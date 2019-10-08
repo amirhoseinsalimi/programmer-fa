@@ -1,0 +1,28 @@
+{
+  "name": "kar-joor-bot",
+  "version": "1.0.0",
+  "description": "ریتوئیت های برنامه نویسی، کاریابی و پروژه؛ پروژه و برنامه نویستو با من جور کن",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Amir Hosein Salimi",
+  "license": "ISC",
+  "dependencies": {
+    "lodash": "^4.17.15",
+    "twit": "^2.2.11"
+  },
+  "devDependencies": {
+    "eslint": "^6.5.1",
+    "eslint-config-airbnb-base": "^14.0.0",
+    "eslint-plugin-import": "^2.18.2"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git clone https://gitlab.com/internship_exception/kar-joor-twitter-bot.git"
+  },
+  "keywords": [
+    "bot",
+    "twitter"
+  ]
+}
