@@ -4,6 +4,7 @@
   "description": "ریتوئیت های برنامه نویسی، کاریابی و پروژه؛ پروژه و برنامه نویستو با من جور کن",
   "main": "app.js",
   "scripts": {
+    "start": "pm2 start app.js --name kar-joor-bot",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Amir Hosein Salimi",
