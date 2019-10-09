@@ -3,6 +3,10 @@ const hashtags = {
     '#فرصت_شغلی',
     '#جویای_کار',
     '#استخدام',
+    '#بازارکار',
+    '#بازار‌کار',
+    '#بازار_کار',
+    '#همکاری',
   ],
   careerEn: [
     '#job',
@@ -17,11 +21,14 @@ const hashtags = {
     '#پروژه‌ای',
     '#دورکاری',
     '#دور‌کاری',
+    '#فریلنسر',
+    '#فریلنسری',
   ],
   typeEn: [
     '#remote',
     '#full_time',
     '#part_time',
+    '#freelancer',
   ],
   positionFa: [
     '#طراح_سایت',
@@ -234,6 +241,14 @@ const hashtags = {
   KarJoorEn: [
     '#karjoor',
     '#kar_joor',
+  ],
+  otherFa: [
+    '#جاباینجا',
+    '#جاب_اینجا',
+  ],
+  otherEn: [
+    '#job_inja',
+    '#jobinja',
   ],
 };
 
