@@ -21,7 +21,7 @@ const params = {
 const stream = T.stream('statuses/filter', params);
 
 stream.on('tweet', (tweet) => {
-  if (tweet.lang === 'fa' || tweet.lang === 'ar') {
+  if (tweet.lang === 'fa'/* || tweet.lang === 'ar'*/) {
     if (_.intersection(hashtags, tweet.entities.hashtags)) {
       const id = tweet.id_str;
 
