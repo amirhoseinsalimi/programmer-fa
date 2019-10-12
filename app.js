@@ -20,7 +20,13 @@ const stream = T.stream('statuses/filter', params);
 
 stream.on('tweet', (tweet) => {
   if (tweet.lang === 'fa') {
-    if (_.intersection(hashtags, tweet.entities.hashtags).length) {
+    const hashtagsOfCurrentTweet = [];
+
+    for (const t in tweet.entities.hashtags) {
+      tweet.entities.hashtags.map((val) => hashtagsOfCurrentTweet.push(`#${val.text}`));
+    }
+
+    if (_.intersection(hashtags, hashtagsOfCurrentTweet).length) {
       const id = tweet.id_str;
 
       T.post('statuses/retweet/:id', { id }, () => {
