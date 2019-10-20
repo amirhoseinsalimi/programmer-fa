@@ -11,6 +11,6 @@ Run `git clone https://gitlab.com/internship_exception/kar-joor-twitter-bot`
 2. **Install dependencies:**
 Run `npm i -S`
 3. **Run the bot**\
-Run `nmp start`
+Run `npm start`
  ---
 If you want to report a bug or willing a new feature feel free to open a issue. PRs are welcome!
