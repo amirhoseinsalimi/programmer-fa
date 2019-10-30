@@ -12,6 +12,8 @@
   "author": "Amir Hosein Salimi",
   "license": "ISC",
   "dependencies": {
+    "db-migrate": "^0.11.6",
+    "db-migrate-mysql": "^1.1.10",
     "lodash": "^4.17.15",
     "twit": "^2.2.11"
   },
