@@ -6,6 +6,7 @@ const hashtags = {
     '#بازارکار',
     '#بازار_کار',
     '#همکاری',
+    '#کارجو',
   ],
   careerEn: [
     '#job',
@@ -168,6 +169,7 @@ const hashtags = {
     '#rails',
     '#python',
     '#django',
+    '#flask',
     '#php',
     '#lumen',
     '#laravel',
@@ -223,10 +225,16 @@ const hashtags = {
   otherFa: [
     '#جاباینجا',
     '#جاب_اینجا',
+    '#برنامه_نویسی',
+    '#برنامه‌نویسی',
+    '#اوپن_سورس',
+    '#اپن_سورس',
   ],
   otherEn: [
     '#job_inja',
     '#jobinja',
+    '#programming',
+    '#open_source',
   ],
 };
 

@@ -22,15 +22,18 @@ stream.on('tweet', (tweet) => {
   if (tweet.lang === 'fa') {
     const hashtagsOfCurrentTweet = [];
 
-    for (const t in tweet.entities.hashtags) {
-      tweet.entities.hashtags.map((val) => hashtagsOfCurrentTweet.push(`#${val.text}`));
-    }
+    // Retweet only if the tweet has 4 or less hashtags
+    if (tweet.entities.hashtags.length <= 4) {
+      for (const t in tweet.entities.hashtags) {
+        tweet.entities.hashtags.map((val) => hashtagsOfCurrentTweet.push(`#${val.text}`));
+      }
 
-    if (_.intersection(hashtags, hashtagsOfCurrentTweet).length) {
-      const id = tweet.id_str;
+      if (_.intersection(hashtags, hashtagsOfCurrentTweet).length) {
+        const id = tweet.id_str;
 
-      T.post('statuses/retweet/:id', { id }, () => {
-      });
+        T.post('statuses/retweet/:id', { id }, () => {
+        });
+      }
     }
   }
 });
