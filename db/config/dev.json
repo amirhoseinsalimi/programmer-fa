@@ -1,0 +1,12 @@
+{
+  "dev": {
+    "host": "",
+    "port": "",
+    "user": "",
+    "password": "",
+    "database": "",
+    "driver": "mysql",
+    "multipleStatements": true
+  },
+  "sql-file": true
+}
