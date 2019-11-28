@@ -1,0 +1,13 @@
+{
+  "prod": {
+    "host": "",
+    "port": "",
+    "user": "",
+    "password": "",
+    "database": "",
+    "driver": "",
+    "multipleStatements": true
+  },
+  "sql-file": true
+}
+

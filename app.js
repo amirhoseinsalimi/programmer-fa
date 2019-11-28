@@ -1,5 +1,6 @@
 const Twit = require('twit');
 const _ = require('lodash');
+const connection = require('./connection');
 
 const hashtagsToFollow = require('./hashtags');
 const config = require('./config');
@@ -32,6 +33,19 @@ stream.on('tweet', (tweet) => {
         const id = tweet.id_str;
 
         T.post('statuses/retweet/:id', { id }, () => {
+          const query = 'INSERT INTO `tweets` (tweet_id, tweet_text, user_name, user_id, created_at) VALUES (?, ?, ?, ?, ?)';
+
+          connection.query(query, [
+            tweet.id_str,
+            Object.prototype.hasOwnProperty.call(tweet, 'extended_tweet') ? tweet.extended_tweet.full_text : tweet.text,
+            tweet.user.screen_name,
+            tweet.user.id,
+            tweet.created_at,
+          ], (err) => {
+            if (err) {
+              console.log(err);
+            }
+          });
         });
       }
     }
