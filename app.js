@@ -2,8 +2,9 @@ const Twit = require('twit');
 const _ = require('lodash');
 const connection = require('./connection');
 
-const hashtagsToFollow = require('./hashtags');
 const config = require('./config');
+const hashtagsToFollow = require('./hashtags');
+const { blackListedAccounts } = require('./black-listed-accounts');
 
 const T = new Twit(config);
 
@@ -32,11 +33,10 @@ stream.on('tweet', (tweet) => {
       if (_.intersection(hashtags, hashtagsOfCurrentTweet).length) {
         const id = tweet.id_str;
 
-        T.post('statuses/retweet/:id', { id }, () => {
-          const query = 'INSERT INTO `tweets` (tweet_id, tweet_text, user_name, user_id, created_at) VALUES (?, ?, ?, ?, ?)';
-
-          T.post('/favorites/create', { id }, () => {
-            if (tweet.user.screen_name !== 'KarJoor') {
+        if (!blackListedAccounts.includes(tweet.user.screen_name)) {
+          T.post('statuses/retweet/:id', {id}, () => {
+            const query = 'INSERT INTO `tweets` (tweet_id, tweet_text, user_name, user_id, created_at) VALUES (?, ?, ?, ?, ?)';
+            T.post('/favorites/create', {id}, () => {
               connection.query(query, [
                 tweet.id_str,
                 Object.prototype.hasOwnProperty.call(tweet, 'extended_tweet') ? tweet.extended_tweet.full_text : tweet.text,
@@ -48,9 +48,9 @@ stream.on('tweet', (tweet) => {
                   console.log(err);
                 }
               });
-            }
+            });
           });
-        });
+        }
       }
     }
   }
