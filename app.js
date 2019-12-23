@@ -36,17 +36,19 @@ stream.on('tweet', (tweet) => {
           const query = 'INSERT INTO `tweets` (tweet_id, tweet_text, user_name, user_id, created_at) VALUES (?, ?, ?, ?, ?)';
 
           T.post('/favorites/create', { id }, () => {
-            connection.query(query, [
-              tweet.id_str,
-              Object.prototype.hasOwnProperty.call(tweet, 'extended_tweet') ? tweet.extended_tweet.full_text : tweet.text,
-              tweet.user.screen_name,
-              tweet.user.id,
-              tweet.created_at,
-            ], (err) => {
-              if (err) {
-                console.log(err);
-              }
-            });
+            if (tweet.user.screen_name !== 'KarJoor') {
+              connection.query(query, [
+                tweet.id_str,
+                Object.prototype.hasOwnProperty.call(tweet, 'extended_tweet') ? tweet.extended_tweet.full_text : tweet.text,
+                tweet.user.screen_name,
+                tweet.user.id,
+                tweet.created_at,
+              ], (err) => {
+                if (err) {
+                  console.log(err);
+                }
+              });
+            }
           });
         });
       }
