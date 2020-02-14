@@ -26,7 +26,8 @@ const params = {
 const stream = T.stream('statuses/filter', params);
 
 stream.on('tweet', (tweet) => {
-  if (tweet.lang === 'fa') {
+  // Check if the tweet is in Farsi and it's not a reply
+  if (tweet.lang === 'fa' && !tweet.in_reply_to_status_id) {
     let id = 0;
     const hashtagsOfCurrentTweet = [];
 
@@ -37,8 +38,6 @@ stream.on('tweet', (tweet) => {
       }
 
       if (!blackListedAccounts.includes(tweet.user.screen_name)) {
-        console.log('=================================================');
-        console.log(tweet);
         if (_.intersection(interests, hashtagsOfCurrentTweet).length) {
           id = tweet.id_str;
         } else {
