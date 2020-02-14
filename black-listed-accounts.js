@@ -2,6 +2,7 @@
 
 module.exports.blackListedAccounts = [
   'KarJoor',
+  'programmer_fa',
   'bazar_kaar',
   'Bazzar_kar',
   'aerolite_ir',
