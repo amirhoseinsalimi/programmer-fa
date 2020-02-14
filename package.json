@@ -1,6 +1,6 @@
 {
   "name": "kar-joor-bot",
-  "version": "2.0.1",
+  "version": "2.1.0",
   "description": "ریتوئیت های برنامه نویسی، کاریابی و پروژه؛ پروژه و برنامه نویستو با من جور کن",
   "main": "app.js",
   "scripts": {
