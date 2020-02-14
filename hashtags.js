@@ -1,35 +1,4 @@
 const hashtags = {
-  careerFa: [
-    '#فرصت_شغلی',
-    '#جویای_کار',
-    '#استخدام',
-    '#بازارکار',
-    '#بازار_کار',
-    '#همکاری',
-    '#کارجو',
-  ],
-  careerEn: [
-    '#job',
-    '#job_oppurtinty',
-    '#job_oppurtinty',
-    '#employment',
-  ],
-  typeFa: [
-    '#تمام_وقت',
-    '#پاره_وقت',
-    '#پروژه_ای',
-    '#پروژه‌ای',
-    '#دورکاری',
-    '#دور‌کاری',
-    '#فریلنسر',
-    '#فریلنسری',
-  ],
-  typeEn: [
-    '#remote',
-    '#full_time',
-    '#part_time',
-    '#freelancer',
-  ],
   positionFa: [
     '#طراح_سایت',
     '#طراح',
@@ -71,15 +40,6 @@ const hashtags = {
     '#sysadmin',
     '#sys_admin',
     '#system_admin',
-  ],
-  levelFa: [
-    '#کارآموز',
-    '#کار‌آموز',
-  ],
-  levelEn: [
-    '#mid_level',
-    '#senior',
-    '#intern',
   ],
   technologiesFa: [
     /* Front-end */
@@ -193,8 +153,6 @@ const hashtags = {
     '#objective_c',
 
     /* Other */
-    // '#c',
-    // '#csharp',
     '#c_sharp',
     '#dotnet',
     '#cplusplus',
@@ -211,28 +169,13 @@ const hashtags = {
     '#ubuntu',
     '#selenium',
   ],
-  KarJoorFa: [
-    '#کارجور',
-    '#کار_جور',
-    'کارجور',
-    'کار جور',
-  ],
-  KarJoorEn: [
-    '#karjoor',
-    '#kar_joor',
-    'karjoor',
-  ],
   otherFa: [
-    '#جاباینجا',
-    '#جاب_اینجا',
     '#برنامه_نویسی',
     '#برنامه‌نویسی',
     '#اوپن_سورس',
     '#اپن_سورس',
   ],
   otherEn: [
-    '#job_inja',
-    '#jobinja',
     '#programming',
     '#open_source',
   ],
