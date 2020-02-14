@@ -1,12 +1,12 @@
 {
-  "name": "kar-joor-bot",
-  "version": "2.1.0",
-  "description": "ریتوئیت های برنامه نویسی، کاریابی و پروژه؛ پروژه و برنامه نویستو با من جور کن",
+  "name": "programmer-fa-bot",
+  "version": "2.0.1",
+  "description": "‏‏‏‏‏‏‏‏‏‏‏ریتوئیت های #برنامه_نویسی و پروژه؛ موضوعات برنامه نویسی و وب رو فالو میکنم و توی فیدت نشون میدم 😊",
   "main": "app.js",
   "scripts": {
-    "start": "pm2 start app.js --name kar-joor-bot",
-    "restart": "pm2 restart kar-joor-bot",
-    "stop": "pm2 stop kar-joor-bot",
+    "start": "pm2 start app.js --name programmer-fa-bot",
+    "restart": "pm2 restart programmer-fa-bot",
+    "stop": "pm2 stop programmer-fa-bot",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Amir Hosein Salimi",
@@ -19,13 +19,13 @@
     "twit": "^2.2.11"
   },
   "devDependencies": {
-    "eslint": "^6.5.1",
+    "eslint": "^6.8.0",
     "eslint-config-airbnb-base": "^14.0.0",
-    "eslint-plugin-import": "^2.18.2"
+    "eslint-plugin-import": "^2.20.1"
   },
   "repository": {
     "type": "git",
-    "url": "git clone https://gitlab.com/internship_exception/kar-joor-twitter-bot.git"
+    "url": "https://gitlab.com/Exceptional-Dev/IOException/WebException/twitter-bots/kar-joor-twitter-bot"
   },
   "keywords": [
     "bot",
