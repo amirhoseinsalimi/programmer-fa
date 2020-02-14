@@ -6,15 +6,12 @@ const words = {
     'پروگرمر',
     'دواپس',
     'فرانت',
-    'تستر',
-    'ادمین',
   ],
   positionEn: [
     'web',
     'developer',
     'programmer',
     'coder',
-    'mobile',
     'ui',
     'ux',
     'front-end',
@@ -51,7 +48,6 @@ const words = {
     'اندروید',
     'فلاتر',
     'کاتلین',
-    'سوییفت',
     'سوئیفت',
 
     /* CMS */
