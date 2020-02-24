@@ -1,0 +1,14 @@
+{
+    "files": [
+        "src/app.ts",
+        "src/hashtags.ts",
+        "src/connection.ts",
+        "src/config.ts",
+        "src/black-listed-accounts.ts",
+        "src/words.ts"
+    ],
+    "compilerOptions": {
+        "noImplicitAny": true,
+        "target": "es5"
+    }
+}

@@ -1,4 +1,4 @@
-const hashtags = {
+const hashtagsToFollow: object = {
   positionFa: [
     '#طراح_سایت',
     '#طراح',
@@ -181,4 +181,4 @@ const hashtags = {
   ],
 };
 
-module.exports = hashtags;
+export { hashtagsToFollow };

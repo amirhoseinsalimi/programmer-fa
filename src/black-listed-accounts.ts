@@ -1,6 +1,5 @@
 /* Do not retweet from these accounts */
-
-module.exports.blackListedAccounts = [
+const blackListedAccounts: string[] = [
   'KarJoor',
   'programmer_fa',
   'bazar_kaar',
@@ -23,3 +22,5 @@ module.exports.blackListedAccounts = [
   'Yones_Saeedi',
   'AliKarbasiCom',
 ];
+
+export { blackListedAccounts };

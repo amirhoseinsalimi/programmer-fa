@@ -1,4 +1,4 @@
-const words = {
+const wordsToFollow: object = {
   positionFa: [
     'برنامه‌نویس',
     'دیزاینر',
@@ -27,7 +27,6 @@ const words = {
     'کوئری',
     'جاوااسکریپت',
     'جاوا‌اسکریپت',
-    'ویو',
     'ری‌اکت',
     'انگولار',
     'اسولت',
@@ -35,10 +34,8 @@ const words = {
 
     /* Back-end */
     'جاوا',
-    'اسپرینگ',
     'پایتون',
     'لاراول',
-    'لومن',
 
     /* Database */
     'دیتابیس',
@@ -47,10 +44,6 @@ const words = {
     /* Mobile */
     'فلاتر',
     'کاتلین',
-
-    /* CMS */
-    'وردپرس',
-    'جوملا',
 
     /* Sys. Admin & DevOps */
     'لینوکس',
@@ -75,7 +68,6 @@ const words = {
     'angular',
     'angularjs',
     'angular.js',
-    'next',
     'next.js',
     'nuxt',
     'nuxt.js',
@@ -135,4 +127,4 @@ const words = {
   ],
 };
 
-module.exports = words;
+export { wordsToFollow };
