@@ -1,4 +1,4 @@
-const words = {
+const wordsToFollow: object = {
   positionFa: [
     'برنامه‌نویس',
     'دیزاینر',
@@ -127,4 +127,4 @@ const words = {
   ],
 };
 
-module.exports = words;
+export { wordsToFollow };
