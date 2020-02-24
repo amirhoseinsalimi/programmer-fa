@@ -4,8 +4,8 @@
   "description": "‏‏‏‏‏‏‏‏‏‏‏ریتوئیت های #برنامه_نویسی و پروژه؛ موضوعات برنامه نویسی و وب رو فالو میکنم و توی فیدت نشون میدم 😊",
   "main": "dist/app.js",
   "scripts": {
-    "start": "pm2 start dist/app.js --name programmer-fa-bot",
-    "restart": "pm2 restart programmer-fa-bot",
+    "start": "gulp && pm2 start dist/app.js --name programmer-fa-bot",
+    "restart": "gulp && pm2 restart programmer-fa-bot",
     "stop": "pm2 stop programmer-fa-bot",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
