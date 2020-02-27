@@ -5,7 +5,8 @@
         "src/connection.ts",
         "src/config.ts",
         "src/black-listed-accounts.ts",
-        "src/words.ts"
+        "src/words.ts",
+        "src/black-listed-words.ts"
     ],
     "compilerOptions": {
         "noImplicitAny": true,
