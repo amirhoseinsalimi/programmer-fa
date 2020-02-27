@@ -52,7 +52,7 @@ stream.on('tweet', (tweet) => {
             return word.toLowerCase();
           });
 
-          if (!_.intersection(interests, blackListedWords).length) {
+          if (!_.intersection(tweetTextArr, blackListedWords).length) {
             id = _.intersection(interests, tweetTextArr).length ? tweet.id_str : 0;
           }
         }
