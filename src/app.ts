@@ -8,6 +8,7 @@ import { connection } from "./connection";
 import { hashtagsToFollow } from "./hashtags";
 import { wordsToFollow } from "./words";
 import { blackListedAccounts } from "./black-listed-accounts";
+import { blackListedWords } from "./black-listed-words";
 
 const T: Twit = new Twit(config);
 
@@ -51,7 +52,9 @@ stream.on('tweet', (tweet) => {
             return word.toLowerCase();
           });
 
-          id = _.intersection(interests, tweetTextArr).length ? tweet.id_str : 0;
+          if (!_.intersection(interests, blackListedWords).length) {
+            id = _.intersection(interests, tweetTextArr).length ? tweet.id_str : 0;
+          }
         }
       }
 
