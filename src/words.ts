@@ -1,7 +1,7 @@
 const wordsToFollow: object = {
   positionFa: [
     'برنامه‌نویس',
-    'دیزاینر',
+    // 'دیزاینر',
     'دولوپر',
     'پروگرمر',
     'دواپس',
@@ -12,7 +12,7 @@ const wordsToFollow: object = {
     'developer',
     'programmer',
     'coder',
-    'ui',
+    // 'ui',
     'ux',
     'front-end',
     'frontend',
@@ -112,8 +112,8 @@ const wordsToFollow: object = {
     'cplusplus',
 
     /* CMS */
-    'wordpress',
-    'joomla',
+    // 'wordpress',
+    // 'joomla',
 
     /* Sys. Admin & DevOps */
     'lpic',
