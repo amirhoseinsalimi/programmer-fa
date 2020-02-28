@@ -11,7 +11,7 @@ const wordsToFollow: object = {
     'web',
     'developer',
     'programmer',
-    'coder',
+    // 'coder',
     // 'ui',
     'ux',
     'front-end',
@@ -19,7 +19,7 @@ const wordsToFollow: object = {
     'back-end',
     'backend',
     'devops',
-    'tester',
+    // 'tester',
     'sysadmin',
   ],
   technologiesFa: [
@@ -29,8 +29,8 @@ const wordsToFollow: object = {
     'جاوا‌اسکریپت',
     'ری‌اکت',
     'انگولار',
-    'اسولت',
-    'ناکست',
+    // 'اسولت',
+    // 'ناکست',
 
     /* Back-end */
     'جاوا',
@@ -38,7 +38,7 @@ const wordsToFollow: object = {
     'لاراول',
 
     /* Database */
-    'دیتابیس',
+    // 'دیتابیس',
     'مونگو',
 
     /* Mobile */
@@ -48,7 +48,7 @@ const wordsToFollow: object = {
     /* Sys. Admin & DevOps */
     'لینوکس',
     'اوبونتو',
-    'سلنیوم',
+    // 'سلنیوم',
   ],
   technologiesEn: [
     /* Front-end */
@@ -82,6 +82,9 @@ const wordsToFollow: object = {
     'express',
     'expressjs',
     'express.js',
+    'koa',
+    'koajs',
+    'koa.js',
     'java',
     'ruby',
     'rails',
@@ -93,7 +96,7 @@ const wordsToFollow: object = {
     'laravel',
 
     /* Database */
-    'db',
+    // 'db',
     'mysql',
     'mssql',
     'sql',
@@ -118,12 +121,13 @@ const wordsToFollow: object = {
     /* Sys. Admin & DevOps */
     'lpic',
     'linux',
-    'server',
+    // 'server',
     'ubuntu',
-    'selenium',
+    // 'selenium',
   ],
   otherFa: [
     'برنامه‌نویسی',
+    '',
   ],
 };
 

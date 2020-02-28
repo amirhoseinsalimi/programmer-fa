@@ -1,7 +1,7 @@
 const hashtagsToFollow: object = {
   positionFa: [
     '#طراح_سایت',
-    '#طراح',
+    // '#طراح',
     '#برنامه_نویس',
     '#برنامه‌نویس',
     '#برنامه_نویس_موبایل',
@@ -14,7 +14,7 @@ const hashtagsToFollow: object = {
     '#دواپس',
     '#فرانت_اند',
     '#بک_اند',
-    '#تستر',
+    // '#تستر',
     '#سیستم_ادمین',
     '#سیس_ادمین',
   ],
@@ -24,7 +24,7 @@ const hashtagsToFollow: object = {
     '#designer',
     '#developer',
     '#programmer',
-    '#coder',
+    // '#coder',
     '#mobile_developer',
     '#ui_ux',
     '#ui_designer',
@@ -36,7 +36,7 @@ const hashtagsToFollow: object = {
     '#data_scientist',
     '#devops',
     '#dev_ops',
-    '#tester',
+    // '#tester',
     '#sysadmin',
     '#sys_admin',
     '#system_admin',
@@ -61,7 +61,7 @@ const hashtagsToFollow: object = {
     '#نود_جی_اس',
     '#اکسپرس_جی_اس',
     '#جاوا',
-    '#اسپرینگ',
+    // '#اسپرینگ',
     '#روبی',
     '#پایتون',
     '#جنگو',
@@ -124,7 +124,7 @@ const hashtagsToFollow: object = {
     '#expressjs',
     '#express_js',
     '#java',
-    '#spring',
+    // '#spring',
     '#ruby',
     '#rails',
     '#python',
@@ -145,7 +145,7 @@ const hashtagsToFollow: object = {
     '#mongo_db',
 
     /* Mobile */
-    '#android',
+    // '#android',
     '#flutter',
     '#kotlin',
     '#react_native',
@@ -160,14 +160,14 @@ const hashtagsToFollow: object = {
 
     /* CMS */
     '#wordpress',
-    '#joomla',
+    // '#joomla',
 
     /* Sys. Admin & DevOps */
     '#lpic',
     '#linux',
     '#server',
     '#ubuntu',
-    '#selenium',
+    // '#selenium',
   ],
   otherFa: [
     '#برنامه_نویسی',
