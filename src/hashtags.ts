@@ -89,8 +89,8 @@ const hashtagsToFollow: object = {
     '#سی_پ_پ',
 
     /* CMS */
-    '#وردپرس',
-    '#جوملا',
+    // '#وردپرس',
+    // '#جوملا',
 
     /* Sys. Admin & DevOps */
     '#لینوکس',
@@ -159,7 +159,7 @@ const hashtagsToFollow: object = {
     '#c_plus_plus',
 
     /* CMS */
-    '#wordpress',
+    // '#wordpress',
     // '#joomla',
 
     /* Sys. Admin & DevOps */
