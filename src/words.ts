@@ -127,7 +127,6 @@ const wordsToFollow: object = {
   ],
   otherFa: [
     'برنامه‌نویسی',
-    '',
   ],
 };
 
