@@ -74,7 +74,7 @@ const hashtagsToFollow: object = {
     '#مونگو',
 
     /* Mobile */
-    '#اندروید',
+    // '#اندروید',
     '#فلاتر',
     '#کاتلین',
     '#ری_اکت_نیتیو',
@@ -120,7 +120,7 @@ const hashtagsToFollow: object = {
     '#node',
     '#nodejs',
     '#node_js',
-    '#express',
+    // '#express',
     '#expressjs',
     '#express_js',
     '#java',

@@ -79,7 +79,7 @@ const wordsToFollow: object = {
     'node',
     'nodejs',
     'node.js',
-    'express',
+    // 'express',
     'expressjs',
     'express.js',
     'koa',
