@@ -20,6 +20,7 @@
     "twit": "^2.2.11"
   },
   "devDependencies": {
+    "@types/dotenv": "^8.2.0",
     "@types/lodash": "^4.14.149",
     "@types/mysql": "^2.15.8",
     "@types/twit": "^2.2.23",
