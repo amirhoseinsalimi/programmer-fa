@@ -14,6 +14,7 @@
   "dependencies": {
     "db-migrate": "^0.11.6",
     "db-migrate-mysql": "^1.1.10",
+    "dotenv": "^8.2.0",
     "lodash": "^4.17.15",
     "mysql": "^2.17.1",
     "twit": "^2.2.11"
