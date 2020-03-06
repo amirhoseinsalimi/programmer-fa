@@ -1,23 +1,17 @@
 module.exports = {
-  env: {
-    es6: true,
-    node: true,
-  },
-  extends: [
-    'airbnb-base',
-  ],
-  globals: {
-    Atomics: 'readonly',
-    SharedArrayBuffer: 'readonly',
-  },
+  extends: ['airbnb', 'plugin:@typescript-eslint/recommended'],
   parser: '@typescript-eslint/parser',
-  parserOptions: {
-    ecmaVersion: 2018,
-    sourceType: 'module',
+  plugins: ['@typescript-eslint', 'prettier'],
+  settings: {
+    'import/parsers': {
+      '@typescript-eslint/parser': ['.ts'],
+    },
+    'import/resolver': {
+      typescript: {},
+    },
   },
-  plugins: [
-    '@typescript-eslint',
-  ],
   rules: {
+    'import/no-extraneous-dependencies': [2, { devDependencies: ['**/test.ts'] }],
+    '@typescript-eslint/indent': [2, 2],
   },
 };
