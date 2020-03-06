@@ -4,9 +4,10 @@
   "description": "‏‏‏‏‏‏‏‏‏‏‏ریتوئیت های #برنامه_نویسی و پروژه؛ موضوعات برنامه نویسی و وب رو فالو میکنم و توی فیدت نشون میدم 😊",
   "main": "dist/app.js",
   "scripts": {
-    "start": "gulp && pm2 start dist/app.js --name programmer-fa-bot",
-    "restart": "gulp && pm2 restart programmer-fa-bot",
+    "start": "tsc && pm2 start dist/app.js --name programmer-fa-bot",
+    "restart": "tsc && pm2 restart programmer-fa-bot",
     "stop": "pm2 stop programmer-fa-bot",
+    "dev:start": "nodemon --watch 'src/**/*.ts' --exec 'ts-node' src/app.ts",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Amir Hosein Salimi",
@@ -17,21 +18,23 @@
     "dotenv": "^8.2.0",
     "lodash": "^4.17.15",
     "mysql": "^2.17.1",
+    "pm2": "^4.2.3",
     "twit": "^2.2.11"
   },
   "devDependencies": {
     "@types/dotenv": "^8.2.0",
     "@types/lodash": "^4.14.149",
     "@types/mysql": "^2.15.8",
+    "@types/node": "^13.7.7",
     "@types/twit": "^2.2.23",
     "@typescript-eslint/eslint-plugin": "^2.21.0",
     "@typescript-eslint/parser": "^2.21.0",
     "eslint": "^6.8.0",
     "eslint-config-airbnb-base": "^14.0.0",
     "eslint-plugin-import": "^2.20.1",
-    "gulp": "^4.0.0",
-    "gulp-typescript": "^6.0.0-alpha.1",
-    "typescript": "^3.8.2"
+    "nodemon": "^2.0.2",
+    "ts-node": "^8.6.2",
+    "typescript": "^3.8.3"
   },
   "repository": {
     "type": "git",
