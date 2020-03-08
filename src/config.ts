@@ -1,5 +1,5 @@
 import { Options } from 'twit';
-import "./env";
+import './env';
 
 const config: Options = {
   consumer_key: process.env.CONSUMER_KEY,
