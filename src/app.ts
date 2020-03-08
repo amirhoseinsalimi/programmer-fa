@@ -21,6 +21,34 @@ for (const field in hashtagsToFollow) {
   );
 }
 
+function getAllOccurrences(
+  subStr: string = '#',
+  str: string,
+  caseSensitive: boolean = true
+): number[] {
+  const subStrLen = subStr.length;
+
+  if (subStrLen === 0) {
+    return [];
+  }
+
+  let startIndex = 0,
+    index: number = 0,
+    indices: number[] = [];
+
+  if (!caseSensitive) {
+    str = str.toLowerCase();
+    subStr = subStr.toLowerCase();
+  }
+
+  while ((index = str.indexOf(subStr, startIndex)) > -1) {
+    indices.push(index);
+    startIndex = index + subStrLen;
+  }
+
+  return indices;
+}
+
 for (const field in wordsToFollow) {
   // @ts-ignore
   wordsToFollow[field].map((val: string) => interests.push(val.toLowerCase()));
@@ -33,13 +61,26 @@ const params: Twit.Params = {
 const stream = T.stream('statuses/filter', params);
 
 stream.on('tweet', (tweet) => {
+  const tweetIsExtended = Object.prototype.hasOwnProperty.call(
+    tweet,
+    'extended_tweet'
+  );
+  const tweetText: string = tweetIsExtended
+    ? tweet.extended_tweet.full_text
+    : tweet.text;
+
   // Check if the tweet is in Farsi and it's not a reply
   if (tweet.lang === 'fa' && !tweet.in_reply_to_status_id) {
     let id: number = 0;
     const hashtagsOfCurrentTweet: string[] = [];
 
-    // Retweet only if the tweet has 4 or less hashtags
-    if (tweet.entities.hashtags.length <= 4) {
+    // Retweet only if the tweet has 4 or less hashtags + Polyfill
+    if (
+      getAllOccurrences('#', tweetText, true).length <= 4 &&
+      tweet.entities.hashtags.length <= 4
+    ) {
+      console.log(getAllOccurrences('#', tweetText, true).length <= 4);
+
       for (const t in tweet.entities.hashtags) {
         tweet.entities.hashtags.map((val: { text: any }) =>
           hashtagsOfCurrentTweet.push(`#${val.text}`)
@@ -50,12 +91,6 @@ stream.on('tweet', (tweet) => {
         if (_.intersection(interests, hashtagsOfCurrentTweet).length) {
           id = tweet.id_str;
         } else {
-          const tweetText: string = Object.prototype.hasOwnProperty.call(
-            tweet,
-            'extended_tweet'
-          )
-            ? tweet.extended_tweet.full_text
-            : tweet.text;
           let tweetTextArr: string[] = tweetText.split(' ');
           tweetTextArr = tweetTextArr.map((word: string) => {
             return word.toLowerCase();
