@@ -61,6 +61,7 @@ const params: Twit.Params = {
 const stream = T.stream('statuses/filter', params);
 
 stream.on('tweet', (tweet) => {
+  // Similar to: `tweet.truncated === true`
   const tweetIsExtended = Object.prototype.hasOwnProperty.call(
     tweet,
     'extended_tweet'
@@ -70,7 +71,11 @@ stream.on('tweet', (tweet) => {
     : tweet.text;
 
   // Check if the tweet is in Farsi and it's not a reply
-  if (tweet.lang === 'fa' && !tweet.in_reply_to_status_id) {
+  if (
+    tweet.lang === 'fa' &&
+    !tweet.in_reply_to_status_id &&
+    !tweet.in_reply_to_user_id
+  ) {
     let id: number = 0;
     const hashtagsOfCurrentTweet: string[] = [];
 
@@ -79,8 +84,6 @@ stream.on('tweet', (tweet) => {
       getAllOccurrences('#', tweetText, true).length <= 4 &&
       tweet.entities.hashtags.length <= 4
     ) {
-      console.log(getAllOccurrences('#', tweetText, true).length <= 4);
-
       for (const t in tweet.entities.hashtags) {
         tweet.entities.hashtags.map((val: { text: any }) =>
           hashtagsOfCurrentTweet.push(`#${val.text}`)
