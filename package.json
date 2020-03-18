@@ -17,9 +17,16 @@
     "db-migrate": "^0.11.6",
     "db-migrate-mysql": "^1.1.10",
     "dotenv": "^8.2.0",
+    "knex": "^0.20.11",
     "lodash": "^4.17.15",
+    "mssql": "^6.2.0",
     "mysql": "^2.17.1",
+    "mysql2": "^2.1.0",
+    "oracledb": "^4.2.0",
+    "pg": "^7.18.2",
+    "pg-hstore": "^2.3.3",
     "pm2": "^4.2.3",
+    "sqlite3": "^4.1.1",
     "twit": "^2.2.11"
   },
   "devDependencies": {
