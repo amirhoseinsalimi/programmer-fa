@@ -1,7 +1,42 @@
 /**
+ * Get an array of all occurrences of a substring in a string
+ * @param {string} subStr - The sub-string to look for its occurrences
+ * @param {string} str - The full string to search in
+ * @param {boolean} [caseSensitive = false] - Case sensitivity matters?
+ * @return {string[]}
+ */
+export function getAllOccurrences(
+  subStr: string,
+  str: string,
+  caseSensitive: boolean = false
+): number[] {
+  const subStrLen = subStr.length;
+
+  if (subStrLen === 0) {
+    return [];
+  }
+
+  let startIndex = 0,
+    index: number = 0,
+    indices: number[] = [];
+
+  if (!caseSensitive) {
+    str = str.toLowerCase();
+    subStr = subStr.toLowerCase();
+  }
+
+  while ((index = str.indexOf(subStr, startIndex)) > -1) {
+    indices.push(index);
+    startIndex = index + subStrLen;
+  }
+
+  return indices;
+}
+
+/**
  * Whether a tweet is under 140 characters long or not
- * @param tweet object
- * @return boolean
+ * @param {*} tweet - The tweet object
+ * @return {boolean}
  */
 export function isTweetExtended(tweet: any): boolean {
   return tweet.truncated === true;
@@ -10,7 +45,7 @@ export function isTweetExtended(tweet: any): boolean {
 /**
  * Whether a tweet is in Farsi or not.
  * This behaviour relies on Twitter API.
- * @param tweet
+ * @param {*} tweet - The tweet object
  * @return boolean
  */
 export function isTweetFarsi(tweet: any): boolean {
@@ -19,8 +54,8 @@ export function isTweetFarsi(tweet: any): boolean {
 
 /**
  *
- * @param tweet
- * @return boolean
+ * @param {*} tweet - The tweet object
+ * @return {boolean}
  */
 export function isTweetNotAReply(tweet: any): boolean {
   // Polyfill to check whether a tweet is a reply or not
@@ -29,8 +64,8 @@ export function isTweetNotAReply(tweet: any): boolean {
 
 /**
  *
- * @param tweet
- * @return string
+ * @param {*} tweet - The tweet object
+ * @return {string}
  */
 export function getTweetFullText(tweet: any): string {
   // All tweets have a `text` property, but the ones having 140 or more
@@ -43,8 +78,8 @@ export function getTweetFullText(tweet: any): string {
 
 /**
  *
- * @param tweet
- * @return string[]
+ * @param {*} tweet - The tweet object
+ * @return {string[]}
  */
 export function getTweetHashtags(tweet: any): string[] {
   return tweet.enteties.hashtags;

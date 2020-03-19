@@ -15,6 +15,7 @@ import {
   isTweetExtended,
   getTweetHashtags,
   isTweetNotAReply,
+  getAllOccurrences,
 } from './utils';
 
 const T: Twit = new Twit(config);
@@ -26,34 +27,6 @@ for (const field in hashtagsToFollow) {
   hashtagsToFollow[field].map((val: string) =>
     interests.push(val.toLowerCase())
   );
-}
-
-function getAllOccurrences(
-  subStr: string = '#',
-  str: string,
-  caseSensitive: boolean = true
-): number[] {
-  const subStrLen = subStr.length;
-
-  if (subStrLen === 0) {
-    return [];
-  }
-
-  let startIndex = 0,
-    index: number = 0,
-    indices: number[] = [];
-
-  if (!caseSensitive) {
-    str = str.toLowerCase();
-    subStr = subStr.toLowerCase();
-  }
-
-  while ((index = str.indexOf(subStr, startIndex)) > -1) {
-    indices.push(index);
-    startIndex = index + subStrLen;
-  }
-
-  return indices;
 }
 
 for (const field in wordsToFollow) {
@@ -74,7 +47,6 @@ stream.on('tweet', (tweet) => {
     let id: number = 0;
     const hashtagsOfCurrentTweet: string[] = [];
 
-    // Retweet only if the tweet has 4 or less hashtags + Polyfill
     if (
       getAllOccurrences('#', tweetText, true).length <= 4 &&
       tweet.entities.hashtags.length <= 4
