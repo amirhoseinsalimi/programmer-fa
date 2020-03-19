@@ -10,12 +10,11 @@ import { wordsToFollow } from './words';
 import { blackListedAccounts } from './black-listed-accounts';
 import { blackListedWords } from './black-listed-words';
 import {
-  isTweetFarsi,
-  getTweetFullText,
-  isTweetExtended,
-  getTweetHashtags,
-  isTweetNotAReply,
   getAllOccurrences,
+  getTweetFullText,
+  isEnvRestricted,
+  isTweetFarsi,
+  isTweetNotAReply,
 } from './utils';
 
 const T: Twit = new Twit(config);
@@ -75,30 +74,39 @@ stream.on('tweet', (tweet) => {
       }
 
       if (id) {
-        T.post('statuses/retweet/:id', { id: id.toString() }, () => {
-          const query =
-            'INSERT INTO `tweets` (tweet_id, tweet_text, user_name, user_id, created_at) VALUES (?, ?, ?, ?, ?)';
+        if (!isEnvRestricted()) {
+          T.post('statuses/retweet/:id', { id: id.toString() }, () => {
+            const query =
+              'INSERT INTO `tweets` (tweet_id, tweet_text, user_name, user_id, created_at) VALUES (?, ?, ?, ?, ?)';
 
-          T.post('/favorites/create', { id: id.toString() }, () => {
-            connection.query(
-              query,
-              [
-                tweet.id_str,
-                Object.prototype.hasOwnProperty.call(tweet, 'extended_tweet')
-                  ? tweet.extended_tweet.full_text
-                  : tweet.text,
-                tweet.user.screen_name,
-                tweet.user.id,
-                tweet.created_at,
-              ],
-              (err: MysqlError) => {
-                if (err) {
-                  console.log(err);
+            T.post('/favorites/create', { id: id.toString() }, () => {
+              connection.query(
+                query,
+                [
+                  tweet.id_str,
+                  Object.prototype.hasOwnProperty.call(tweet, 'extended_tweet')
+                    ? tweet.extended_tweet.full_text
+                    : tweet.text,
+                  tweet.user.screen_name,
+                  tweet.user.id,
+                  tweet.created_at,
+                ],
+                (err: MysqlError) => {
+                  if (err) {
+                    console.log(err);
+                  }
                 }
-              }
-            );
+              );
+            });
           });
-        });
+        } else {
+          console.log(
+            "A tweet has been captured but it won't be retweeted because by " +
+              ' default the bot is forbidden to retweet on development/' +
+              'staging environments. To change this behavior set' +
+              ' `RESTRICTED_DEV` to true in .env file.'
+          );
+        }
       }
     }
   }

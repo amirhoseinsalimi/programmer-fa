@@ -84,3 +84,33 @@ export function getTweetFullText(tweet: any): string {
 export function getTweetHashtags(tweet: any): string[] {
   return tweet.enteties.hashtags;
 }
+
+/**
+ *
+ * @return {string}
+ */
+export function getCurrentEnv() {
+  let currentEnv: string;
+
+  if (process.env.NODE_ENV === 'production') {
+    currentEnv = process.env.NODE_ENV;
+  } else if (process.env.NODE_ENV === 'staging') {
+    currentEnv = process.env.NODE_ENV;
+  } else {
+    currentEnv = 'development';
+  }
+
+  return currentEnv;
+}
+
+/**
+ * Whether the environment is restricted to do some actions or not
+ * @return {boolean}
+ */
+export function isEnvRestricted() {
+  if (getCurrentEnv() === 'production') {
+    return false;
+  } else {
+    return process.env.RESTRICTED_ENV;
+  }
+}
