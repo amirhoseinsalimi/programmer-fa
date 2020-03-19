@@ -82,7 +82,7 @@ export function getTweetFullText(tweet: any): string {
  * @return {string[]}
  */
 export function getTweetHashtags(tweet: any): string[] {
-  return tweet.enteties.hashtags;
+  return tweet.entities.hashtags;
 }
 
 /**

@@ -102,9 +102,9 @@ stream.on('tweet', (tweet) => {
         } else {
           console.log(
             "A tweet has been captured but it won't be retweeted because by " +
-              ' default the bot is forbidden to retweet on development/' +
-              'staging environments. To change this behavior set' +
-              ' `RESTRICTED_DEV` to true in .env file.'
+              ' default the bot is forbidden to retweet from a development/' +
+              'staging environment. To change this behavior set' +
+              ' `RESTRICTED_DEV` to false in .env file.'
           );
         }
       }
