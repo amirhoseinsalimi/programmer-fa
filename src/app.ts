@@ -9,6 +9,13 @@ import { hashtagsToFollow } from './hashtags';
 import { wordsToFollow } from './words';
 import { blackListedAccounts } from './black-listed-accounts';
 import { blackListedWords } from './black-listed-words';
+import {
+  isTweetFarsi,
+  getTweetFullText,
+  isTweetExtended,
+  getTweetHashtags,
+  isTweetNotAReply,
+} from './utils';
 
 const T: Twit = new Twit(config);
 
@@ -61,21 +68,9 @@ const params: Twit.Params = {
 const stream = T.stream('statuses/filter', params);
 
 stream.on('tweet', (tweet) => {
-  // Similar to: `tweet.truncated === true`
-  const tweetIsExtended = Object.prototype.hasOwnProperty.call(
-    tweet,
-    'extended_tweet'
-  );
-  const tweetText: string = tweetIsExtended
-    ? tweet.extended_tweet.full_text
-    : tweet.text;
+  const tweetText: string = getTweetFullText(tweet);
 
-  // Check if the tweet is in Farsi and it's not a reply
-  if (
-    tweet.lang === 'fa' &&
-    !tweet.in_reply_to_status_id &&
-    !tweet.in_reply_to_user_id
-  ) {
+  if (isTweetFarsi(tweet) && isTweetNotAReply(tweet)) {
     let id: number = 0;
     const hashtagsOfCurrentTweet: string[] = [];
 
@@ -138,6 +133,5 @@ stream.on('tweet', (tweet) => {
 });
 
 stream.on('error', (err: any) => {
-  // eslint-disable-next-line
   console.log(err);
 });
