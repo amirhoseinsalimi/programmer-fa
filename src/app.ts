@@ -85,19 +85,20 @@ stream.on('tweet', (tweet) => {
                 ],
                 (err: MysqlError) => {
                   if (err) {
-                    console.log(err);
+                    logError(err.toString());
                   }
                 }
               );
             });
           });
         } else {
-          console.log(
+          logWarning(
             "A tweet has been captured but it won't be retweeted because by " +
               ' default the bot is forbidden to retweet from a development/' +
               'staging environment. To change this behavior set' +
               ' `RESTRICTED_DEV` to false in .env file.'
           );
+          logInfo(tweetText);
         }
       }
     }
@@ -105,5 +106,5 @@ stream.on('tweet', (tweet) => {
 });
 
 stream.on('error', (err: any) => {
-  console.log(err);
+  logError(err);
 });
