@@ -21,17 +21,9 @@ const T: Twit = new Twit(config);
 
 const interests: string[] = [];
 
-for (const field in hashtagsToFollow) {
-  // @ts-ignore
-  hashtagsToFollow[field].map((val: string) =>
-    interests.push(val.toLowerCase())
-  );
-}
-
-for (const field in wordsToFollow) {
-  // @ts-ignore
-  wordsToFollow[field].map((val: string) => interests.push(val.toLowerCase()));
-}
+/* Include hashtags in a single array */
+hashtagsToFollow.map((val: string) => interests.push(val.toLowerCase()));
+wordsToFollow.map((val: string) => interests.push(val.toLowerCase()));
 
 const params: Twit.Params = {
   track: interests,
