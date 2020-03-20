@@ -89,7 +89,7 @@ export function getTweetHashtags(tweet: any): string[] {
  *
  * @return {string}
  */
-export function getCurrentEnv() {
+export function getCurrentEnv(): string {
   let currentEnv: string;
 
   if (process.env.NODE_ENV === 'production') {
@@ -107,10 +107,10 @@ export function getCurrentEnv() {
  * Whether the environment is restricted to do some actions or not
  * @return {boolean}
  */
-export function isEnvRestricted() {
+export function isEnvRestricted(): boolean {
   if (getCurrentEnv() === 'production') {
     return false;
   } else {
-    return process.env.RESTRICTED_ENV;
+    return !!process.env.RESTRICTED_ENV;
   }
 }
