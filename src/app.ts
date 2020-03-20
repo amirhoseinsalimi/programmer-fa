@@ -1,10 +1,22 @@
+/*=======================================
+ *            Node.js Modules
+ * ====================================*/
 import * as Twit from 'twit';
 import * as _ from 'lodash';
 import { MysqlError } from 'mysql';
 
+/*=======================================
+ *            Configuration
+ * ====================================*/
 import { config } from './config';
 import { connection } from './connection';
 
+const T: Twit = new Twit(config);
+
+/*=======================================
+ *          My Modules and Utils
+ * ====================================*/
+import { logInfo, logWarning, logError, logSuccess } from './logger';
 import { hashtagsToFollow } from './hashtags';
 import { wordsToFollow } from './words';
 import { blackListedAccounts } from './black-listed-accounts';
@@ -17,15 +29,17 @@ import {
   isTweetNotAReply,
 } from './utils';
 
-const T: Twit = new Twit(config);
-
+/*=======================================
+ *                 Bot
+ * ====================================*/
 const interests: string[] = [];
 
-/* Include hashtags in a single array */
+// Include hashtags in a single array
 hashtagsToFollow.map((val: string) => interests.push(val.toLowerCase()));
 wordsToFollow.map((val: string) => interests.push(val.toLowerCase()));
 
 const params: Twit.Params = {
+  // track these words
   track: interests,
 };
 
