@@ -3,15 +3,30 @@
  * ====================================*/
 import * as Twit from 'twit';
 import * as _ from 'lodash';
+import * as mysql from 'mysql';
+import { Options } from 'twit';
 import { MysqlError } from 'mysql';
+import './env';
 
 /*=======================================
  *            Configuration
  * ====================================*/
-import { config } from './config';
-import { connection } from './connection';
+const connection = mysql.createPool({
+  host: process.env.DB_HOST,
+  user: process.env.DB_USERNAME,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_NAME,
+  connectionLimit: 10,
+});
 
-const T: Twit = new Twit(config);
+const T: Twit = new Twit({
+  consumer_key: process.env.CONSUMER_KEY,
+  consumer_secret: process.env.CONSUMER_SECRET,
+  access_token: process.env.ACCESS_TOKEN,
+  access_token_secret: process.env.ACCESS_TOKEN_SECRET,
+  timeout_ms: 60 * 1000,
+  strictSSL: true,
+});
 
 /*=======================================
  *          My Modules and Utils
