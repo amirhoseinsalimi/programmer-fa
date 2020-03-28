@@ -1,17 +1,33 @@
 const colorIt = require('color-it');
 
-export function logWarning(message: string): void {
-  console.log('' + colorIt(message).orange());
+export function logWarning(...args: any): void {
+  const l = args.length;
+
+  for (let i = 0; i < l; i++) {
+    console.log('' + args[i].orange());
+  }
 }
 
-export function logError(message: string): void {
-  console.log('' + colorIt(message).red());
+export function logError(...args: any): void {
+  const l = args.length;
+
+  for (let i = 0; i < l; i++) {
+    console.log('' + args[i].red());
+  }
 }
 
-export function logInfo(message: string): void {
-  console.log('' + colorIt(message).belizeHole());
+export function logInfo(...args: any): void {
+  const l = args.length;
+
+  for (let i = 0; i < l; i++) {
+    console.log('' + args[i].belizeHole());
+  }
 }
 
-export function logSuccess(message: string): void {
-  console.log('' + colorIt(message).green());
+export function logSuccess(...args: any): void {
+  const l = args.length;
+
+  for (let i = 0; i < l; i++) {
+    console.log('' + args[i].green());
+  }
 }
