@@ -61,11 +61,10 @@ const params: Twit.Params = {
 const stream = T.stream('statuses/filter', params);
 
 stream.on('tweet', (tweet) => {
-  const tweetText: string = getTweetFullText(tweet);
-
   if (isTweetFarsi(tweet) && isTweetNotAReply(tweet)) {
-    let id: number = 0;
     const hashtagsOfCurrentTweet: string[] = [];
+
+    const tweetText: string = getTweetFullText(tweet);
 
     if (
       getAllOccurrences('#', tweetText, true).length <= 4 &&
@@ -76,6 +75,8 @@ stream.on('tweet', (tweet) => {
           hashtagsOfCurrentTweet.push(`#${val.text}`)
         );
       }
+
+      let id: number = 0;
 
       if (!blackListedAccounts.includes(tweet.user.screen_name)) {
         if (_.intersection(interests, hashtagsOfCurrentTweet).length) {
@@ -105,9 +106,7 @@ stream.on('tweet', (tweet) => {
                 query,
                 [
                   tweet.id_str,
-                  Object.prototype.hasOwnProperty.call(tweet, 'extended_tweet')
-                    ? tweet.extended_tweet.full_text
-                    : tweet.text,
+                  tweetText,
                   tweet.user.screen_name,
                   tweet.user.id,
                   tweet.created_at,
