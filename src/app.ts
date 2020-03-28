@@ -4,7 +4,6 @@
 import * as Twit from 'twit';
 import * as _ from 'lodash';
 import * as mysql from 'mysql';
-import { Options } from 'twit';
 import { MysqlError } from 'mysql';
 import './env';
 
