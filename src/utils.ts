@@ -1,3 +1,5 @@
+import { T } from './app';
+
 /**
  * Get an array of all occurrences of a substring in a string
  * @param {string} subStr - The sub-string to look for its occurrences
@@ -113,4 +115,46 @@ export function isEnvRestricted(): boolean {
   } else {
     return !!process.env.RESTRICTED_ENV;
   }
+}
+
+
+/**
+ * Retweet the passed tweet by the given `id`
+ * @param {number} id
+ * @return {Promise}
+ */
+export function retweet(id: number): Promise<any> {
+  return new Promise((resolve, reject) => {
+    T.post('statuses/retweet/:id', { id: id.toString() }, (err, response) => {
+      if (err) {
+        return reject(err);
+      }
+
+      console.log({
+        res: response,
+        message: 'Tweet retweeted successfully',
+      });
+    });
+  });
+}
+
+
+/**
+ * Favourite/Like the passed tweet by the given `id`
+ * @param {number} id
+ * @return {Promise}
+ */
+export function favourite(id: number): Promise<any> {
+  return new Promise((resolve, reject) => {
+    T.post('/favorites/create', { id: id.toString() }, (err, response) => {
+      if (err) {
+        return reject(err);
+      }
+
+      console.log({
+        res: response,
+        message: 'Tweet favourited successfully',
+      });
+    });
+  });
 }

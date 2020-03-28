@@ -28,6 +28,8 @@ const T: Twit = new Twit({
   strictSSL: !!process.env.STRICT_SSL,
 });
 
+export { T };
+
 /*=======================================
  *          My Modules and Utils
  * ====================================*/
@@ -42,6 +44,8 @@ import {
   isEnvRestricted,
   isTweetFarsi,
   isTweetNotAReply,
+  retweet,
+  favourite,
 } from './utils';
 
 /*=======================================
@@ -97,26 +101,20 @@ stream.on('tweet', (tweet) => {
 
       if (id) {
         if (!isEnvRestricted()) {
-          T.post('statuses/retweet/:id', { id: id.toString() }, () => {
-            const query =
-              'INSERT INTO `tweets` (tweet_id, tweet_text, user_name, user_id, created_at) VALUES (?, ?, ?, ?, ?)';
+          retweet(id)
+            .then(({ message }) => {
+              logSuccess(message);
 
-            T.post('/favorites/create', { id: id.toString() }, () => {
-              connection.query(
-                query,
-                [
-                  tweet.id_str,
-                  tweetText,
-                  tweet.user.screen_name,
-                  tweet.user.id,
-                  tweet.created_at,
-                ],
-                (err: MysqlError) => {
-                  if (err) {
-                    logError(err.toString());
-                  }
-                }
-              );
+              favourite(id)
+                .then(({ message }) => {
+                  logSuccess(message);
+                })
+                .catch((err) => {
+                  logError(err);
+                });
+            })
+            .catch((err) => {
+              logError(err);
             });
           });
         } else {
