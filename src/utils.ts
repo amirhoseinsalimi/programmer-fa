@@ -1,4 +1,6 @@
-import { T } from './app';
+import { T, connection } from './app';
+import { MysqlError } from 'mysql';
+import { logError, logSuccess } from './logger';
 
 /**
  * Get an array of all occurrences of a substring in a string
@@ -117,7 +119,6 @@ export function isEnvRestricted(): boolean {
   }
 }
 
-
 /**
  * Retweet the passed tweet by the given `id`
  * @param {number} id
@@ -138,7 +139,6 @@ export function retweet(id: number): Promise<any> {
   });
 }
 
-
 /**
  * Favourite/Like the passed tweet by the given `id`
  * @param {number} id
@@ -156,5 +156,37 @@ export function favourite(id: number): Promise<any> {
         message: 'Tweet favourited successfully',
       });
     });
+  });
+}
+
+/**
+ * Store the given tweet in the database
+ * @param {*} tweet
+ * @return {Promise}
+ */
+export function store(tweet: any) {
+  const query =
+    'INSERT INTO `tweets` (tweet_id, tweet_text, user_name, user_id, created_at) VALUES (?, ?, ?, ?, ?)';
+
+  const tweeText = getTweetFullText(tweet);
+
+  return new Promise((resolve, reject) => {
+    connection.query(
+      query,
+      [
+        tweet.id_str,
+        tweeText,
+        tweet.user.screen_name,
+        tweet.user.id,
+        tweet.created_at,
+      ],
+      (err: MysqlError) => {
+        if (err) {
+          reject(err);
+        } else {
+          resolve({ message: 'Tweet favourited successfully' });
+        }
+      }
+    );
   });
 }

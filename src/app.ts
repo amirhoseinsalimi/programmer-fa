@@ -4,7 +4,6 @@
 import * as Twit from 'twit';
 import * as _ from 'lodash';
 import * as mysql from 'mysql';
-import { MysqlError } from 'mysql';
 import './env';
 
 /*=======================================
@@ -27,10 +26,13 @@ const T: Twit = new Twit({
   strictSSL: !!process.env.STRICT_SSL,
 });
 
-export { T };
+/*=======================================
+ *                Export
+ * ====================================*/
+export { T, connection };
 
 /*=======================================
- *          My Modules and Utils
+ *         My Modules and Utils
  * ====================================*/
 import { logInfo, logWarning, logError, logSuccess } from './logger';
 import { hashtagsToFollow } from './hashtags';
@@ -45,6 +47,7 @@ import {
   isTweetNotAReply,
   retweet,
   favourite,
+  store,
 } from './utils';
 
 /*=======================================
@@ -125,25 +128,13 @@ stream.on('tweet', (tweet) => {
           logInfo(tweetText);
         }
 
-        const query =
-          'INSERT INTO `tweets` (tweet_id, tweet_text, user_name, user_id, created_at) VALUES (?, ?, ?, ?, ?)';
-        connection.query(
-          query,
-          [
-            tweet.id_str,
-            tweetText,
-            tweet.user.screen_name,
-            tweet.user.id,
-            tweet.created_at,
-          ],
-          (err: MysqlError) => {
-            if (err) {
-              logError(err.toString());
-            } else {
-              logSuccess('Inserted to Database');
-            }
-          }
-        );
+        store(tweet)
+          .then(({ message }) => {
+            logSuccess(message);
+          })
+          .catch((err) => {
+            logError(err);
+          });
       }
     }
   }
