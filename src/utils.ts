@@ -126,16 +126,17 @@ export function isEnvRestricted(): boolean {
  */
 export function retweet(id: number): Promise<any> {
   return new Promise((resolve, reject) => {
-    T.post('statuses/retweet/:id', { id: id.toString() }, (err, response) => {
-      if (err) {
-        return reject(err);
-      }
+    T.post(
+      'statuses/retweet/:id',
+      { id: id.toString() },
+      (err, result, response) => {
+        if (err) {
+          return reject(err);
+        }
 
-      console.log({
-        res: response,
-        message: 'Tweet retweeted successfully',
-      });
-    });
+        resolve({ message: 'Tweet retweeted successfully' });
+      }
+    );
   });
 }
 
@@ -146,16 +147,17 @@ export function retweet(id: number): Promise<any> {
  */
 export function favourite(id: number): Promise<any> {
   return new Promise((resolve, reject) => {
-    T.post('/favorites/create', { id: id.toString() }, (err, response) => {
-      if (err) {
-        return reject(err);
-      }
+    T.post(
+      '/favorites/create',
+      { id: id.toString() },
+      (err, result, response) => {
+        if (err) {
+          return reject(err);
+        }
 
-      console.log({
-        res: response,
-        message: 'Tweet favourited successfully',
-      });
-    });
+        resolve({ message: 'Tweet favourited successfully' });
+      }
+    );
   });
 }
 
@@ -184,7 +186,7 @@ export function store(tweet: any) {
         if (err) {
           reject(err);
         } else {
-          resolve({ message: 'Tweet favourited successfully' });
+          resolve({ message: 'Tweet stored in the database' });
         }
       }
     );
