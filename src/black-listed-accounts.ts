@@ -21,6 +21,7 @@ const blackListedAccounts: string[] = [
   'Behrouzfeiz',
   'Yones_Saeedi',
   'AliKarbasiCom',
+  'programer_man',
 ];
 
 export { blackListedAccounts };
