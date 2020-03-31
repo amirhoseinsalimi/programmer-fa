@@ -84,7 +84,7 @@ stream.on('tweet', (tweet) => {
 
       let id: number = 0;
 
-      if (!blackListedAccounts.includes(tweet.user.screen_name)) {
+      if (!blackListedAccounts.includes(tweet.user.id)) {
         if (_.intersection(interests, hashtagsOfCurrentTweet).length) {
           id = tweet.id_str;
         } else {
