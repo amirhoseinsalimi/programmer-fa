@@ -1,13 +1,16 @@
-// Update with your config settings.
+/* Knex.js configuration
+   See http://knexjs.org/ for documents
+* */
+const dotenv = require('dotenv');
+dotenv.config();
 
 module.exports = {
-
   development: {
-    client: 'mysql',
+    client: 'mysql', // Your database driver
     connection: {
-      database: 'programmer_fa',
-      user:     'root',
-      password: '137511'
+      database: process.env.DB_NAME,
+      user:     process.env.DB_USERNAME,
+      password: process.env.DB_PASSWORD
     },
     pool: {
       min: 2,
