@@ -12,7 +12,7 @@ export function logError(...args: any): void {
   const l = args.length;
 
   for (let i = 0; i < l; i++) {
-    console.log('' + colorIt(args[i]).red());
+    console.error('' + colorIt(args[i]).red());
   }
 }
 
