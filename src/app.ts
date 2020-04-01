@@ -1,10 +1,11 @@
 /*=======================================
- *            Node.js Modules
+ *           Node.js Modules
  * ====================================*/
 import * as Twit from 'twit';
 import * as _ from 'lodash';
 import * as mysql from 'mysql';
 import './env';
+import { EventEmitter } from 'events';
 
 /*=======================================
  *            Configuration
@@ -112,11 +113,11 @@ stream.on('tweet', (tweet) => {
                   logSuccess(message);
                 })
                 .catch((err) => {
-                  logError(err);
+                  emitter.emit('bot-error', err);
                 });
             })
             .catch((err) => {
-              logError(err);
+              emitter.emit('bot-error', err);
             });
         } else {
           logWarning(
@@ -133,13 +134,36 @@ stream.on('tweet', (tweet) => {
             logSuccess(message);
           })
           .catch((err) => {
-            logError(err);
+            emitter.emit('bot-error', err);
           });
       }
     }
   }
 });
 
+/*=======================================
+ *            Error Handling
+ * ====================================*/
+class Emitter extends EventEmitter {}
+
+const emitter = new Emitter();
+
 stream.on('error', (err: any) => {
-  logError(err);
+  emitter.emit('bot-error', err);
 });
+
+emitter.on('bot-error', (err) => {
+  logError('An error has been thrown', err.message);
+});
+
+/* Deal w/ uncaught errors and unhandled promises */
+process
+  .on('uncaughtException', (err: Error) => {
+    logError(`${new Date().toUTCString()} "uncaughtException": ${err.message}`);
+    logError(err.stack);
+    process.exit(1);
+  })
+  .on('unhandledRejection', (reason, p: Promise<any>) => {
+    logError('Unhandled Rejection at Promise', p);
+    logError(reason);
+  });
