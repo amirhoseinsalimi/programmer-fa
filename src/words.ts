@@ -33,6 +33,7 @@ const wordsToFollow: string[] = [
   'جاوا',
   'پایتون',
   'لاراول',
+  'سی‌شارپ',
 
   /* Database */
   // 'دیتابیس',

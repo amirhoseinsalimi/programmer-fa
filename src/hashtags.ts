@@ -63,6 +63,7 @@ const hashtagsToFollow: string[] = [
   '#پی_اچ_پی',
   '#لاراول',
   '#لومن',
+  '#سی_شارپ',
 
   /* Database */
   '#دیتابیس',
