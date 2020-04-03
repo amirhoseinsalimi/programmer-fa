@@ -89,16 +89,11 @@ stream.on('tweet', (tweet) => {
         if (_.intersection(interests, hashtagsOfCurrentTweet).length) {
           id = tweet.id_str;
         } else {
-          let tweetTextArr: string[] = tweetText.split(' ');
-          tweetTextArr = tweetTextArr.map((word: string) => {
-            return word.toLowerCase();
+          const hasInterest: string | undefined = interests.find((interest) => {
+            return tweetText.search(new RegExp(interest)) >= 0;
           });
 
-          if (!_.intersection(tweetTextArr, blackListedWords).length) {
-            id = _.intersection(interests, tweetTextArr).length
-              ? tweet.id_str
-              : 0;
-          }
+          id = hasInterest ?? tweet.id_str;
         }
       }
 
