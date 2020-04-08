@@ -10,11 +10,18 @@ import { EventEmitter } from 'events';
 /*=======================================
  *            Configuration
  * ====================================*/
+const {
+  DB_HOST: host,
+  DB_NAME: database,
+  DB_USERNAME: user,
+  DB_PASSWORD: password,
+} = require('./env');
+
 const connection = mysql.createPool({
-  host: process.env.DB_HOST,
-  user: process.env.DB_USERNAME,
-  password: process.env.DB_PASSWORD,
-  database: process.env.DB_NAME,
+  host,
+  user,
+  password,
+  database,
   connectionLimit: 10,
 });
 

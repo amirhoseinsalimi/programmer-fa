@@ -1,16 +1,19 @@
 /* Knex.js configuration
    See http://knexjs.org/ for documents
 * */
-const dotenv = require('dotenv');
-dotenv.config();
+const {
+  DB_NAME: database,
+  DB_USERNAME: user,
+  DB_PASSWORD: password,
+} = require('./env');
 
 module.exports = {
   development: {
     client: 'mysql', // Your database driver
     connection: {
-      database: process.env.DB_NAME,
-      user:     process.env.DB_USERNAME,
-      password: process.env.DB_PASSWORD
+      database,
+      user,
+      password,
     },
     pool: {
       min: 2,
@@ -22,7 +25,7 @@ module.exports = {
     },
     seeds: {
       directory: __dirname + '/knex/seeds',
-    }
+    },
   },
 
   // staging: {
@@ -41,20 +44,23 @@ module.exports = {
   //   }
   // },
 
-  // production: {
-  //   client: 'postgresql',
-  //   connection: {
-  //     database: 'my_db',
-  //     user:     'username',
-  //     password: 'password'
-  //   },
-  //   pool: {
-  //     min: 2,
-  //     max: 10
-  //   },
-  //   migrations: {
-  //     tableName: 'knex_migrations'
-  //   }
-  // }
-
+  production: {
+    client: 'mysql',
+    connection: {
+      database,
+      user,
+      password,
+    },
+    pool: {
+      min: 2,
+      max: 10
+    },
+    migrations: {
+      tableName: 'knex_migrations',
+      directory: __dirname + '/knex/migrations',
+    },
+    seeds: {
+      directory: __dirname + '/knex/seeds',
+    },
+  }
 };
