@@ -75,6 +75,8 @@ const params: Twit.Params = {
 const stream = T.stream('statuses/filter', params);
 
 stream.on('tweet', (tweet) => {
+  console.log(tweet);
+
   if (isTweetFarsi(tweet) && isTweetNotAReply(tweet)) {
     const hashtagsOfCurrentTweet: string[] = [];
 
