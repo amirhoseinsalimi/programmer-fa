@@ -75,6 +75,8 @@ const params: Twit.Params = {
 const stream = T.stream('statuses/filter', params);
 
 stream.on('tweet', (tweet) => {
+  console.log(tweet);
+
   if (isTweetFarsi(tweet) && isTweetNotAReply(tweet)) {
     const hashtagsOfCurrentTweet: string[] = [];
 
@@ -92,7 +94,7 @@ stream.on('tweet', (tweet) => {
 
       let id: number = 0;
 
-      if (!blackListedAccounts.includes(tweet.user.id)) {
+      if (!blackListedAccounts.includes(tweet.user.id_str)) {
         if (_.intersection(interests, hashtagsOfCurrentTweet).length) {
           id = tweet.id_str;
         } else {
