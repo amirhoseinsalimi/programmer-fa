@@ -2,6 +2,8 @@ import { T, connection } from './app';
 import { MysqlError } from 'mysql';
 import { logError, logSuccess } from './logger';
 
+const { NODE_ENV: env } = require('./env');
+
 /**
  * Get an array of all occurrences of a substring in a string
  * @param {string} subStr - The sub-string to look for its occurrences
@@ -90,29 +92,13 @@ export function getTweetHashtags(tweet: any): string[] {
 }
 
 /**
- *
- * @return {string}
- */
-export function getCurrentEnv(): string {
-  let currentEnv: string;
-
-  if (process.env.NODE_ENV === 'production') {
-    currentEnv = process.env.NODE_ENV;
-  } else if (process.env.NODE_ENV === 'staging') {
-    currentEnv = process.env.NODE_ENV;
-  } else {
-    currentEnv = 'development';
-  }
-
-  return currentEnv;
-}
-
-/**
  * Whether the environment is restricted to do some actions or not
  * @return {boolean}
  */
 export function isEnvRestricted(): boolean {
-  if (getCurrentEnv() === 'production') {
+  const environment = env || 'development';
+
+  if (environment === 'production') {
     return false;
   } else {
     return !!process.env.RESTRICTED_ENV;
