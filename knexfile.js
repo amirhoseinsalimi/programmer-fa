@@ -5,7 +5,7 @@ const {
   DB_NAME: database,
   DB_USERNAME: user,
   DB_PASSWORD: password,
-} = require('./env');
+} = require('./dist/env');
 
 module.exports = {
   development: {

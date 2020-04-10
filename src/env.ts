@@ -1,5 +1,11 @@
-import {resolve} from "path";
+const dotenv = require('dotenv');
 
-import {config} from "dotenv";
+const result = dotenv.config();
 
-config({path: resolve(__dirname, "../.env")});
+if (result.error) {
+  throw result.error;
+}
+
+const { parsed: envs } = result;
+
+module.exports = envs;

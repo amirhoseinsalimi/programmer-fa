@@ -1,6 +1,6 @@
 const {
   NODE_ENV: env,
-} = require('./env');
+} = require('./dist/env');
 
 const environment = env || 'development';
 const config = require('./knexfile.js')[environment];
