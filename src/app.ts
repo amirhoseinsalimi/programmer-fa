@@ -15,6 +15,11 @@ const {
   DB_NAME: database,
   DB_USERNAME: user,
   DB_PASSWORD: password,
+  CONSUMER_KEY: consumer_key,
+  CONSUMER_SECRET: consumer_secret,
+  ACCESS_TOKEN: access_token,
+  ACCESS_TOKEN_SECRET: access_token_secret,
+  STRICT_SSL: strictSSL,
 } = require('./env');
 
 const connection = mysql.createPool({
@@ -26,12 +31,12 @@ const connection = mysql.createPool({
 });
 
 const T: Twit = new Twit({
-  consumer_key: process.env.CONSUMER_KEY,
-  consumer_secret: process.env.CONSUMER_SECRET,
-  access_token: process.env.ACCESS_TOKEN,
-  access_token_secret: process.env.ACCESS_TOKEN_SECRET,
+  consumer_key,
+  consumer_secret,
+  access_token,
+  access_token_secret,
   timeout_ms: 60 * 1000,
-  strictSSL: !!process.env.STRICT_SSL,
+  strictSSL: !!strictSSL,
 });
 
 /*=======================================

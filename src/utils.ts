@@ -2,7 +2,9 @@ import { T, connection } from './app';
 import { MysqlError } from 'mysql';
 import { logError, logSuccess } from './logger';
 
-const { NODE_ENV: env } = require('./env');
+const { NODE_ENV: env, RESTRICTED_ENV: restrictedEnv } = require('./env');
+
+const knex = require('../knex.js');
 
 /**
  * Get an array of all occurrences of a substring in a string
@@ -101,7 +103,7 @@ export function isEnvRestricted(): boolean {
   if (environment === 'production') {
     return false;
   } else {
-    return !!process.env.RESTRICTED_ENV;
+    return !!restrictedEnv;
   }
 }
 
