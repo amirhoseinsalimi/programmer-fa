@@ -92,7 +92,6 @@ const wordsToFollow: string[] = [
   'lumen',
   'laravel',
 
-
   /* Database */
   // 'db',
   'mysql',
@@ -122,7 +121,6 @@ const wordsToFollow: string[] = [
   // 'server',
   'ubuntu',
   // 'selenium',
-
 
   'برنامه‌نویسی',
 ];

@@ -7,7 +7,7 @@
     "start": "tsc && NODE_ENV=production pm2 start dist/app.js --name programmer-fa-bot",
     "restart": "tsc && NODE_ENV=production pm2 restart programmer-fa-bot",
     "stop": "pm2 stop programmer-fa-bot",
-    "dev:start": "nodemon --watch 'src/**/*.ts' --exec 'ts-node' src/app.ts",
+    "bot:dev": "tsc -p src/bot/tsconfig.json && nodemon --watch 'src/bot/**/*.ts' --exec 'ts-node' src/bot/app.ts",
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "eslint . --ext .js,.ts"
   },

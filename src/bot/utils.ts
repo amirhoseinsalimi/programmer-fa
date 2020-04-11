@@ -4,7 +4,7 @@ import { logError, logSuccess } from './logger';
 
 const { NODE_ENV: env, RESTRICTED_ENV: restrictedEnv } = require('./env');
 
-const knex = require('../knex.js');
+const knex = require('../../knex.js');
 
 /**
  * Get an array of all occurrences of a substring in a string

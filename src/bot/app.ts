@@ -4,7 +4,6 @@
 import * as Twit from 'twit';
 import * as _ from 'lodash';
 import * as mysql from 'mysql';
-import './env';
 import { EventEmitter } from 'events';
 
 /*=======================================
