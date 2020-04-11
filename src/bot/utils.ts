@@ -2,7 +2,7 @@ import { T, connection } from './app';
 import { MysqlError } from 'mysql';
 import { logError, logSuccess } from './logger';
 
-const { NODE_ENV: env, RESTRICTED_ENV: restrictedEnv } = require('../../env');
+const { NODE_ENV: env, DEBUG_MODE: debugMode } = require('../../env');
 
 const knex = require('../../knex.js');
 
@@ -94,16 +94,16 @@ export function getTweetHashtags(tweet: any): string[] {
 }
 
 /**
- * Whether the environment is restricted to do some actions or not
+ * Whether the environment is in debug mode or not
  * @return {boolean}
  */
-export function isEnvRestricted(): boolean {
+export function isDebugModeEnabled(): boolean {
   const environment = env || 'development';
 
   if (environment === 'production') {
     return false;
   } else {
-    return !!restrictedEnv;
+    return debugMode !== "false";
   }
 }
 

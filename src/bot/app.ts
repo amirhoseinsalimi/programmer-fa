@@ -55,7 +55,7 @@ import { blackListedWords } from './black-listed-words';
 import {
   getAllOccurrences,
   getTweetFullText,
-  isEnvRestricted,
+  isDebugModeEnabled,
   isTweetFarsi,
   isTweetNotAReply,
   retweet,
@@ -115,7 +115,7 @@ stream.on('tweet', (tweet) => {
       }
 
       if (id) {
-        if (!isEnvRestricted()) {
+        if (!isDebugModeEnabled()) {
           retweet(id)
             .then(({ message }) => {
               logSuccess(message);
@@ -136,7 +136,7 @@ stream.on('tweet', (tweet) => {
             "A tweet has been captured but it won't be retweeted because by " +
               ' default the bot is forbidden to retweet from a development/' +
               'staging environment. To change this behavior set' +
-              ' `RESTRICTED_DEV` to false in .env file.'
+              ' `DEBUG_MODE` to false in your .env file.'
           );
           logInfo(tweetText);
         }
