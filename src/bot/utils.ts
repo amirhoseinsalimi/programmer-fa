@@ -2,7 +2,7 @@ import { T, connection } from './app';
 import { MysqlError } from 'mysql';
 import { logError, logSuccess } from './logger';
 
-const { NODE_ENV: env, RESTRICTED_ENV: restrictedEnv } = require('./env');
+const { NODE_ENV: env, RESTRICTED_ENV: restrictedEnv } = require('../../env');
 
 const knex = require('../../knex.js');
 

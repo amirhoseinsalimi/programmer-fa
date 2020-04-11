@@ -20,7 +20,7 @@ const {
   ACCESS_TOKEN: access_token,
   ACCESS_TOKEN_SECRET: access_token_secret,
   STRICT_SSL: strictSSL,
-} = require('./env');
+} = require('./../../env');
 
 const connection = mysql.createPool({
   host,
