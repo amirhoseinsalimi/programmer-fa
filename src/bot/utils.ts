@@ -2,7 +2,7 @@ import { T, connection } from './app';
 import { MysqlError } from 'mysql';
 import { logError, logSuccess } from './logger';
 
-const { NODE_ENV: env, DEBUG_MODE: debugMode } = require('../../env');
+const { NODE_ENV: env, DEBUG_MODE: debugMode } = require('../../env.js');
 
 const knex = require('../../knex.js');
 
@@ -103,7 +103,7 @@ export function isDebugModeEnabled(): boolean {
   if (environment === 'production') {
     return false;
   } else {
-    return debugMode !== "false";
+    return debugMode !== 'false';
   }
 }
 
