@@ -10,7 +10,7 @@
     "bot:dev": "npm run bot:build && NODE_ENV=development nodemon --watch 'src/bot/**/*.ts' --exec 'ts-node' src/bot/app.ts",
     "bot:build": "tsc -p src/bot/tsconfig.json",
     "server:dev": "==============================PLACEHOLDER==============================",
-    "server:build": "tsc -p src/server/tsconfig.json",
+    "server:build": "==============================PLACEHOLDER==============================",
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "eslint . --ext .js,.ts"
   },
