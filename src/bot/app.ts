@@ -47,13 +47,7 @@ export { T, connection };
 /*=======================================
  *         My Modules and Utils
  * ====================================*/
-import {
-  logInfo,
-  logWarning,
-  logError,
-  logSuccess,
-  writeToFile,
-} from './logger';
+import { logInfo, logError, logSuccess, writeToFile } from './logger';
 import { hashtagsToFollow } from './hashtags';
 import { wordsToFollow } from './words';
 import { blackListedAccounts } from './black-listed-accounts';
@@ -67,6 +61,7 @@ import {
   retweet,
   favourite,
   store,
+  ignoreSuspiciousWords,
 } from './utils';
 
 /*=======================================
@@ -118,16 +113,29 @@ stream.on('tweet', (tweet) => {
         if (_.intersection(interests, hashtagsOfCurrentTweet).length) {
           id = tweet.id_str;
         } else {
-          let tweetTextArr: string[] = tweet.$tweetText.split(' ');
-          tweetTextArr = tweetTextArr.map((word: string) => {
-            return word.toLowerCase();
+          const tweetTextWithoutSuspiciousWords = ignoreSuspiciousWords(
+            tweet.$tweetText
+          );
+
+          const hasInterestingWords = interests.some((interest) => {
+            return (
+              tweetTextWithoutSuspiciousWords.search(
+                new RegExp(interest.toLowerCase())
+              ) > -1
+            );
           });
 
-          if (!_.intersection(tweetTextArr, blackListedWords).length) {
-            id = _.intersection(interests, tweetTextArr).length
-              ? tweet.id_str
-              : 0;
-          }
+          const hasUninterestingWords = blackListedWords.some(
+            (blackListedWord) => {
+              return (
+                tweetTextWithoutSuspiciousWords.search(
+                  new RegExp(blackListedWord.toLowerCase())
+                ) > -1
+              );
+            }
+          );
+
+          id = hasInterestingWords && !hasUninterestingWords ? tweet.id_str : 0;
         }
       }
 
