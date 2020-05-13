@@ -1,54 +1,30 @@
 const wordsToFollow: string[] = [
   'برنامه‌نویس',
-  // 'دیزاینر',
+  'برنامه نویس',
   'دولوپر',
   'پروگرمر',
   'دواپس',
-  'فرانت',
+  'برنامه‌نویسی',
+  'برنامه نویسی',
 
-  'web',
-  'developer',
-  'programmer',
-  // 'coder',
-  // 'ui',
-  'ux',
-  'front-end',
-  'frontend',
-  'back-end',
-  'backend',
-  'devops',
-  // 'tester',
-  'sysadmin',
-
-  /* Front-end */
-  'کوئری',
+  'جی کوئری',
+  'جی‌کوئری',
   'جاوااسکریپت',
   'جاوا‌اسکریپت',
-  'ری‌اکت',
   'انگولار',
-  // 'اسولت',
-  // 'ناکست',
 
-  /* Back-end */
   'جاوا',
-  'پایتون',
   'لاراول',
   'سی‌شارپ',
+  'سی شارپ',
+  'پی‌اچ‌پی',
 
-  /* Database */
-  // 'دیتابیس',
-  'مونگو',
-
-  /* Mobile */
   'فلاتر',
   'کاتلین',
 
-  /* Sys. Admin & DevOps */
   'لینوکس',
   'اوبونتو',
-  // 'سلنیوم',
 
-  /* Front-end */
   'html',
   'css',
   'bootstrap',
@@ -72,11 +48,9 @@ const wordsToFollow: string[] = [
   'svelte.js',
   'sapper',
 
-  /* Back-end */
   'node',
   'nodejs',
   'node.js',
-  // 'express',
   'expressjs',
   'express.js',
   'koa',
@@ -92,37 +66,30 @@ const wordsToFollow: string[] = [
   'lumen',
   'laravel',
 
-  /* Database */
-  // 'db',
   'mysql',
   'mssql',
   'sql',
   'mongo',
   'mongodb',
 
-  /* Mobile */
   'flutter',
   'kotlin',
   'reactnative',
   'react.native',
-  'swift',
 
-  /* Other */
-  'dotnet',
-  'cplusplus',
-
-  /* CMS */
-  // 'wordpress',
-  // 'joomla',
-
-  /* Sys. Admin & DevOps */
   'lpic',
   'linux',
-  // 'server',
   'ubuntu',
-  // 'selenium',
 
-  'برنامه‌نویسی',
+  'developer',
+  'programmer',
+  'ux',
+  'front-end',
+  'frontend',
+  'back-end',
+  'backend',
+  'devops',
+  'sysadmin',
 ];
 
 export { wordsToFollow };
