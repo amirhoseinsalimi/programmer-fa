@@ -1,6 +1,6 @@
 import { T, connection } from './app';
 import { MysqlError } from 'mysql';
-import { logError, logSuccess } from './logger';
+import { logError, logInfo, logSuccess } from './logger';
 
 const { NODE_ENV: env, DEBUG_MODE: debugMode } = require('../../env.js');
 
@@ -155,28 +155,33 @@ export function favourite(id: number): Promise<any> {
  * @return {Promise}
  */
 export function store(tweet: any) {
-  const query =
-    'INSERT INTO `tweets` (tweet_id, tweet_text, user_name, user_id, created_at) VALUES (?, ?, ?, ?, ?)';
+  const {
+    in_reply_to_status_id,
+    in_reply_to_user_id,
+    source,
+    user,
+    id_str,
+    $tweetText,
+  } = tweet;
 
-  const tweeText = getTweetFullText(tweet);
+  logInfo(id_str);
 
   return new Promise((resolve, reject) => {
-    connection.query(
-      query,
-      [
-        tweet.id_str,
-        tweeText,
-        tweet.user.screen_name,
-        tweet.user.id,
-        tweet.created_at,
-      ],
-      (err: MysqlError) => {
-        if (err) {
-          reject(err);
-        } else {
-          resolve({ message: 'Tweet stored in the database' });
-        }
-      }
-    );
+    knex('tweets')
+      .insert({
+        tweet_id: id_str,
+        text: $tweetText,
+        source,
+        is_retweet: false, // for now
+        in_reply_to_status_id,
+        in_reply_to_user_id,
+        user_id: user.id_str,
+      })
+      .then(() => {
+        resolve({ message: 'Tweet stored in the database' });
+      })
+      .catch((err: Error) => {
+        reject(err);
+      });
   });
 }
