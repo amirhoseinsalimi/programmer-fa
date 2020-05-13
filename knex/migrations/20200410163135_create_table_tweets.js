@@ -5,7 +5,7 @@ exports.up = knex =>
       if (!exists) {
         return knex.schema.createTable('tweets', table => {
           table.increments().primary();
-          table.integer('tweet_id').notNullable().unique();
+          table.string('tweet_id', 50).notNullable().unique();
           table.text('text').notNullable();
           table.string('source').nullable();
           table.boolean('is_retweet').defaultTo(false);
