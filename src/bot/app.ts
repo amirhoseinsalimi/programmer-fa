@@ -72,6 +72,17 @@ import {
 /*=======================================
  *                 Bot
  * ====================================*/
+logSuccess('Bot has been started...');
+
+if (isDebugModeEnabled()) {
+  logInfo(
+    'Tweet has been started in development environment, so it does not' +
+      ' emit retweets, instead stores them in the database and logs the text of' +
+      ' the tweets in a file. To change this behavior set `NODE_ENV=production`' +
+      ' in the .env file'
+  );
+}
+
 const interests: string[] = [];
 
 // Include hashtags in a single array
