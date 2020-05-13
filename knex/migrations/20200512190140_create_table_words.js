@@ -15,10 +15,10 @@ exports.up = knex =>
 
 exports.down = knex =>
   knex.schema
-    .hasTable('tweets')
+    .hasTable('words')
     .then(exists => {
       if (exists) {
-        return knex.schema.dropTableIfExists('tweets');
+        return knex.schema.dropTableIfExists('words');
       }
     })
     .catch(() => {});
