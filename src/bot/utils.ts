@@ -4,6 +4,8 @@ import { logError, logInfo, logSuccess } from './logger';
 
 const { NODE_ENV: env, DEBUG_MODE: debugMode } = require('../../env.js');
 
+import { suspiciousWords } from './suspicious-words';
+
 const knex = require('../../knex.js');
 
 /**
@@ -39,6 +41,27 @@ export function getAllOccurrences(
   }
 
   return indices;
+}
+
+/**
+ * Ignore words that are likely used in contexts other than programming.
+ * This function finds and removes these words from the text of the tweet
+ * and pass the rest to the main program.
+ * @param {string} text - The text of the tweet
+ * @return {string}
+ */
+export function ignoreSuspiciousWords(text: string): string {
+  let lText = text.toLowerCase();
+
+  suspiciousWords.forEach((word: string) => {
+    const lWord = word.toLowerCase();
+
+    if (text.search(new RegExp(lWord)) > -1) {
+      lText = lText.replace(new RegExp(lWord, 'g'), '');
+    }
+  });
+
+  return lText;
 }
 
 /**
@@ -163,8 +186,6 @@ export function store(tweet: any) {
     id_str,
     $tweetText,
   } = tweet;
-
-  logInfo(id_str);
 
   return new Promise((resolve, reject) => {
     knex('tweets')
