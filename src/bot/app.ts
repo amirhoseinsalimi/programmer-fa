@@ -100,10 +100,10 @@ stream.on('tweet', (tweet) => {
   if (isTweetFarsi(tweet) && isTweetNotAReply(tweet)) {
     const hashtagsOfCurrentTweet: string[] = [];
 
-    const tweetText: string = getTweetFullText(tweet);
+    tweet.$tweetText = getTweetFullText(tweet);
 
     if (
-      getAllOccurrences('#', tweetText, true).length <= 4 &&
+      getAllOccurrences('#', tweet.$tweetText, true).length <= 4 &&
       tweet.entities.hashtags.length <= 4
     ) {
       for (const t in tweet.entities.hashtags) {
@@ -118,7 +118,7 @@ stream.on('tweet', (tweet) => {
         if (_.intersection(interests, hashtagsOfCurrentTweet).length) {
           id = tweet.id_str;
         } else {
-          let tweetTextArr: string[] = tweetText.split(' ');
+          let tweetTextArr: string[] = tweet.$tweetText.split(' ');
           tweetTextArr = tweetTextArr.map((word: string) => {
             return word.toLowerCase();
           });
@@ -175,7 +175,7 @@ stream.on('error', (err: any) => {
   emitter.emit('bot-error', err);
 });
 
-emitter.on('bot-error', (err) => {
+emitter.on('bot-error', (err: any) => {
   logError('An error has been thrown', err.message);
 });
 
