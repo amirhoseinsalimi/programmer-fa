@@ -1,18 +1,12 @@
 exports.up = knex =>
   knex.schema
-    .hasTable('tweets')
+    .hasTable('words')
     .then(exists => {
       if (!exists) {
-        return knex.schema.createTable('tweets', table => {
+        return knex.schema.createTable('words', table => {
           table.increments().primary();
-          table.integer('tweet_id').notNullable().unique();
-          table.text('text').notNullable();
-          table.string('source').nullable();
-          table.boolean('is_retweet').defaultTo(false);
-          table.boolean('in_reply_to_status_id').nullable();
-          table.boolean('in_reply_to_user_id').nullable();
+          table.integer('word').notNullable().unique();
 
-          table.string('user_id');
           table.timestamps(true, true);
         });
       }
