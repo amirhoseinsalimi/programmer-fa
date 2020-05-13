@@ -1,3 +1,5 @@
+import ErrnoException = NodeJS.ErrnoException;
+
 const colorIt = require('color-it');
 const fs = require('fs');
 import { isDebugModeEnabled } from './utils';

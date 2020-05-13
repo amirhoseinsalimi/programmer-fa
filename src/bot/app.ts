@@ -47,7 +47,13 @@ export { T, connection };
 /*=======================================
  *         My Modules and Utils
  * ====================================*/
-import { logInfo, logWarning, logError, logSuccess } from './logger';
+import {
+  logInfo,
+  logWarning,
+  logError,
+  logSuccess,
+  writeToFile,
+} from './logger';
 import { hashtagsToFollow } from './hashtags';
 import { wordsToFollow } from './words';
 import { blackListedAccounts } from './black-listed-accounts';
@@ -132,13 +138,7 @@ stream.on('tweet', (tweet) => {
               emitter.emit('bot-error', err);
             });
         } else {
-          logWarning(
-            "A tweet has been captured but it won't be retweeted because by " +
-              ' default the bot is forbidden to retweet from a development/' +
-              'staging environment. To change this behavior set' +
-              ' `DEBUG_MODE` to false in your .env file.'
-          );
-          logInfo(tweetText);
+          writeToFile(tweet.$tweetText);
         }
 
         store(tweet)
