@@ -1,4 +1,5 @@
 const colorIt = require('color-it');
+const fs = require('fs');
 import { isDebugModeEnabled } from './utils';
 
 export function logWarning(...args: string[]): void {
@@ -49,3 +50,19 @@ export function logSuccess(...args: any): void {
   return;
 }
 
+export function writeToFile(text: string | Buffer): void {
+  if (isDebugModeEnabled()) {
+    const formattedText = `\n=======================================\n${text}\n=======================================`;
+
+    fs.appendFile(
+      'logs/retweets.log',
+      formattedText,
+      typeof text === 'string' ? 'utf8' : '',
+      (err: ErrnoException | null) => {
+        if (err) logError(err);
+      }
+    );
+  }
+
+  return;
+}
