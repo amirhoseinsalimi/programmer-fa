@@ -76,3 +76,29 @@ export function writeToFile(text: string | Buffer): void {
 
   return;
 }
+
+export function printWelcomeBanner() {
+  fs.readFile(
+    `${process.cwd()}/.banner`,
+    'utf8',
+    (err: ErrnoException | null, banner: string) => {
+      if (err) {
+        logError(err);
+        return;
+      }
+
+      console.log(banner);
+
+      logSuccess('Bot has been started...');
+
+      if (isDebugModeEnabled()) {
+        logInfo(
+          'Tweet has been started in development environment, so it does not' +
+            ' emit retweets, instead stores them in the database and logs the text of' +
+            ' the tweets in a file. To change this behavior set `NODE_ENV=production`' +
+            ' in the .env file'
+        );
+      }
+    }
+  );
+}
