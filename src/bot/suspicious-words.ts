@@ -16,6 +16,8 @@ const suspiciousWords: string[] = [
   'ui',
   'swift',
   'express',
+  'react',
+  'html',
 ];
 
 export { suspiciousWords };

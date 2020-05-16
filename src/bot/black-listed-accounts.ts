@@ -26,6 +26,8 @@ const blackListedAccounts: string[] = [
   '1255904987097509889',
   '1245630302166249474',
   '1254895401980833801',
+  '32442100',
+  '1194335350425931776',
 ];
 
 export { blackListedAccounts };
