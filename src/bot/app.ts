@@ -47,7 +47,13 @@ export { T, connection };
 /*=======================================
  *         My Modules and Utils
  * ====================================*/
-import { logInfo, logError, logSuccess, writeToFile, printWelcomeBanner } from './logger';
+import {
+  logInfo,
+  logError,
+  logSuccess,
+  writeToFile,
+  printWelcomeBanner,
+} from './logger';
 import { hashtagsToFollow } from './hashtags';
 import { wordsToFollow } from './words';
 import { blackListedAccounts } from './black-listed-accounts';
@@ -61,7 +67,8 @@ import {
   retweet,
   favourite,
   store,
-  ignoreSuspiciousWords,
+  removeSuspiciousWords,
+  removeURLs,
 } from './utils';
 
 /*=======================================
@@ -104,8 +111,10 @@ stream.on('tweet', (tweet) => {
         if (_.intersection(interests, hashtagsOfCurrentTweet).length) {
           id = tweet.id_str;
         } else {
-          const tweetTextWithoutSuspiciousWords = ignoreSuspiciousWords(
-            tweet.$tweetText
+          const tweetTextWithoutURLs = removeURLs(tweet.$tweetText);
+
+          const tweetTextWithoutSuspiciousWords = removeSuspiciousWords(
+            tweetTextWithoutURLs
           );
 
           const hasInterestingWords = interests.some((interest) => {

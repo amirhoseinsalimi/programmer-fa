@@ -44,13 +44,13 @@ export function getAllOccurrences(
 }
 
 /**
- * Ignore words that are likely used in contexts other than programming.
+ * Remove words that are likely used in contexts other than programming.
  * This function finds and removes these words from the text of the tweet
  * and pass the rest to the main program.
  * @param {string} text - The text of the tweet
  * @return {string}
  */
-export function ignoreSuspiciousWords(text: string): string {
+export function removeSuspiciousWords(text: string): string {
   let lText = text.toLowerCase();
 
   suspiciousWords.forEach((word: string) => {
@@ -63,6 +63,23 @@ export function ignoreSuspiciousWords(text: string): string {
 
   // remove multiple contiguous spaces and return the string
   return lText.replace(/ +/g, ' ');
+}
+
+/**
+ * Remove URLs from the tweet.
+ * This function finds and removes URLs from the text of the tweet
+ * and pass the rest to the main program. Sounds weired but w/o this
+ * function, URLs that contain `html`, `php`, etc. match the keywords!
+ * @param {string} text - The text of the tweet
+ * @return {string}
+ */
+export function removeURLs(text: string): string {
+  const urlRegex = /(https?:\/\/[^\s]+)/g;
+
+  let lText = text.toLowerCase();
+  lText.replace(urlRegex, '');
+
+  return lText;
 }
 
 /**
