@@ -54,10 +54,18 @@ export function logSuccess(...args: any): void {
 
 export function writeToFile(text: string | Buffer): void {
   if (isDebugModeEnabled()) {
-    const formattedText = `\n=======================================\n${text}\n=======================================`;
+    const formattedText = `
+    \n=======================================
+    \n${text}
+    \n=======================================
+    `;
+
+    const d = new Date();
+    const fileName = `${d.getFullYear()}-${d.getMonth() +
+      1}-${d.getDate()}.log`;
 
     fs.appendFile(
-      'logs/retweets.log',
+      `logs/${fileName}`,
       formattedText,
       typeof text === 'string' ? 'utf8' : '',
       (err: ErrnoException | null) => {
