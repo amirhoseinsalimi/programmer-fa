@@ -61,7 +61,8 @@ export function ignoreSuspiciousWords(text: string): string {
     }
   });
 
-  return lText;
+  // remove multiple contiguous spaces and return the string
+  return lText.replace(/ +/g, ' ');
 }
 
 /**
