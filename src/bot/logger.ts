@@ -62,7 +62,7 @@ export function writeToFile(text: string | Buffer): void {
 
     const d = new Date();
     const fileName = `${d.getFullYear()}-${d.getMonth() +
-      1}-${d.getDate()}.log`;
+      1}-${d.getDate()} - H${d.getHours()}.log`;
 
     fs.appendFile(
       `logs/${fileName}`,
