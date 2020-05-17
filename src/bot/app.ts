@@ -2,7 +2,6 @@
  *           Node.js Modules
  * ====================================*/
 import * as Twit from 'twit';
-import * as _ from 'lodash';
 import * as mysql from 'mysql';
 import { EventEmitter } from 'events';
 
@@ -48,7 +47,6 @@ export { T, connection };
  *         My Modules and Utils
  * ====================================*/
 import {
-  logInfo,
   logError,
   logSuccess,
   writeToFile,
@@ -56,10 +54,8 @@ import {
 } from './logger';
 import { hashtagsToFollow } from './hashtags';
 import { wordsToFollow } from './words';
-import { blackListedAccounts } from './black-listed-accounts';
 import { blackListedWords } from './black-listed-words';
 import {
-  getAllOccurrences,
   getTweetFullText,
   isDebugModeEnabled,
   isTweetFarsi,
@@ -69,6 +65,9 @@ import {
   store,
   removeSuspiciousWords,
   removeURLs,
+  isNotBlackListed,
+  getIntersectionCount,
+  hasLessThanFourHashtags,
 } from './utils';
 
 /*=======================================
@@ -95,10 +94,7 @@ stream.on('tweet', (tweet) => {
 
     tweet.$tweetText = getTweetFullText(tweet);
 
-    if (
-      getAllOccurrences('#', tweet.$tweetText, true).length <= 4 &&
-      tweet.entities.hashtags.length <= 4
-    ) {
+    if (hasLessThanFourHashtags(tweet)) {
       for (const t in tweet.entities.hashtags) {
         tweet.entities.hashtags.map((val: { text: any }) =>
           hashtagsOfCurrentTweet.push(`#${val.text}`)
@@ -107,17 +103,17 @@ stream.on('tweet', (tweet) => {
 
       let id: number = 0;
 
-      if (!blackListedAccounts.includes(tweet.user.id_str)) {
-        if (_.intersection(interests, hashtagsOfCurrentTweet).length) {
+      if (isNotBlackListed(tweet)) {
+        if (getIntersectionCount(interests, hashtagsOfCurrentTweet)) {
           id = tweet.id_str;
         } else {
-          const tweetTextWithoutURLs = removeURLs(tweet.$tweetText);
+          const tweetTextWithoutURLs: string = removeURLs(tweet.$tweetText);
 
-          const tweetTextWithoutSuspiciousWords = removeSuspiciousWords(
+          const tweetTextWithoutSuspiciousWords: string = removeSuspiciousWords(
             tweetTextWithoutURLs
           );
 
-          const hasInterestingWords = interests.some((interest) => {
+          const hasInterestingWords: boolean = interests.some((interest) => {
             return (
               tweetTextWithoutSuspiciousWords.search(
                 new RegExp(interest.toLowerCase())
@@ -125,7 +121,7 @@ stream.on('tweet', (tweet) => {
             );
           });
 
-          const hasUninterestingWords = blackListedWords.some(
+          const hasUninterestingWords: boolean = blackListedWords.some(
             (blackListedWord) => {
               return (
                 tweetTextWithoutSuspiciousWords.search(

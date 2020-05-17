@@ -5,6 +5,7 @@ import { logError, logInfo, logSuccess } from './logger';
 const { NODE_ENV: env, DEBUG_MODE: debugMode } = require('../../env.js');
 
 import { suspiciousWords } from './suspicious-words';
+import { blackListedAccounts } from './black-listed-accounts';
 
 const knex = require('../../knex.js');
 
@@ -223,4 +224,35 @@ export function store(tweet: any) {
         reject(err);
       });
   });
+}
+
+/**
+ * Check if the user is not in the blacklist
+ * @param {string} userId
+ * @return {boolean}
+ */
+export function isNotBlackListed(userId: string): boolean {
+  return !blackListedAccounts.includes(userId);
+}
+
+/**
+ * Returns the number of intersections b/w two arrays
+ * @param {string[]} arr1
+ * @param {string[]} arr2
+ * @return {number}
+ */
+export function getIntersectionCount(arr1: string[], arr2: string[]): number {
+  return [...new Set(arr1)].filter((v) => arr2.includes(v)).length;
+}
+
+/**
+ * Check if a tweet has 4 hashtags or less. See it as an ad-blocker.
+ * @param {*} tweet
+ * @return {boolean}
+ */
+export function hasLessThanFourHashtags(tweet: any): boolean {
+  return (
+    getAllOccurrences('#', getTweetFullText(tweet), true).length <= 4 &&
+    tweet.entities.hashtags.length <= 4
+  );
 }
