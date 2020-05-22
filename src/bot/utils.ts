@@ -2,13 +2,13 @@ import { T } from './app';
 
 const { NODE_ENV: env, DEBUG_MODE: debugMode } = require('../../env.js');
 
-import { suspiciousWords } from './suspicious-words';
-import { blackListedAccounts } from './black-listed-accounts';
+const suspiciousWords: string[] = require('./suspicious-words');
+const blackListedAccounts: string[] = require('./black-listed-accounts.json');
 
 const knex = require('../../knex.js');
 
 interface Message {
-  message: String;
+  message: string;
   err?: any;
 }
 
@@ -248,6 +248,7 @@ export const getIntersectionCount = (arr1: string[], arr2: string[]): number =>
 export const hasLessThanFourHashtags = (tweet: any): boolean =>
   getAllOccurrences('#', getTweetFullText(tweet), true).length <= 4 &&
   tweet.entities.hashtags.length <= 4;
+
 /**
  * Check if a tweet is retweeted by ME or not
  * @param {*} tweet - The tweet object

@@ -33,9 +33,9 @@ import {
   writeToFile,
   printWelcomeBanner,
 } from './logger';
-import { hashtagsToFollow } from './hashtags';
-import { wordsToFollow } from './words';
-import { blackListedWords } from './black-listed-words';
+const hashtagsToFollow = require('./hashtags.json');
+const wordsToFollow = require('./words.json');
+const blackListedWords = require('./black-listed-words.json');
 import {
   getTweetFullText,
   isDebugModeEnabled,
@@ -96,16 +96,18 @@ stream.on('tweet', (tweet) => {
             tweetTextWithoutURLs
           );
 
-          const hasInterestingWords: boolean = interests.some((interest) => {
-            return (
-              tweetTextWithoutSuspiciousWords.search(
-                new RegExp(interest.toLowerCase())
-              ) > -1
-            );
-          });
+          const hasInterestingWords: boolean = interests.some(
+            (interest: string) => {
+              return (
+                tweetTextWithoutSuspiciousWords.search(
+                  new RegExp(interest.toLowerCase())
+                ) > -1
+              );
+            }
+          );
 
           const hasUninterestingWords: boolean = blackListedWords.some(
-            (blackListedWord) => {
+            (blackListedWord: string) => {
               return (
                 tweetTextWithoutSuspiciousWords.search(
                   new RegExp(blackListedWord.toLowerCase())

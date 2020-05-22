@@ -4,6 +4,7 @@
     "noImplicitAny": true,
     "target": "es5",
     "outDir": "dist",
-    "downlevelIteration": true
+    "downlevelIteration": true,
+    "resolveJsonModule": true
   }
 }
