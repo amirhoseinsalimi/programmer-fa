@@ -1,6 +1,4 @@
-import { T, connection } from './app';
-import { MysqlError } from 'mysql';
-import { logError, logInfo, logSuccess } from './logger';
+import { T } from './app';
 
 const { NODE_ENV: env, DEBUG_MODE: debugMode } = require('../../env.js');
 
@@ -84,6 +82,15 @@ export function removeURLs(text: string): string {
 }
 
 /**
+ * Checks whether a tweet has URL entities or not
+ * @param tweet
+ * @return boolean
+ */
+export function hasURLs(tweet: any): boolean {
+  return tweet.entities.urls.length > 0;
+}
+
+/**
  * Whether a tweet is under 140 characters long or not
  * @param {*} tweet - The tweet object
  * @return {boolean}
@@ -151,49 +158,41 @@ export function isDebugModeEnabled(): boolean {
 
 /**
  * Retweet the passed tweet by the given `id`
- * @param {number} id
+ * @param {number} id - Tweet ID
  * @return {Promise}
  */
 export function retweet(id: number): Promise<any> {
   return new Promise((resolve, reject) => {
-    T.post(
-      'statuses/retweet/:id',
-      { id: id.toString() },
-      (err, result, response) => {
-        if (err) {
-          return reject(err);
-        }
-
-        resolve({ message: 'Tweet retweeted successfully' });
+    T.post('statuses/retweet/:id', { id: id.toString() }, (err) => {
+      if (err) {
+        return reject(err);
       }
-    );
+
+      resolve({ message: 'Tweet retweeted successfully' });
+    });
   });
 }
 
 /**
  * Favourite/Like the passed tweet by the given `id`
- * @param {number} id
+ * @param {number} id - Tweet ID
  * @return {Promise}
  */
 export function favourite(id: number): Promise<any> {
   return new Promise((resolve, reject) => {
-    T.post(
-      '/favorites/create',
-      { id: id.toString() },
-      (err, result, response) => {
-        if (err) {
-          return reject(err);
-        }
-
-        resolve({ message: 'Tweet favourited successfully' });
+    T.post('/favorites/create', { id: id.toString() }, (err) => {
+      if (err) {
+        return reject(err);
       }
-    );
+
+      resolve({ message: 'Tweet favourited successfully' });
+    });
   });
 }
 
 /**
  * Store the given tweet in the database
- * @param {*} tweet
+ * @param {*} tweet - The tweet object
  * @return {Promise}
  */
 export function store(tweet: any) {
@@ -242,13 +241,12 @@ export function isNotBlackListed(userId: string): boolean {
  * @return {number}
  */
 export function getIntersectionCount(arr1: string[], arr2: string[]): number {
-  // @ts-ignore
   return [...new Set(arr1)].filter((v) => arr2.includes(v)).length;
 }
 
 /**
  * Check if a tweet has 4 hashtags or less. See it as an ad-blocker.
- * @param {*} tweet
+ * @param {*} tweet - The tweet object
  * @return {boolean}
  */
 export function hasLessThanFourHashtags(tweet: any): boolean {
@@ -256,4 +254,13 @@ export function hasLessThanFourHashtags(tweet: any): boolean {
     getAllOccurrences('#', getTweetFullText(tweet), true).length <= 4 &&
     tweet.entities.hashtags.length <= 4
   );
+}
+
+/**
+ * Check if a tweet is retweeted by ME or not
+ * @param {*} tweet - The tweet object
+ * @return {boolean}
+ */
+export function isRetweeted(tweet: any): boolean {
+  return tweet.retweeted;
 }

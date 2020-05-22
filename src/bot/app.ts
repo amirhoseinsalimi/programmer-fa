@@ -2,32 +2,18 @@
  *           Node.js Modules
  * ====================================*/
 import * as Twit from 'twit';
-import * as mysql from 'mysql';
 import { EventEmitter } from 'events';
 
 /*=======================================
  *            Configuration
  * ====================================*/
 const {
-  DB_HOST: host,
-  DB_NAME: database,
-  DB_USERNAME: user,
-  DB_PASSWORD: password,
-
   CONSUMER_KEY: consumer_key,
   CONSUMER_SECRET: consumer_secret,
   ACCESS_TOKEN: access_token,
   ACCESS_TOKEN_SECRET: access_token_secret,
   STRICT_SSL: strictSSL,
 } = require('../../env');
-
-const connection = mysql.createPool({
-  host,
-  user,
-  password,
-  database,
-  connectionLimit: 10,
-});
 
 const T: Twit = new Twit({
   consumer_key,
@@ -37,11 +23,6 @@ const T: Twit = new Twit({
   timeout_ms: 60 * 1000,
   strictSSL: !!strictSSL,
 });
-
-/*=======================================
- *                Export
- * ====================================*/
-export { T, connection };
 
 /*=======================================
  *         My Modules and Utils
@@ -68,6 +49,8 @@ import {
   isNotBlackListed,
   getIntersectionCount,
   hasLessThanFourHashtags,
+  hasURLs,
+  isRetweeted,
 } from './utils';
 
 /*=======================================
@@ -131,7 +114,13 @@ stream.on('tweet', (tweet) => {
             }
           );
 
-          id = hasInterestingWords && !hasUninterestingWords ? tweet.id_str : 0;
+          id =
+            hasInterestingWords &&
+            !hasUninterestingWords &&
+            !hasURLs(tweet) &&
+            !isRetweeted(tweet)
+              ? tweet.id_str
+              : 0;
         }
       }
 
@@ -194,3 +183,8 @@ process
     logError('Unhandled Rejection at Promise', p);
     logError(reason);
   });
+
+/*=======================================
+ *                Export
+ * ====================================*/
+export { T };
