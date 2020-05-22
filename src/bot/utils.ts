@@ -242,6 +242,7 @@ export function isNotBlackListed(userId: string): boolean {
  * @return {number}
  */
 export function getIntersectionCount(arr1: string[], arr2: string[]): number {
+  // @ts-ignore
   return [...new Set(arr1)].filter((v) => arr2.includes(v)).length;
 }
 
