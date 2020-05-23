@@ -33,7 +33,6 @@ import {
   writeToFile,
   printWelcomeBanner,
 } from './logger';
-const hashtagsToFollow = require('./hashtags.json');
 const wordsToFollow = require('./words.json');
 const blackListedWords = require('./black-listed-words.json');
 import {
@@ -61,8 +60,17 @@ printWelcomeBanner();
 const interests: string[] = [];
 
 // Include hashtags in a single array
-hashtagsToFollow.map((val: string) => interests.push(val.toLowerCase()));
-wordsToFollow.map((val: string) => interests.push(val.toLowerCase()));
+wordsToFollow.forEach((val: string) => interests.push(val.toLowerCase()));
+wordsToFollow.forEach((word: string) => {
+  let w: string;
+
+  // Replace space and half-space w/ an underscore
+  w = word.replace(/[ ‌]/g, '_');
+  // Add a number sign at the beginning of the word
+  w = `#${w}`;
+
+  interests.push(w);
+});
 
 const params: Twit.Params = {
   // track these words
