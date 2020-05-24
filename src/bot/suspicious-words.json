@@ -25,5 +25,6 @@
   "node",
   "python",
   "swift",
-  "linux"
+  "linux",
+  "django"
 ]
