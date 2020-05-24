@@ -1,6 +1,10 @@
 import { T } from './app';
 
-const { NODE_ENV: env, DEBUG_MODE: debugMode } = require('../../env.js');
+const {
+  NODE_ENV: env,
+  DEBUG_MODE: debugMode,
+  DB_ENABLE: enableDB,
+} = require('../../env.js');
 
 const suspiciousWords: string[] = require('./suspicious-words');
 const blackListedAccounts: string[] = require('./black-listed-accounts.json');
@@ -194,6 +198,10 @@ export const favourite = (id: number): Promise<Message> =>
  * @return {Promise}
  */
 export const store = (tweet: any): Promise<Message> => {
+  if (!enableDB) {
+    return;
+  }
+
   const {
     in_reply_to_status_id,
     in_reply_to_user_id,
