@@ -1,12 +1,12 @@
 import ErrnoException = NodeJS.ErrnoException;
 
 const colorIt = require('color-it');
-const fs = require('fs');
+import * as fs from 'fs';
 import { isDebugModeEnabled } from './utils';
 
 export function logWarning(...args: string[]): void {
   if (isDebugModeEnabled()) {
-    const l = args.length;
+    const l: number = args.length;
 
     for (let i = 0; i < l; i++) {
       console.log('' + colorIt(args[i]).orange());
@@ -18,7 +18,7 @@ export function logWarning(...args: string[]): void {
 
 export function logError(...args: any): void {
   if (isDebugModeEnabled()) {
-    const l = args.length;
+    const l: number = args.length;
 
     for (let i = 0; i < l; i++) {
       console.error('' + colorIt(args[i]).red());
@@ -30,7 +30,7 @@ export function logError(...args: any): void {
 
 export function logInfo(...args: any): void {
   if (isDebugModeEnabled()) {
-    const l = args.length;
+    const l: number = args.length;
 
     for (let i = 0; i < l; i++) {
       console.log('' + colorIt(args[i]).belizeHole());
@@ -42,7 +42,7 @@ export function logInfo(...args: any): void {
 
 export function logSuccess(...args: any): void {
   if (isDebugModeEnabled()) {
-    const l = args.length;
+    const l: number = args.length;
 
     for (let i = 0; i < l; i++) {
       console.log('' + colorIt(args[i]).green());
@@ -60,15 +60,15 @@ export function writeToFile(text: string | Buffer): void {
     \n=======================================
     `;
 
-    const d = new Date();
-    const fileName = `${d.getFullYear()}-${d.getMonth() +
+    const d: Date = new Date();
+    const fileName: string = `${d.getFullYear()}-${d.getMonth() +
       1}-${d.getDate()} - H${d.getHours()}.log`;
 
     fs.appendFile(
       `logs/${fileName}`,
       formattedText,
       typeof text === 'string' ? 'utf8' : '',
-      (err: ErrnoException | null) => {
+      (err: ErrnoException) => {
         if (err) logError(err);
       }
     );
@@ -81,7 +81,7 @@ export function printWelcomeBanner() {
   fs.readFile(
     `${process.cwd()}/.banner`,
     'utf8',
-    (err: ErrnoException | null, banner: string) => {
+    (err: ErrnoException, banner: string) => {
       if (err) {
         logError(err);
         return;

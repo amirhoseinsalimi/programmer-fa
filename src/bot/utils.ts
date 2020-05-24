@@ -24,13 +24,13 @@ export const getAllOccurrences = (
   str: string,
   caseSensitive: boolean = false
 ): number[] => {
-  const subStrLen = subStr.length;
+  const subStrLen: number = subStr.length;
 
   if (subStrLen === 0) {
     return [];
   }
 
-  let startIndex = 0,
+  let startIndex: number = 0,
     index: number = 0,
     indices: number[] = [];
 
@@ -55,10 +55,10 @@ export const getAllOccurrences = (
  * @return {string}
  */
 export const removeSuspiciousWords = (text: string): string => {
-  let lText = text.toLowerCase();
+  let lText: string = text.toLowerCase();
 
   suspiciousWords.forEach((word: string) => {
-    const lWord = word.toLowerCase();
+    const lWord: string = word.toLowerCase();
 
     if (text.search(new RegExp(lWord)) > -1) {
       lText = lText.replace(new RegExp(lWord, 'g'), '');
@@ -78,9 +78,9 @@ export const removeSuspiciousWords = (text: string): string => {
  * @return {string}
  */
 export const removeURLs = (text: string): string => {
-  const urlRegex = /(https?:\/\/[^\s]+)/g;
+  const urlRegex: RegExp = /(https?:\/\/[^\s]+)/g;
 
-  let lText = text.toLowerCase();
+  let lText: string = text.toLowerCase();
   lText.replace(urlRegex, '');
 
   return lText;

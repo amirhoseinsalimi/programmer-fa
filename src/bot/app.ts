@@ -33,8 +33,9 @@ import {
   writeToFile,
   printWelcomeBanner,
 } from './logger';
-const wordsToFollow = require('./words.json');
-const blackListedWords = require('./black-listed-words.json');
+const wordsToFollow: string[] = require('./words.json');
+const blackListedWords: string[] = require('./black-listed-words.json');
+
 import {
   getTweetFullText,
   isDebugModeEnabled,
@@ -77,9 +78,9 @@ const params: Twit.Params = {
   track: interests,
 };
 
-const stream = T.stream('statuses/filter', params);
+const stream: Twit.Stream = T.stream('statuses/filter', params);
 
-stream.on('tweet', (tweet) => {
+stream.on('tweet', (tweet: any) => {
   if (isTweetFarsi(tweet) && isTweetNotAReply(tweet)) {
     const hashtagsOfCurrentTweet: string[] = [];
 
@@ -87,7 +88,7 @@ stream.on('tweet', (tweet) => {
 
     if (hasLessThanFourHashtags(tweet)) {
       for (const t in tweet.entities.hashtags) {
-        tweet.entities.hashtags.map((val: { text: any }) =>
+        tweet.entities.hashtags.map((val: { text: string }) =>
           hashtagsOfCurrentTweet.push(`#${val.text}`)
         );
       }
@@ -172,7 +173,7 @@ stream.on('tweet', (tweet) => {
  * ====================================*/
 class Emitter extends EventEmitter {}
 
-const emitter = new Emitter();
+const emitter: Emitter = new Emitter();
 
 stream.on('error', (err: any) => {
   emitter.emit('bot-error', err);
