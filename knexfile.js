@@ -5,11 +5,12 @@ const {
   DB_NAME: database,
   DB_USERNAME: user,
   DB_PASSWORD: password,
+  DB_CLIENT: client
 } = require('./env');
 
 module.exports = {
   development: {
-    client: 'mysql', // Your database driver
+    client: client || 'mysql',
     connection: {
       database,
       user,
@@ -29,7 +30,7 @@ module.exports = {
   },
 
   // staging: {
-  //   client: 'postgresql',
+  //   client: client || 'mysql',
   //   connection: {
   //     database: 'my_db',
   //     user:     'username',
@@ -45,7 +46,7 @@ module.exports = {
   // },
 
   production: {
-    client: 'mysql',
+    client: client || 'mysql',
     connection: {
       database,
       user,
