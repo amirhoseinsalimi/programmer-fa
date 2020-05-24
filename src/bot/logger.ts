@@ -4,7 +4,7 @@ const colorIt = require('color-it');
 import * as fs from 'fs';
 import { isDebugModeEnabled } from './utils';
 
-export function logWarning(...args: string[]): void {
+export const logWarning = (...args: string[]): void => {
   if (isDebugModeEnabled()) {
     const l: number = args.length;
 
@@ -12,11 +12,9 @@ export function logWarning(...args: string[]): void {
       console.log('' + colorIt(args[i]).orange());
     }
   }
+};
 
-  return;
-}
-
-export function logError(...args: any): void {
+export const logError = (...args: any): void => {
   if (isDebugModeEnabled()) {
     const l: number = args.length;
 
@@ -24,11 +22,9 @@ export function logError(...args: any): void {
       console.error('' + colorIt(args[i]).red());
     }
   }
+};
 
-  return;
-}
-
-export function logInfo(...args: any): void {
+export const logInfo = (...args: any): void => {
   if (isDebugModeEnabled()) {
     const l: number = args.length;
 
@@ -36,11 +32,9 @@ export function logInfo(...args: any): void {
       console.log('' + colorIt(args[i]).belizeHole());
     }
   }
+};
 
-  return;
-}
-
-export function logSuccess(...args: any): void {
+export const logSuccess = (...args: any): void => {
   if (isDebugModeEnabled()) {
     const l: number = args.length;
 
@@ -48,11 +42,9 @@ export function logSuccess(...args: any): void {
       console.log('' + colorIt(args[i]).green());
     }
   }
+};
 
-  return;
-}
-
-export function writeToFile(text: string | Buffer): void {
+export const writeToFile = (text: string | Buffer): void => {
   if (isDebugModeEnabled()) {
     const formattedText = `
     \n=======================================
@@ -73,11 +65,9 @@ export function writeToFile(text: string | Buffer): void {
       }
     );
   }
+};
 
-  return;
-}
-
-export function printWelcomeBanner() {
+export const printWelcomeBanner = (): void => {
   fs.readFile(
     `${process.cwd()}/.banner`,
     'utf8',
@@ -101,4 +91,4 @@ export function printWelcomeBanner() {
       }
     }
   );
-}
+};
