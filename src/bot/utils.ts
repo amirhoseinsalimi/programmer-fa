@@ -198,20 +198,20 @@ export const favourite = (id: number): Promise<Message> =>
  * @return {Promise}
  */
 export const store = (tweet: any): Promise<Message> => {
-  if (!enableDB) {
-    return;
-  }
-
-  const {
-    in_reply_to_status_id,
-    in_reply_to_user_id,
-    source,
-    user,
-    id_str,
-    $tweetText,
-  } = tweet;
-
   return new Promise((resolve, reject) => {
+    if (enableDB === 'false') {
+      resolve({ message: 'Database storage is disabled' });
+    }
+
+    const {
+      in_reply_to_status_id,
+      in_reply_to_user_id,
+      source,
+      user,
+      id_str,
+      $tweetText,
+    } = tweet;
+
     knex('tweets')
       .insert({
         tweet_id: id_str,
