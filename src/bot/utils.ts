@@ -6,8 +6,8 @@ const {
   DB_ENABLE: enableDB,
 } = require('../../env.js');
 
-const suspiciousWords: string[] = require('./suspicious-words');
-const blackListedAccounts: string[] = require('./black-listed-accounts.json');
+const suspiciousWords: string[] = require('../data/suspicious-words.json');
+const blackListedAccounts: string[] = require('../data/black-listed-accounts.json');
 
 const knex = require('../../knex-export.js');
 

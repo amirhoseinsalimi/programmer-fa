@@ -33,8 +33,8 @@ import {
   writeToFile,
   printWelcomeBanner,
 } from './logger';
-const wordsToFollow: string[] = require('./words.json');
-const blackListedWords: string[] = require('./black-listed-words.json');
+const wordsToFollow: string[] = require('../data/words.json');
+const blackListedWords: string[] = require('../data/black-listed-words.json');
 
 import {
   getTweetFullText,
