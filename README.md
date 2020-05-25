@@ -1,4 +1,6 @@
-# Kar Joor Twitter Bot
+# Programmer Farsi Twitter Bot
+
+![Twitter Follow](https://img.shields.io/twitter/follow/programmer_fa?style=social)
 
 ### Requirements to run this app
 1. Node.js and npm
