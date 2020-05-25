@@ -8,8 +8,9 @@ exports.up = knex =>
         });
       }
     })
-    .catch(() => {});
-
+    .catch((err) => {
+      console.error(err);
+    });
 exports.down = knex =>
   knex.schema
     .hasTable('tweets')
@@ -20,6 +21,8 @@ exports.down = knex =>
         });
       }
     })
-    .catch(() => {});
+    .catch((err) => {
+      console.error(err);
+    });
 
 exports.config = { transaction: false };

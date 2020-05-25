@@ -17,7 +17,9 @@ exports.up = knex =>
         });
       }
     })
-    .catch(() => {});
+    .catch((err) => {
+      console.error(err);
+    });
 
 exports.down = knex =>
   knex.schema
@@ -27,6 +29,8 @@ exports.down = knex =>
         return knex.schema.dropTableIfExists('tweets');
       }
     })
-    .catch(() => {});
+    .catch((err) => {
+      console.error(err);
+    });
 
 exports.config = { transaction: false };
