@@ -20,16 +20,16 @@ A simple bot that brings tweets about programming to your feed.
 0. **Clone this repo:**\
 Run `https://github.com/amirhoseinsalimi/programmer-fa`
 
-1. **Install dependencies:**
+1. **Install dependencies:**\
 Run `npm i`
 
-2. **Create an .env file**
+2. **Create an .env file**\
 Copy the content of `.env.example` into `.env` and fill it with your credentials
 
-3. **Run migrations**
+3. **Run migrations**\
 Run the command `knex migrate:latest` to create the tables
 
-4. 3. **Run the bot**\
+4. **Run the bot**\
 For development with hot reload: `npm run bot:dev`
 For Run `npm start`
  ---
