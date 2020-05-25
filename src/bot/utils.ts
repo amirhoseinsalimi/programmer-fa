@@ -166,7 +166,7 @@ export const retweet = (id: number): Promise<Message> =>
   new Promise((resolve, reject) => {
     T.post('statuses/retweet/:id', { id: id.toString() }, (err) => {
       if (err) {
-        return reject({
+        reject({
           message: `Failed to retweet the tweet ${id}`,
           err: err,
         });
@@ -185,7 +185,10 @@ export const favourite = (id: number): Promise<Message> =>
   new Promise((resolve, reject) => {
     T.post('/favorites/create', { id: id.toString() }, (err) => {
       if (err) {
-        return reject(err);
+        reject({
+          message: `Failed to favorite the tweet ${id}`,
+          err: err,
+        });
       }
 
       resolve({ message: 'Tweet favourited successfully' });
@@ -226,7 +229,10 @@ export const store = (tweet: any): Promise<Message> => {
         resolve({ message: 'Tweet stored in the database' });
       })
       .catch((err: Error) => {
-        reject(err);
+        reject({
+          message: 'Failed to store the tweet in the database',
+          err: err,
+        });
       });
   });
 };
