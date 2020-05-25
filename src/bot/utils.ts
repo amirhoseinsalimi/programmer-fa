@@ -9,7 +9,7 @@ const {
 const suspiciousWords: string[] = require('./suspicious-words');
 const blackListedAccounts: string[] = require('./black-listed-accounts.json');
 
-const knex = require('../../knex.js');
+const knex = require('../../knex-export.js');
 
 interface Message {
   message: string;
