@@ -43,4 +43,4 @@ For Run `npm start`
 
 
 <br />
-<small>A small side project done in [https://expteam.ir](https://expteam.ir)</small>
+<small>A small side project done in https://expteam.ir</small>
