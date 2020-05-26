@@ -1,4 +1,4 @@
-import { T } from './app';
+import { T } from './twit';
 
 const {
   NODE_ENV: env,
