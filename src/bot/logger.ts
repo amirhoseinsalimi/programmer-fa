@@ -44,26 +44,31 @@ export const logSuccess = (...args: any): void => {
 };
 
 export const writeToFile = (text: string | Buffer): void => {
-  if (isDebugModeEnabled()) {
-    const formattedText = `
-    \n=======================================
-    \n${text}
-    \n=======================================
-    `;
+  fs.mkdir(`${process.cwd()}/logs`, (err) => {
+    if (!err && isDebugModeEnabled()) {
+      const formattedText = `
+      \n=======================================
+      \n${text}
+      \n=======================================
+      `;
 
-    const d: Date = new Date();
-    const fileName = `${d.getFullYear()}-${d.getMonth()
+      const d: Date = new Date();
+      const fileName = `${d.getFullYear()}-${d.getMonth()
       + 1}-${d.getDate()} - H${d.getHours()}.log`;
 
-    fs.appendFile(
-      `logs/${fileName}`,
-      formattedText,
-      typeof text === 'string' ? 'utf8' : '',
-      (err) => {
-        if (err) logError(err);
-      },
-    );
-  }
+      fs.appendFile(
+        `logs/${fileName}`,
+        formattedText,
+        typeof text === 'string' ? 'utf8' : '',
+        (err) => {
+          if (err) logError(err);
+        },
+      );
+    } else if (err) {
+      logError('Couldn\'t create "logs" dir. Exiting...');
+      process.exit();
+    }
+  });
 };
 
 export const printWelcomeBanner = (): void => {
