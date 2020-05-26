@@ -26,7 +26,7 @@ interface Message {
 export const getAllOccurrences = (
   subStr: string,
   str: string,
-  caseSensitive: boolean = false
+  caseSensitive = false,
 ): number[] => {
   const subStrLen: number = subStr.length;
 
@@ -34,9 +34,9 @@ export const getAllOccurrences = (
     return [];
   }
 
-  let startIndex: number = 0,
-    index: number = 0,
-    indices: number[] = [];
+  let startIndex = 0;
+  let index = 0;
+  const indices: number[] = [];
 
   if (!caseSensitive) {
     str = str.toLowerCase();
@@ -82,9 +82,9 @@ export const removeSuspiciousWords = (text: string): string => {
  * @return {string}
  */
 export const removeURLs = (text: string): string => {
-  const urlRegex: RegExp = /(https?:\/\/[^\s]+)/g;
+  const urlRegex = /(https?:\/\/[^\s]+)/g;
 
-  let lText: string = text.toLowerCase();
+  const lText: string = text.toLowerCase();
   lText.replace(urlRegex, '');
 
   return lText;
@@ -102,8 +102,9 @@ export const hasURLs = (tweet: any): boolean => tweet.entities.urls.length > 0;
  * @param {*} tweet - The tweet object
  * @return {boolean}
  */
-export const isTweetExtended = (tweet: any): boolean =>
-  tweet.truncated === true;
+export const isTweetExtended = (tweet: any): boolean => (
+  tweet.truncated === true
+);
 
 /**
  * Whether a tweet is in Farsi or not.
@@ -118,30 +119,33 @@ export const isTweetFarsi = (tweet: any): boolean => tweet.lang === 'fa';
  * @param {*} tweet - The tweet object
  * @return {boolean}
  */
-export const isTweetNotAReply = (tweet: any): boolean =>
+export const isTweetNotAReply = (tweet: any): boolean => (
   // Polyfill to check whether a tweet is a reply or not
-  !tweet.in_reply_to_status_id && !tweet.in_reply_to_user_id;
+  !tweet.in_reply_to_status_id && !tweet.in_reply_to_user_id
+);
 
 /**
  *
  * @param {*} tweet - The tweet object
  * @return {string}
  */
-export const getTweetFullText = (tweet: any): string =>
+export const getTweetFullText = (tweet: any): string => (
   // All tweets have a `text` property, but the ones having 140 or more
   // characters have `extended_tweet` property set to `true` and an extra
   // `extended_tweet` property containing the actual tweet's text under
   // `full_text`. For tweets which are not truncated the former `text` is
   // enough.
-  isTweetExtended(tweet) ? tweet.extended_tweet.full_text : tweet.text;
+  isTweetExtended(tweet) ? tweet.extended_tweet.full_text : tweet.text
+);
 
 /**
  *
  * @param {*} tweet - The tweet object
  * @return {string[]}
  */
-export const getTweetHashtags = (tweet: any): string[] =>
-  tweet.entities.hashtags;
+export const getTweetHashtags = (tweet: any): string[] => (
+  tweet.entities.hashtags
+);
 
 /**
  * Whether the environment is in debug mode or not
@@ -152,9 +156,8 @@ export const isDebugModeEnabled = (): boolean => {
 
   if (environment === 'production') {
     return false;
-  } else {
-    return debugMode !== 'false';
   }
+  return debugMode !== 'false';
 };
 
 /**
@@ -162,46 +165,42 @@ export const isDebugModeEnabled = (): boolean => {
  * @param {number} id - Tweet ID
  * @return {Promise}
  */
-export const retweet = (id: number): Promise<Message> =>
+export const retweet = (id: number): Promise<Message> => (
   new Promise((resolve, reject) => {
-    T.post('statuses/retweet/:id', { id: id.toString() }, (err) => {
+    T.post('statuses/retweet/:id', { id: id.toString() }, (err: any) => {
       if (err) {
-        reject({
-          message: `Failed to retweet the tweet ${id}`,
-          err: err,
-        });
+        reject(new Error(`Failed to retweet the tweet ${id}`));
       }
 
       resolve({ message: 'Tweet retweeted successfully' });
     });
-  });
+  })
+);
 
 /**
  * Favourite/Like the passed tweet by the given `id`
  * @param {number} id - Tweet ID
  * @return {Promise}
  */
-export const favourite = (id: number): Promise<Message> =>
+export const favourite = (id: number): Promise<Message> => (
   new Promise((resolve, reject) => {
-    T.post('/favorites/create', { id: id.toString() }, (err) => {
+    T.post('/favorites/create', { id: id.toString() }, (err: any) => {
       if (err) {
-        reject({
-          message: `Failed to favorite the tweet ${id}`,
-          err: err,
-        });
+        reject(new Error(`Failed to favorite the tweet ${id}`));
       }
 
       resolve({ message: 'Tweet favourited successfully' });
     });
-  });
+  })
+);
 
 /**
  * Store the given tweet in the database
  * @param {*} tweet - The tweet object
  * @return {Promise}
  */
-export const store = (tweet: any): Promise<Message> => {
-  return new Promise((resolve, reject) => {
+export const store = (tweet: any): Promise<Message> => (
+  new Promise((resolve, reject) => {
     if (enableDB === 'false') {
       resolve({ message: 'Database storage is disabled' });
     }
@@ -228,22 +227,20 @@ export const store = (tweet: any): Promise<Message> => {
       .then(() => {
         resolve({ message: 'Tweet stored in the database' });
       })
-      .catch((err: Error) => {
-        reject({
-          message: 'Failed to store the tweet in the database',
-          err: err,
-        });
+      .catch(() => {
+        reject(new Error('Failed to store the tweet in the database'));
       });
-  });
-};
+  })
+);
 
 /**
  * Check if the user is not in the blacklist
  * @param {string} userId
  * @return {boolean}
  */
-export const isNotBlackListed = (userId: string): boolean =>
-  !blackListedAccounts.includes(userId);
+export const isNotBlackListed = (userId: string): boolean => (
+  !blackListedAccounts.includes(userId)
+);
 
 /**
  * Returns the number of intersections b/w two arrays
@@ -251,17 +248,19 @@ export const isNotBlackListed = (userId: string): boolean =>
  * @param {string[]} arr2
  * @return {number}
  */
-export const getIntersectionCount = (arr1: string[], arr2: string[]): number =>
-  [...new Set(arr1)].filter((v) => arr2.includes(v)).length;
+export const getIntersectionCount = (arr1: string[], arr2: string[]): number => (
+  [...new Set(arr1)].filter((v) => arr2.includes(v)).length
+);
 
 /**
  * Check if a tweet has 4 hashtags or less. See it as an ad-blocker.
  * @param {*} tweet - The tweet object
  * @return {boolean}
  */
-export const hasLessThanFourHashtags = (tweet: any): boolean =>
-  getAllOccurrences('#', getTweetFullText(tweet), true).length <= 4 &&
-  tweet.entities.hashtags.length <= 4;
+export const hasLessThanFourHashtags = (tweet: any): boolean => (
+  getAllOccurrences('#', getTweetFullText(tweet), true).length <= 4
+  && tweet.entities.hashtags.length <= 4
+);
 
 /**
  * Check if a tweet is retweeted by ME or not

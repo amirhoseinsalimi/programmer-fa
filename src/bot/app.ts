@@ -1,21 +1,18 @@
-/*=======================================
+/* =======================================
  *           Node.js Modules
- * ====================================*/
-import * as Twit from 'twit';
+ * ===================================== */
 import { EventEmitter } from 'events';
 import { T, Twit } from './twit';
 
-/*=======================================
+/* =======================================
  *         My Modules and Utils
- * ====================================*/
+ * ===================================== */
 import {
   logError,
   logSuccess,
   writeToFile,
   printWelcomeBanner,
 } from './logger';
-const wordsToFollow: string[] = require('../data/words.json');
-const blackListedWords: string[] = require('../data/black-listed-words.json');
 
 import {
   getTweetFullText,
@@ -34,10 +31,36 @@ import {
   isRetweeted,
 } from './utils';
 
-/*=======================================
+/* =======================================
+ *            Error Handling
+ * ==================================== */
+class Emitter extends EventEmitter {}
+
+const emitter: Emitter = new Emitter();
+
+emitter.on('bot-error', (err: any) => {
+  logError('An error has been thrown', err.message);
+});
+
+/* Deal w/ uncaught errors and unhandled promises */
+process
+  .on('uncaughtException', (err: Error) => {
+    logError(`${new Date().toUTCString()} "uncaughtException": ${err.message}`);
+    logError(err.stack);
+    process.exit(1);
+  })
+  .on('unhandledRejection', (reason, p: Promise<any>) => {
+    logError('Unhandled Rejection at Promise', p);
+    logError(reason);
+  });
+
+/* =======================================
  *                 Bot
- * ====================================*/
+ * ==================================== */
 printWelcomeBanner();
+
+const wordsToFollow: string[] = require('../data/words.json');
+const blackListedWords: string[] = require('../data/black-listed-words.json');
 
 const interests: string[] = [];
 
@@ -68,13 +91,9 @@ stream.on('tweet', (tweet: any) => {
     tweet.$tweetText = getTweetFullText(tweet);
 
     if (hasLessThanFourHashtags(tweet)) {
-      for (const t in tweet.entities.hashtags) {
-        tweet.entities.hashtags.map((val: { text: string }) =>
-          hashtagsOfCurrentTweet.push(`#${val.text}`)
-        );
-      }
+      tweet.entities.hashtags.map((val: { text: string }) => hashtagsOfCurrentTweet.push(`#${val.text}`));
 
-      let id: number = 0;
+      let id = 0;
 
       if (isNotBlackListed(tweet)) {
         if (getIntersectionCount(interests, hashtagsOfCurrentTweet)) {
@@ -83,36 +102,31 @@ stream.on('tweet', (tweet: any) => {
           const tweetTextWithoutURLs: string = removeURLs(tweet.$tweetText);
 
           const tweetTextWithoutSuspiciousWords: string = removeSuspiciousWords(
-            tweetTextWithoutURLs
+            tweetTextWithoutURLs,
           );
 
           const hasInterestingWords: boolean = interests.some(
-            (interest: string) => {
-              return (
-                tweetTextWithoutSuspiciousWords.search(
-                  new RegExp(interest.toLowerCase())
-                ) > -1
-              );
-            }
+            (interest: string) => (
+              tweetTextWithoutSuspiciousWords.search(
+                new RegExp(interest.toLowerCase()),
+              ) > -1
+            ),
           );
 
           const hasUninterestingWords: boolean = blackListedWords.some(
-            (blackListedWord: string) => {
-              return (
-                tweetTextWithoutSuspiciousWords.search(
-                  new RegExp(blackListedWord.toLowerCase())
-                ) > -1
-              );
-            }
+            (blackListedWord: string) => (
+              tweetTextWithoutSuspiciousWords.search(
+                new RegExp(blackListedWord.toLowerCase()),
+              ) > -1
+            ),
           );
 
-          id =
-            hasInterestingWords &&
-            !hasUninterestingWords &&
-            !hasURLs(tweet) &&
-            !isRetweeted(tweet)
-              ? tweet.id_str
-              : 0;
+          id = hasInterestingWords
+            && !hasUninterestingWords
+            && !hasURLs(tweet)
+            && !isRetweeted(tweet)
+            ? tweet.id_str
+            : 0;
         }
       }
 
@@ -123,8 +137,8 @@ stream.on('tweet', (tweet: any) => {
               logSuccess(message);
 
               favourite(id)
-                .then(({ message }) => {
-                  logSuccess(message);
+                .then(({ message: m }) => {
+                  logSuccess(m);
                 })
                 .catch((err) => {
                   emitter.emit('bot-error', err);
@@ -149,34 +163,6 @@ stream.on('tweet', (tweet: any) => {
   }
 });
 
-/*=======================================
- *            Error Handling
- * ====================================*/
-class Emitter extends EventEmitter {}
-
-const emitter: Emitter = new Emitter();
-
 stream.on('error', (err: any) => {
   emitter.emit('bot-error', err);
 });
-
-emitter.on('bot-error', (err: any) => {
-  logError('An error has been thrown', err.message);
-});
-
-/* Deal w/ uncaught errors and unhandled promises */
-process
-  .on('uncaughtException', (err: Error) => {
-    logError(`${new Date().toUTCString()} "uncaughtException": ${err.message}`);
-    logError(err.stack);
-    process.exit(1);
-  })
-  .on('unhandledRejection', (reason, p: Promise<any>) => {
-    logError('Unhandled Rejection at Promise', p);
-    logError(reason);
-  });
-
-/*=======================================
- *                Export
- * ====================================*/
-export { T };

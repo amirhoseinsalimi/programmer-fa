@@ -5,7 +5,7 @@ const {
   DB_NAME: database,
   DB_USERNAME: user,
   DB_PASSWORD: password,
-  DB_CLIENT: client
+  DB_CLIENT: client,
 } = require('./env');
 
 module.exports = {
@@ -18,14 +18,14 @@ module.exports = {
     },
     pool: {
       min: 2,
-      max: 10
+      max: 10,
     },
     migrations: {
       tableName: 'knex_migrations',
-      directory: __dirname + '/knex/migrations',
+      directory: `${__dirname}/knex/migrations`,
     },
     seeds: {
-      directory: __dirname + '/knex/seeds',
+      directory: `${__dirname}/knex/seeds`,
     },
   },
 
@@ -54,14 +54,14 @@ module.exports = {
     },
     pool: {
       min: 2,
-      max: 10
+      max: 10,
     },
     migrations: {
       tableName: 'knex_migrations',
-      directory: __dirname + '/knex/migrations',
+      directory: `${__dirname}/knex/migrations`,
     },
     seeds: {
-      directory: __dirname + '/knex/seeds',
+      directory: `${__dirname}/knex/seeds`,
     },
-  }
+  },
 };
