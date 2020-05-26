@@ -54,14 +54,14 @@ export const writeToFile = (text: string | Buffer): void => {
 
       const d: Date = new Date();
       const fileName = `${d.getFullYear()}-${d.getMonth()
-      + 1}-${d.getDate()} - H${d.getHours()}.log`;
+        + 1}-${d.getDate()} - H${d.getHours()}.log`;
 
       fs.appendFile(
         `logs/${fileName}`,
         formattedText,
         typeof text === 'string' ? 'utf8' : '',
-        (err) => {
-          if (err) logError(err);
+        (e) => {
+          if (e) logError(e);
         },
       );
     } else if (err) {
@@ -72,27 +72,23 @@ export const writeToFile = (text: string | Buffer): void => {
 };
 
 export const printWelcomeBanner = (): void => {
-  fs.readFile(
-    `${process.cwd()}/.banner`,
-    'utf8',
-    (err, banner: string) => {
-      if (err) {
-        logError(err);
-        return;
-      }
+  fs.readFile(`${process.cwd()}/.banner`, 'utf8', (err, banner: string) => {
+    if (err) {
+      logError(err);
+      return;
+    }
 
-      console.log(banner);
+    console.log(banner);
 
-      logSuccess('Bot has been started...');
+    logSuccess('Bot has been started...');
 
-      if (isDebugModeEnabled()) {
-        logInfo(
-          'The bot has been started in development environment, so it does not'
-            + ' emit retweets, instead stores them in the database and logs the text of'
-            + ' the tweets in a file. To change this behavior set `NODE_ENV=production`'
-            + ' in the .env file',
-        );
-      }
-    },
-  );
+    if (isDebugModeEnabled()) {
+      logInfo(
+        'The bot has been started in development environment, so it does not'
+        + ' emit retweets, instead stores them in the database and logs the text of'
+        + ' the tweets in a file. To change this behavior set `NODE_ENV=production`'
+        + ' in the .env file',
+      );
+    }
+  });
 };

@@ -91,7 +91,9 @@ stream.on('tweet', (tweet: any) => {
     tweet.$tweetText = getTweetFullText(tweet);
 
     if (hasLessThanFourHashtags(tweet)) {
-      tweet.entities.hashtags.map((val: { text: string }) => hashtagsOfCurrentTweet.push(`#${val.text}`));
+      tweet.entities.hashtags.map((val: { text: string }) => (
+        hashtagsOfCurrentTweet.push(`#${val.text}`)
+      ));
 
       let id = 0;
 
@@ -122,9 +124,9 @@ stream.on('tweet', (tweet: any) => {
           );
 
           id = hasInterestingWords
-            && !hasUninterestingWords
-            && !hasURLs(tweet)
-            && !isRetweeted(tweet)
+          && !hasUninterestingWords
+          && !hasURLs(tweet)
+          && !isRetweeted(tweet)
             ? tweet.id_str
             : 0;
         }

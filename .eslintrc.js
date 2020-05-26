@@ -24,5 +24,6 @@ module.exports = {
         "ts": "never",
       }
     ],
+    'no-cond-assign': 0,
   },
 };
