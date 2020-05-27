@@ -44,34 +44,36 @@ export const logSuccess = (...args: any): void => {
 };
 
 export const writeToFile = (text: string | Buffer): void => {
-  fs.access(`${process.cwd()}/logs`, (err) => {
-    if (err && err.code === 'ENOENT') {
-      fs.mkdir(`${process.cwd()}/logs`, (e) => {
-        if (e) {
-          logError('Couldn\'t create "logs" dir. Exiting...');
-        }
-      });
-    } else {
-      const formattedText = `
+  if (isDebugModeEnabled()) {
+    fs.access(`${process.cwd()}/logs`, (err) => {
+      if (err && err.code === 'ENOENT') {
+        fs.mkdir(`${process.cwd()}/logs`, (e) => {
+          if (e) {
+            logError('Couldn\'t create "logs" dir. Exiting...');
+          }
+        });
+      } else {
+        const formattedText = `
         \n=======================================
         \n${text}
         \n=======================================
         `;
 
-      const d: Date = new Date();
-      const fileName = `${d.getFullYear()}-${d.getMonth()
-        + 1}-${d.getDate()} - H${d.getHours()}.log`;
+        const d: Date = new Date();
+        const fileName = `${d.getFullYear()}-${d.getMonth()
+          + 1}-${d.getDate()} - H${d.getHours()}.log`;
 
-      fs.appendFile(
-        `logs/${fileName}`,
-        formattedText,
-        typeof text === 'string' ? 'utf8' : '',
-        (error) => {
-          if (error) logError(error);
-        },
-      );
-    }
-  });
+        fs.appendFile(
+          `logs/${fileName}`,
+          formattedText,
+          typeof text === 'string' ? 'utf8' : '',
+          (error) => {
+            if (error) logError(error);
+          },
+        );
+      }
+    });
+  }
 };
 
 export const printWelcomeBanner = (): void => {
