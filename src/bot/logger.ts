@@ -44,13 +44,19 @@ export const logSuccess = (...args: any): void => {
 };
 
 export const writeToFile = (text: string | Buffer): void => {
-  fs.mkdir(`${process.cwd()}/logs`, (err) => {
-    if (!err && isDebugModeEnabled()) {
+  fs.access(`${process.cwd()}/logs`, (err) => {
+    if (err && err.code === 'ENOENT') {
+      fs.mkdir(`${process.cwd()}/logs`, (e) => {
+        if (e) {
+          logError('Couldn\'t create "logs" dir. Exiting...');
+        }
+      });
+    } else {
       const formattedText = `
-      \n=======================================
-      \n${text}
-      \n=======================================
-      `;
+        \n=======================================
+        \n${text}
+        \n=======================================
+        `;
 
       const d: Date = new Date();
       const fileName = `${d.getFullYear()}-${d.getMonth()
@@ -60,13 +66,10 @@ export const writeToFile = (text: string | Buffer): void => {
         `logs/${fileName}`,
         formattedText,
         typeof text === 'string' ? 'utf8' : '',
-        (e) => {
-          if (e) logError(e);
+        (error) => {
+          if (error) logError(error);
         },
       );
-    } else if (err) {
-      logError('Couldn\'t create "logs" dir. Exiting...');
-      process.exit();
     }
   });
 };
@@ -78,7 +81,7 @@ export const printWelcomeBanner = (): void => {
       return;
     }
 
-    console.log(banner);
+    logInfo(banner);
 
     logSuccess('Bot has been started...');
 
