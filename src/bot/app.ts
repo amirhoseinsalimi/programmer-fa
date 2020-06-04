@@ -84,84 +84,96 @@ const params: Twit.Params = {
 
 const stream: Twit.Stream = T.stream('statuses/filter', params);
 
-const onTweet = (tweet: any) => {
-  if (isTweetFarsi(tweet) && isTweetNotAReply(tweet)) {
-    const hashtagsOfCurrentTweet: string[] = [];
+/**
+ * onTweet handler - Runs for each tweet that comes from the stream
+ * @param tweet - The tweet object
+ * @return void
+ */
+const onTweet = (tweet: any): void => {
+  if (!isTweetFarsi(tweet)) {
+    return;
+  }
 
-    tweet.$tweetText = getTweetFullText(tweet);
+  if (isTweetAReply(tweet)) {
+    return;
+  }
 
-    if (hasLessThanFourHashtags(tweet)) {
-      tweet.entities.hashtags.map((val: { text: string }) => (
-        hashtagsOfCurrentTweet.push(`#${val.text}`)
-      ));
+  if (!hasLessThanFourHashtags(tweet)) {
+    return;
+  }
 
-      let id = 0;
+  if (isBlackListed(tweet)) {
+    return;
+  }
 
-      if (isNotBlackListed(tweet)) {
-        if (getIntersectionCount(interests, hashtagsOfCurrentTweet)) {
-          id = tweet.id_str;
-        } else {
-          const tweetTextWithoutURLs: string = removeURLs(tweet.$tweetText);
+  const hashtagsOfCurrentTweet: string[] = [];
+  tweet.$tweetText = getTweetFullText(tweet);
 
-          const tweetTextWithoutSuspiciousWords: string = removeSuspiciousWords(
-            tweetTextWithoutURLs,
-          );
+  tweet.entities.hashtags.map((val: { text: string }) => (
+    hashtagsOfCurrentTweet.push(`#${val.text}`)
+  ));
 
-          const hasInterestingWords: boolean = interests.some(
-            (interest: string) => (
-              tweetTextWithoutSuspiciousWords.search(
-                new RegExp(interest.toLowerCase()),
-              ) > -1
-            ),
-          );
+  let id = 0;
 
-          const hasUninterestingWords: boolean = blackListedWords.some(
-            (blackListedWord: string) => (
-              tweetTextWithoutSuspiciousWords.search(
-                new RegExp(blackListedWord.toLowerCase()),
-              ) > -1
-            ),
-          );
+  if (getIntersectionCount(interests, hashtagsOfCurrentTweet)) {
+    const tweetTextWithoutURLs: string = removeURLs(tweet.$tweetText);
 
-          id = hasInterestingWords
-          && !hasUninterestingWords
-          && !hasURLs(tweet)
-          && !isRetweeted(tweet)
-            ? tweet.id_str
-            : 0;
-        }
-      }
+    const tweetTextWithoutSuspiciousWords: string = removeSuspiciousWords(
+      tweetTextWithoutURLs,
+    );
 
-      if (id) {
-        if (!isDebugModeEnabled()) {
-          retweet(id)
-            .then(({ message }) => {
-              logSuccess(message);
+    const hasInterestingWords: boolean = interests.some(
+      (interest: string) => (
+        tweetTextWithoutSuspiciousWords.search(
+          new RegExp(interest.toLowerCase()),
+        ) > -1
+      ),
+    );
 
-              favourite(id)
-                .then(({ message: m }) => {
-                  logSuccess(m);
-                })
-                .catch((err) => {
-                  emitter.emit('bot-error', err);
-                });
+    const hasUninterestingWords: boolean = blackListedWords.some(
+      (blackListedWord: string) => (
+        tweetTextWithoutSuspiciousWords.search(
+          new RegExp(blackListedWord.toLowerCase()),
+        ) > -1
+      ),
+    );
+
+    id = hasInterestingWords
+    && !hasUninterestingWords
+    && !hasURLs(tweet)
+    && !isRetweeted(tweet)
+      ? tweet.id_str
+      : 0;
+  }
+
+  if (id) {
+    if (isDebugModeEnabled()) {
+      writeToFile(tweet.$tweetText);
+    } else {
+      retweet(id)
+        .then(({ message }) => {
+          logSuccess(message);
+
+          favourite(id)
+            .then(({ message: m }) => {
+              logSuccess(m);
             })
             .catch((err) => {
               emitter.emit('bot-error', err);
             });
-        } else {
-          writeToFile(tweet.$tweetText);
-        }
-
-        store(tweet)
-          .then(({ message }) => {
-            logSuccess(message);
-          })
-          .catch((err) => {
-            emitter.emit('bot-error', err);
-          });
-      }
+        })
+        .catch((err) => {
+          emitter.emit('bot-error', err);
+        });
     }
+
+    store(tweet)
+      .then(({ message }) => {
+        logSuccess(message);
+      })
+      .catch((err) => {
+        emitter.emit('bot-error', err);
+      });
   }
 };
 
