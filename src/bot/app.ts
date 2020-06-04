@@ -24,7 +24,7 @@ import {
   store,
   removeSuspiciousWords,
   removeURLs,
-  isNotBlackListed,
+  isBlackListed,
   getIntersectionCount,
   hasLessThanFourHashtags,
   hasURLs,

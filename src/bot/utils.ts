@@ -238,8 +238,8 @@ export const store = (tweet: any): Promise<Message> => (
  * @param {string} userId
  * @return {boolean}
  */
-export const isNotBlackListed = (userId: string): boolean => (
-  !blackListedAccounts.includes(userId)
+export const isBlackListed = (userId: string): boolean => (
+  blackListedAccounts.includes(userId)
 );
 
 /**
