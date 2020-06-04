@@ -17,18 +17,14 @@ import {
 import {
   getTweetFullText,
   isDebugModeEnabled,
-  isTweetFarsi,
-  isTweetAReply,
   retweet,
   favourite,
   store,
   removeSuspiciousWords,
   removeURLs,
-  isBlackListed,
   getIntersectionCount,
-  hasLessThanFourHashtags,
   hasURLs,
-  isRetweeted,
+  isRetweeted, validateInitialTweet,
 } from './utils';
 
 /* =======================================
@@ -90,19 +86,7 @@ const stream: Twit.Stream = T.stream('statuses/filter', params);
  * @return void
  */
 const onTweet = (tweet: any): void => {
-  if (!isTweetFarsi(tweet)) {
-    return;
-  }
-
-  if (isTweetAReply(tweet)) {
-    return;
-  }
-
-  if (!hasLessThanFourHashtags(tweet)) {
-    return;
-  }
-
-  if (isBlackListed(tweet)) {
+  if (!validateInitialTweet(tweet)) {
     return;
   }
 

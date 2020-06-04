@@ -268,3 +268,32 @@ export const hasLessThanFourHashtags = (tweet: any): boolean => (
  * @return {boolean}
  */
 export const isRetweeted = (tweet: any): boolean => tweet.retweeted;
+
+/**
+ * Validate the tweet properties for further process:
+ *   1. Checks the language of the tweet
+ *   2. Checks whether the tweet is a reply or not
+ *   3. Checks whether the tweet has for or less hashtags "#"
+ *   4. See if the user is blocked or not
+ * @param {*} tweet - The tweet object
+ * @return {boolean} - Whether the tweet is validated or not
+ */
+export const validateInitialTweet = (tweet: any): boolean => {
+  if (!isTweetFarsi(tweet)) {
+    return false;
+  }
+
+  if (isTweetAReply(tweet)) {
+    return false;
+  }
+
+  if (!hasLessThanFourHashtags(tweet)) {
+    return false;
+  }
+
+  if (isBlackListed(tweet)) {
+    return false;
+  }
+
+  return true;
+};
