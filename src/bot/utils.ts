@@ -119,9 +119,9 @@ export const isTweetFarsi = (tweet: any): boolean => tweet.lang === 'fa';
  * @param {*} tweet - The tweet object
  * @return {boolean}
  */
-export const isTweetNotAReply = (tweet: any): boolean => (
+export const isTweetAReply = (tweet: any): boolean => (
   // Polyfill to check whether a tweet is a reply or not
-  !tweet.in_reply_to_status_id && !tweet.in_reply_to_user_id
+  tweet.in_reply_to_status_id && !tweet.in_reply_to_user_id
 );
 
 /**

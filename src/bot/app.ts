@@ -18,7 +18,7 @@ import {
   getTweetFullText,
   isDebugModeEnabled,
   isTweetFarsi,
-  isTweetNotAReply,
+  isTweetAReply,
   retweet,
   favourite,
   store,
