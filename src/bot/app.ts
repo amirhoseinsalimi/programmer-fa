@@ -84,7 +84,7 @@ const params: Twit.Params = {
 
 const stream: Twit.Stream = T.stream('statuses/filter', params);
 
-stream.on('tweet', (tweet: any) => {
+const onTweet = (tweet: any) => {
   if (isTweetFarsi(tweet) && isTweetNotAReply(tweet)) {
     const hashtagsOfCurrentTweet: string[] = [];
 
@@ -163,7 +163,9 @@ stream.on('tweet', (tweet: any) => {
       }
     }
   }
-});
+};
+
+stream.on('tweet', onTweet);
 
 stream.on('error', (err: any) => {
   emitter.emit('bot-error', err);
