@@ -115,7 +115,7 @@ export const isTweetExtended = (tweet: any): boolean => (
 export const isTweetFarsi = (tweet: any): boolean => tweet.lang === 'fa';
 
 /**
- *
+ * Whether a tweet is a reply or not.
  * @param {*} tweet - The tweet object
  * @return {boolean}
  */
@@ -125,7 +125,7 @@ export const isTweetNotAReply = (tweet: any): boolean => (
 );
 
 /**
- *
+ * Return the full text of the tweet
  * @param {*} tweet - The tweet object
  * @return {string}
  */
