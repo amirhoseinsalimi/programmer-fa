@@ -45,49 +45,55 @@ export const logSuccess = (...args: any): void => {
 
 export const writeToFile = (text: string | Buffer): void => {
   if (isDebugModeEnabled()) {
-    const formattedText = `
-    \n=======================================
-    \n${text}
-    \n=======================================
-    `;
+    fs.access(`${process.cwd()}/logs`, (err) => {
+      if (err && err.code === 'ENOENT') {
+        fs.mkdir(`${process.cwd()}/logs`, (e) => {
+          if (e) {
+            logError('Couldn\'t create "logs" dir. Exiting...');
+          }
+        });
+      } else {
+        const formattedText = `
+        \n=======================================
+        \n${text}
+        \n=======================================
+        `;
 
-    const d: Date = new Date();
-    const fileName = `${d.getFullYear()}-${d.getMonth()
-      + 1}-${d.getDate()} - H${d.getHours()}.log`;
+        const d: Date = new Date();
+        const fileName = `${d.getFullYear()}-${d.getMonth()
+          + 1}-${d.getDate()} - H${d.getHours()}.log`;
 
-    fs.appendFile(
-      `logs/${fileName}`,
-      formattedText,
-      typeof text === 'string' ? 'utf8' : '',
-      (err) => {
-        if (err) logError(err);
-      },
-    );
+        fs.appendFile(
+          `logs/${fileName}`,
+          formattedText,
+          typeof text === 'string' ? 'utf8' : '',
+          (error) => {
+            if (error) logError(error);
+          },
+        );
+      }
+    });
   }
 };
 
 export const printWelcomeBanner = (): void => {
-  fs.readFile(
-    `${process.cwd()}/.banner`,
-    'utf8',
-    (err, banner: string) => {
-      if (err) {
-        logError(err);
-        return;
-      }
+  fs.readFile(`${process.cwd()}/.banner`, 'utf8', (err, banner: string) => {
+    if (err) {
+      logError(err);
+      return;
+    }
 
-      console.log(banner);
+    logInfo(banner);
 
-      logSuccess('Bot has been started...');
+    logSuccess('Bot has been started...');
 
-      if (isDebugModeEnabled()) {
-        logInfo(
-          'The bot has been started in development environment, so it does not'
-            + ' emit retweets, instead stores them in the database and logs the text of'
-            + ' the tweets in a file. To change this behavior set `NODE_ENV=production`'
-            + ' in the .env file',
-        );
-      }
-    },
-  );
+    if (isDebugModeEnabled()) {
+      logInfo(
+        'The bot has been started in development environment, so it does not'
+        + ' emit retweets, instead stores them in the database and logs the text of'
+        + ' the tweets in a file. To change this behavior set `NODE_ENV=production`'
+        + ' in the .env file',
+      );
+    }
+  });
 };

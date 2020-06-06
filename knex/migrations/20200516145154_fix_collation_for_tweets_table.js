@@ -1,7 +1,7 @@
 exports.up = (knex) => knex.schema
   .hasTable('tweets')
   .then((exists) => {
-    if (!exists) {
+    if (exists) {
       knex.schema.alterTable('tweets', (table) => {
         table.collate('utf8mb4_unicode_ci');
       });

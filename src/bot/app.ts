@@ -17,18 +17,14 @@ import {
 import {
   getTweetFullText,
   isDebugModeEnabled,
-  isTweetFarsi,
-  isTweetNotAReply,
   retweet,
   favourite,
   store,
   removeSuspiciousWords,
   removeURLs,
-  isNotBlackListed,
   getIntersectionCount,
-  hasLessThanFourHashtags,
   hasURLs,
-  isRetweeted,
+  isRetweeted, validateInitialTweet,
 } from './utils';
 
 /* =======================================
@@ -84,84 +80,90 @@ const params: Twit.Params = {
 
 const stream: Twit.Stream = T.stream('statuses/filter', params);
 
-stream.on('tweet', (tweet: any) => {
-  if (isTweetFarsi(tweet) && isTweetNotAReply(tweet)) {
-    const hashtagsOfCurrentTweet: string[] = [];
+/**
+ * onTweet handler - Runs for each tweet that comes from the stream
+ * @param tweet - The tweet object
+ * @return void
+ */
+const onTweet = (tweet: any): void => {
+  if (!validateInitialTweet(tweet)) {
+    return;
+  }
 
-    tweet.$tweetText = getTweetFullText(tweet);
+  const hashtagsOfCurrentTweet: string[] = [];
+  tweet.$tweetText = getTweetFullText(tweet);
 
-    if (hasLessThanFourHashtags(tweet)) {
-      tweet.entities.hashtags.map((val: { text: string }) => hashtagsOfCurrentTweet.push(`#${val.text}`));
+  tweet.entities.hashtags.map((val: { text: string }) => (
+    hashtagsOfCurrentTweet.push(`#${val.text}`)
+  ));
 
-      let id = 0;
+  let id = 0;
 
-      if (isNotBlackListed(tweet)) {
-        if (getIntersectionCount(interests, hashtagsOfCurrentTweet)) {
-          id = tweet.id_str;
-        } else {
-          const tweetTextWithoutURLs: string = removeURLs(tweet.$tweetText);
+  if (getIntersectionCount(interests, hashtagsOfCurrentTweet)) {
+    id = tweet.id_str;
+  } else {
+    const tweetTextWithoutURLs: string = removeURLs(tweet.$tweetText);
 
-          const tweetTextWithoutSuspiciousWords: string = removeSuspiciousWords(
-            tweetTextWithoutURLs,
-          );
+    const tweetTextWithoutSuspiciousWords: string = removeSuspiciousWords(
+      tweetTextWithoutURLs,
+    );
 
-          const hasInterestingWords: boolean = interests.some(
-            (interest: string) => (
-              tweetTextWithoutSuspiciousWords.search(
-                new RegExp(interest.toLowerCase()),
-              ) > -1
-            ),
-          );
+    const hasInterestingWords: boolean = interests.some(
+      (interest: string) => (
+        tweetTextWithoutSuspiciousWords.search(
+          new RegExp(interest.toLowerCase()),
+        ) > -1
+      ),
+    );
 
-          const hasUninterestingWords: boolean = blackListedWords.some(
-            (blackListedWord: string) => (
-              tweetTextWithoutSuspiciousWords.search(
-                new RegExp(blackListedWord.toLowerCase()),
-              ) > -1
-            ),
-          );
+    const hasUninterestingWords: boolean = blackListedWords.some(
+      (blackListedWord: string) => (
+        tweetTextWithoutSuspiciousWords.search(
+          new RegExp(blackListedWord.toLowerCase()),
+        ) > -1
+      ),
+    );
 
-          id = hasInterestingWords
-            && !hasUninterestingWords
-            && !hasURLs(tweet)
-            && !isRetweeted(tweet)
-            ? tweet.id_str
-            : 0;
-        }
-      }
+    id = hasInterestingWords
+    && !hasUninterestingWords
+    && !hasURLs(tweet)
+    && !isRetweeted(tweet)
+      ? tweet.id_str
+      : 0;
+  }
 
-      if (id) {
-        if (!isDebugModeEnabled()) {
-          retweet(id)
-            .then(({ message }) => {
-              logSuccess(message);
+  if (id) {
+    if (isDebugModeEnabled()) {
+      writeToFile(tweet.$tweetText);
+    } else {
+      retweet(id)
+        .then(({ message }) => {
+          logSuccess(message);
 
-              favourite(id)
-                .then(({ message: m }) => {
-                  logSuccess(m);
-                })
-                .catch((err) => {
-                  emitter.emit('bot-error', err);
-                });
+          favourite(id)
+            .then(({ message: m }) => {
+              logSuccess(m);
             })
             .catch((err) => {
               emitter.emit('bot-error', err);
             });
-        } else {
-          writeToFile(tweet.$tweetText);
-        }
-
-        store(tweet)
-          .then(({ message }) => {
-            logSuccess(message);
-          })
-          .catch((err) => {
-            emitter.emit('bot-error', err);
-          });
-      }
+        })
+        .catch((err) => {
+          emitter.emit('bot-error', err);
+        });
     }
+
+    store(tweet)
+      .then(({ message }) => {
+        logSuccess(message);
+      })
+      .catch((err) => {
+        emitter.emit('bot-error', err);
+      });
   }
-});
+};
+
+stream.on('tweet', onTweet);
 
 stream.on('error', (err: any) => {
   emitter.emit('bot-error', err);

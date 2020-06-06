@@ -115,17 +115,17 @@ export const isTweetExtended = (tweet: any): boolean => (
 export const isTweetFarsi = (tweet: any): boolean => tweet.lang === 'fa';
 
 /**
- *
+ * Whether a tweet is a reply or not.
  * @param {*} tweet - The tweet object
  * @return {boolean}
  */
-export const isTweetNotAReply = (tweet: any): boolean => (
+export const isTweetAReply = (tweet: any): boolean => (
   // Polyfill to check whether a tweet is a reply or not
-  !tweet.in_reply_to_status_id && !tweet.in_reply_to_user_id
+  tweet.in_reply_to_status_id || tweet.in_reply_to_user_id
 );
 
 /**
- *
+ * Return the full text of the tweet
  * @param {*} tweet - The tweet object
  * @return {string}
  */
@@ -238,8 +238,8 @@ export const store = (tweet: any): Promise<Message> => (
  * @param {string} userId
  * @return {boolean}
  */
-export const isNotBlackListed = (userId: string): boolean => (
-  !blackListedAccounts.includes(userId)
+export const isBlackListed = (userId: string): boolean => (
+  blackListedAccounts.includes(userId)
 );
 
 /**
@@ -268,3 +268,32 @@ export const hasLessThanFourHashtags = (tweet: any): boolean => (
  * @return {boolean}
  */
 export const isRetweeted = (tweet: any): boolean => tweet.retweeted;
+
+/**
+ * Validate the tweet properties for further process:
+ *   1. Checks the language of the tweet
+ *   2. Checks whether the tweet is a reply or not
+ *   3. Checks whether the tweet has for or less hashtags "#"
+ *   4. See if the user is blocked or not
+ * @param {*} tweet - The tweet object
+ * @return {boolean} - Whether the tweet is validated or not
+ */
+export const validateInitialTweet = (tweet: any): boolean => {
+  if (!isTweetFarsi(tweet)) {
+    return false;
+  }
+
+  if (isTweetAReply(tweet)) {
+    return false;
+  }
+
+  if (!hasLessThanFourHashtags(tweet)) {
+    return false;
+  }
+
+  if (isBlackListed(tweet)) {
+    return false;
+  }
+
+  return true;
+};
