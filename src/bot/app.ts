@@ -100,6 +100,8 @@ const onTweet = (tweet: any): void => {
   let id = 0;
 
   if (getIntersectionCount(interests, hashtagsOfCurrentTweet)) {
+    id = tweet.id_str;
+  } else {
     const tweetTextWithoutURLs: string = removeURLs(tweet.$tweetText);
 
     const tweetTextWithoutSuspiciousWords: string = removeSuspiciousWords(
