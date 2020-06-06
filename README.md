@@ -7,7 +7,7 @@
 
 <p></p>
 
-A simple bot that brings persian tweets about programming to your feed.
+A simple bot that brings Persian tweets about programming to your feed.
 
 ### Requirements to run the bot
 
@@ -39,8 +39,8 @@ For Run `npm start`
 * [ ] Let "log verbosity level" and "file storing" to be set
 * [ ] Don't store or log `RT @username`
 * [ ] Log the details of retweets in dev. env. (Name, date, text, matched words, link, etc.)
-* [ ] Full implantation of the database
+* [ ] Full implementation of the database
 
 
 <br />
-<small>A small side project done in [https://expteam.ir](https://expteam.ir)</small>
+<small>A small side project done in https://expteam.ir</small>
