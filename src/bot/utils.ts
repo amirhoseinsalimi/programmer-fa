@@ -234,13 +234,20 @@ export const store = (tweet: any): Promise<Message> => (
 );
 
 /**
- * Check if the user is not in the blacklist
- * @param {string} userId
+ * Check if the user is in the blacklist
+ * @param {*} tweet
  * @return {boolean}
  */
-export const isBlackListed = (userId: string): boolean => (
-  blackListedAccounts.includes(userId)
-);
+export const isBlackListed = (tweet: any): boolean => {
+  const originalUserId = tweet.retweet_status?.user?.id_str;
+  const retweetedUserId = tweet.user.id_str;
+
+  if (originalUserId) {
+    return blackListedAccounts.includes(originalUserId);
+  }
+
+  return blackListedAccounts.includes(retweetedUserId);
+};
 
 /**
  * Returns the number of intersections b/w two arrays
