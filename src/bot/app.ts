@@ -24,7 +24,7 @@ import {
   removeURLs,
   getIntersectionCount,
   hasURLs,
-  isRetweeted, validateInitialTweet,
+  isRetweeted, validateInitialTweet, removeRetweetNotation,
 } from './utils';
 
 /* =======================================
@@ -91,7 +91,7 @@ const onTweet = (tweet: any): void => {
   }
 
   const hashtagsOfCurrentTweet: string[] = [];
-  tweet.$tweetText = getTweetFullText(tweet);
+  tweet.$tweetText = removeRetweetNotation(getTweetFullText(tweet));
 
   tweet.entities.hashtags.map((val: { text: string }) => (
     hashtagsOfCurrentTweet.push(`#${val.text}`)

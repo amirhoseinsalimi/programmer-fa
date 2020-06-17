@@ -317,3 +317,7 @@ export const validateInitialTweet = (tweet: any): boolean => {
 
   return true;
 };
+
+export const removeRetweetNotation = (tweetText: string): string => (
+  tweetText.replace(/(RT @.*?:)/m, '').trim()
+);
