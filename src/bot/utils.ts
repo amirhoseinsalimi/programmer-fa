@@ -255,11 +255,8 @@ export const isBlackListed = (tweet: any): boolean => {
   const originalUserId: string = tweet.retweet_status?.user?.id_str;
   const retweetedUserId: string = tweet.user.id_str;
 
-  if (originalUserId) {
-    return blackListedAccounts.includes(originalUserId);
-  }
-
-  return blackListedAccounts.includes(retweetedUserId);
+  return blackListedAccounts.includes(retweetedUserId)
+    || blackListedAccounts.includes(originalUserId);
 };
 
 /**
