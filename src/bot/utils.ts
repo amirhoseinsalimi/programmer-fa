@@ -214,6 +214,19 @@ export const store = (tweet: any): Promise<Message> => (
       $tweetText,
     } = tweet;
 
+    const {
+      id_str: userIdStr,
+      screen_name,
+      name,
+    } = user;
+
+    knex('users')
+      .insert({
+        id_str: userIdStr,
+        screen_name,
+        name,
+      });
+
     knex('tweets')
       .insert({
         tweet_id: id_str,
@@ -234,13 +247,20 @@ export const store = (tweet: any): Promise<Message> => (
 );
 
 /**
- * Check if the user is not in the blacklist
- * @param {string} userId
+ * Check if the user is in the blacklist
+ * @param {*} tweet
  * @return {boolean}
  */
-export const isBlackListed = (userId: string): boolean => (
-  blackListedAccounts.includes(userId)
-);
+export const isBlackListed = (tweet: any): boolean => {
+  const originalUserId: string = tweet.retweet_status?.user?.id_str;
+  const retweetedUserId: string = tweet.user.id_str;
+
+  if (originalUserId) {
+    return blackListedAccounts.includes(originalUserId);
+  }
+
+  return blackListedAccounts.includes(retweetedUserId);
+};
 
 /**
  * Returns the number of intersections b/w two arrays
@@ -297,3 +317,7 @@ export const validateInitialTweet = (tweet: any): boolean => {
 
   return true;
 };
+
+export const removeRetweetNotation = (tweetText: string): string => (
+  tweetText.replace(/(RT @.*?:)/m, '').trim()
+);
