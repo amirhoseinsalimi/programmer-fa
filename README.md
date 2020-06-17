@@ -37,7 +37,7 @@ For Run `npm start`
 * [ ] Enhance code modularity
 * [ ] Separate Development & Debug env. variables
 * [ ] Let "log verbosity level" and "file storing" to be set
-* [ ] Don't store or log `RT @username`
+* [x] Don't store or log `RT @username`
 * [ ] Log the details of retweets in dev. env. (Name, date, text, matched words, link, etc.)
 * [ ] Full implantation of the database
 
