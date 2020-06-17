@@ -252,8 +252,8 @@ export const store = (tweet: any): Promise<Message> => (
  * @return {boolean}
  */
 export const isBlackListed = (tweet: any): boolean => {
-  const originalUserId = tweet.retweet_status?.user?.id_str;
-  const retweetedUserId = tweet.user.id_str;
+  const originalUserId: string = tweet.retweet_status?.user?.id_str;
+  const retweetedUserId: string = tweet.user.id_str;
 
   if (originalUserId) {
     return blackListedAccounts.includes(originalUserId);
