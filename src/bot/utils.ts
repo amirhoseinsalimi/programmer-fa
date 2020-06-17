@@ -214,6 +214,19 @@ export const store = (tweet: any): Promise<Message> => (
       $tweetText,
     } = tweet;
 
+    const {
+      id_str: userIdStr,
+      screen_name,
+      name,
+    } = user;
+
+    knex('users')
+      .insert({
+        id_str: userIdStr,
+        screen_name,
+        name,
+      });
+
     knex('tweets')
       .insert({
         tweet_id: id_str,
