@@ -18,37 +18,17 @@ interface Message {
 
 /**
  * Get an array of all occurrences of a substring in a string
- * @param {string} subStr - The sub-string to look for its occurrences
  * @param {string} str - The full string to search in
- * @param {boolean} [caseSensitive = false] - Case sensitivity matters?
  * @return {string[]}
  */
-export const getAllOccurrences = (
-  subStr: string,
-  str: string,
-  caseSensitive = false,
-): number[] => {
-  const subStrLen: number = subStr.length;
-
-  if (subStrLen === 0) {
-    return [];
+export const getCountOfHashtags = (str: string): number => {
+  if (str.length === 0) {
+    return 0;
   }
 
-  let startIndex = 0;
-  let index = 0;
-  const indices: number[] = [];
+  const matches: RegExpMatchArray = str.match(/#.*?/mgi);
 
-  if (!caseSensitive) {
-    str = str.toLowerCase();
-    subStr = subStr.toLowerCase();
-  }
-
-  while ((index = str.indexOf(subStr, startIndex)) > -1) {
-    indices.push(index);
-    startIndex = index + subStrLen;
-  }
-
-  return indices;
+  return (matches && matches.length) ? matches.length : 0;
 };
 
 /**
@@ -255,11 +235,8 @@ export const isBlackListed = (tweet: any): boolean => {
   const originalUserId: string = tweet.retweet_status?.user?.id_str;
   const retweetedUserId: string = tweet.user.id_str;
 
-  if (originalUserId) {
-    return blackListedAccounts.includes(originalUserId);
-  }
-
-  return blackListedAccounts.includes(retweetedUserId);
+  return blackListedAccounts.includes(retweetedUserId)
+    || blackListedAccounts.includes(originalUserId);
 };
 
 /**
@@ -273,13 +250,13 @@ export const getIntersectionCount = (arr1: string[], arr2: string[]): number => 
 );
 
 /**
- * Check if a tweet has 4 hashtags or less. See it as an ad-blocker.
+ * Check if a tweet has 5 hashtags or more. See it as an ad-blocker.
  * @param {*} tweet - The tweet object
  * @return {boolean}
  */
-export const hasLessThanFourHashtags = (tweet: any): boolean => (
-  getAllOccurrences('#', getTweetFullText(tweet), true).length <= 4
-  && tweet.entities.hashtags.length <= 4
+export const hasFiveHashtagsOrMore = (tweet: any): boolean => (
+  getCountOfHashtags(getTweetFullText(tweet)) >= 5
+  || tweet.entities.hashtags.length >= 5
 );
 
 /**
@@ -307,7 +284,7 @@ export const validateInitialTweet = (tweet: any): boolean => {
     return false;
   }
 
-  if (!hasLessThanFourHashtags(tweet)) {
+  if (hasFiveHashtagsOrMore(tweet)) {
     return false;
   }
 

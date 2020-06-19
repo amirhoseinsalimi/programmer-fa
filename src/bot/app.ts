@@ -24,7 +24,9 @@ import {
   removeURLs,
   getIntersectionCount,
   hasURLs,
-  isRetweeted, validateInitialTweet, removeRetweetNotation,
+  isRetweeted,
+  validateInitialTweet,
+  removeRetweetNotation,
 } from './utils';
 
 /* =======================================
