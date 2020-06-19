@@ -26,7 +26,9 @@ export const getCountOfHashtags = (str: string): number => {
     return 0;
   }
 
-  return str.match(/#.*?/mgi).length;
+  const matches: RegExpMatchArray = str.match(/#.*?/mgi);
+
+  return (matches && matches.length) ? matches.length : 0;
 };
 
 /**
@@ -253,7 +255,7 @@ export const getIntersectionCount = (arr1: string[], arr2: string[]): number => 
  * @return {boolean}
  */
 export const hasFiveHashtagsOrMore = (tweet: any): boolean => (
-  getCountOfHashtags(tweet.$tweetText) >= 5
+  getCountOfHashtags(getTweetFullText(tweet)) >= 5
   || tweet.entities.hashtags.length >= 5
 );
 
