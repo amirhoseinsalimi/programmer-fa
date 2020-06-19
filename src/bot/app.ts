@@ -24,7 +24,9 @@ import {
   removeURLs,
   getIntersectionCount,
   hasURLs,
-  isRetweeted, validateInitialTweet, removeRetweetNotation,
+  isRetweeted,
+  validateInitialTweet,
+  removeRetweetNotation,
 } from './utils';
 
 /* =======================================
@@ -86,12 +88,13 @@ const stream: Twit.Stream = T.stream('statuses/filter', params);
  * @return void
  */
 const onTweet = (tweet: any): void => {
+  tweet.$tweetText = removeRetweetNotation(getTweetFullText(tweet));
+
   if (!validateInitialTweet(tweet)) {
     return;
   }
 
   const hashtagsOfCurrentTweet: string[] = [];
-  tweet.$tweetText = removeRetweetNotation(getTweetFullText(tweet));
 
   tweet.entities.hashtags.map((val: { text: string }) => (
     hashtagsOfCurrentTweet.push(`#${val.text}`)

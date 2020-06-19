@@ -18,37 +18,15 @@ interface Message {
 
 /**
  * Get an array of all occurrences of a substring in a string
- * @param {string} subStr - The sub-string to look for its occurrences
  * @param {string} str - The full string to search in
- * @param {boolean} [caseSensitive = false] - Case sensitivity matters?
  * @return {string[]}
  */
-export const getAllOccurrences = (
-  subStr: string,
-  str: string,
-  caseSensitive = false,
-): number[] => {
-  const subStrLen: number = subStr.length;
-
-  if (subStrLen === 0) {
-    return [];
+export const getCountOfHashtags = (str: string): number => {
+  if (str.length === 0) {
+    return 0;
   }
 
-  let startIndex = 0;
-  let index = 0;
-  const indices: number[] = [];
-
-  if (!caseSensitive) {
-    str = str.toLowerCase();
-    subStr = subStr.toLowerCase();
-  }
-
-  while ((index = str.indexOf(subStr, startIndex)) > -1) {
-    indices.push(index);
-    startIndex = index + subStrLen;
-  }
-
-  return indices;
+  return str.match(/#.*?/mgi).length;
 };
 
 /**
