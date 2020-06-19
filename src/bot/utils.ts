@@ -248,13 +248,13 @@ export const getIntersectionCount = (arr1: string[], arr2: string[]): number => 
 );
 
 /**
- * Check if a tweet has 4 hashtags or less. See it as an ad-blocker.
+ * Check if a tweet has 5 hashtags or more. See it as an ad-blocker.
  * @param {*} tweet - The tweet object
  * @return {boolean}
  */
-export const hasLessThanFourHashtags = (tweet: any): boolean => (
-  getAllOccurrences('#', getTweetFullText(tweet), true).length <= 4
-  && tweet.entities.hashtags.length <= 4
+export const hasFiveHashtagsOrMore = (tweet: any): boolean => (
+  getCountOfHashtags(tweet.$tweetText) >= 5
+  || tweet.entities.hashtags.length >= 5
 );
 
 /**
@@ -282,7 +282,7 @@ export const validateInitialTweet = (tweet: any): boolean => {
     return false;
   }
 
-  if (!hasLessThanFourHashtags(tweet)) {
+  if (hasFiveHashtagsOrMore(tweet)) {
     return false;
   }
 
