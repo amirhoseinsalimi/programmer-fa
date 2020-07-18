@@ -27,6 +27,7 @@ import {
   isRetweetedByMyself,
   validateInitialTweet,
   removeRetweetNotation,
+  isRetweet,
 } from './utils';
 
 /* =======================================
@@ -95,6 +96,12 @@ const onTweet = (tweet: any): void => {
   const hashtagsOfCurrentTweet: string[] = [];
   tweet.$tweetText = removeRetweetNotation(getTweetFullText(tweet));
 
+  tweet.$retweetText = '';
+
+  if (isRetweet(tweet)) {
+    tweet.$retweetText = removeRetweetNotation(getTweetFullText(tweet.retweeted_status));
+  }
+
   tweet.entities.hashtags.map((val: { text: string }) => (
     hashtagsOfCurrentTweet.push(`#${val.text}`)
   ));
@@ -105,9 +112,13 @@ const onTweet = (tweet: any): void => {
     id = tweet.id_str;
   } else {
     const tweetTextWithoutURLs: string = removeURLs(tweet.$tweetText);
+    const reTweetTextWithoutURLs: string = removeURLs(tweet.$retweetText);
 
     const tweetTextWithoutSuspiciousWords: string = removeSuspiciousWords(
       tweetTextWithoutURLs,
+    );
+    const reTweetTextWithoutSuspiciousWords: string = removeSuspiciousWords(
+      reTweetTextWithoutURLs,
     );
 
     const hasInterestingWords: boolean = interests.some(
@@ -118,7 +129,7 @@ const onTweet = (tweet: any): void => {
       ),
     );
 
-    const hasUninterestingWords: boolean = blackListedWords.some(
+    const hasUninterestingWordsInTweetText: boolean = blackListedWords.some(
       (blackListedWord: string) => (
         tweetTextWithoutSuspiciousWords.search(
           new RegExp(blackListedWord.toLowerCase()),
@@ -126,12 +137,19 @@ const onTweet = (tweet: any): void => {
       ),
     );
 
+    const hasUninterestingWordsInRetweetText: boolean = blackListedWords.some(
+      (blackListedWord: string) => (
+        reTweetTextWithoutSuspiciousWords.search(
+          new RegExp(blackListedWord.toLowerCase()),
+        ) > -1
+      ),
+    );
+
     id = hasInterestingWords
-    && !hasUninterestingWords
-    && !hasURLs(tweet)
-    && !isRetweetedByMyself(tweet)
-      ? tweet.id_str
-      : 0;
+      && !hasUninterestingWordsInTweetText
+      && !hasUninterestingWordsInRetweetText
+      && !hasURLs(tweet)
+      && !isRetweetedByMyself(tweet) ? tweet.id_str : 0;
   }
 
   if (id) {
