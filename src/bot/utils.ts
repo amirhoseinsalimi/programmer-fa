@@ -223,7 +223,7 @@ export const store = (tweet: any): Promise<Message> => (
         tweet_id: id_str,
         text: $tweetText,
         source,
-        is_retweet: false, // for now
+        is_retweet: isRetweet(tweet),
         in_reply_to_status_id,
         in_reply_to_user_id,
         user_id: user.id_str,
