@@ -95,13 +95,24 @@ export const isTweetExtended = (tweet: any): boolean => (
 export const isTweetFarsi = (tweet: any): boolean => tweet.lang === 'fa';
 
 /**
+ * Whether a tweet is a retweet or not.
+ * @param tweet
+ * @return {boolean}
+ */
+export const isRetweet = (tweet: any): boolean => (
+  Object.prototype.hasOwnProperty.call(tweet, 'retweeted_status')
+);
+
+/**
  * Whether a tweet is a reply or not.
  * @param {*} tweet - The tweet object
  * @return {boolean}
  */
 export const isTweetAReply = (tweet: any): boolean => (
   // Polyfill to check whether a tweet is a reply or not
-  tweet.in_reply_to_status_id || tweet.in_reply_to_user_id
+  tweet.in_reply_to_status_id
+  || tweet.in_reply_to_user_id
+  || isRetweet(tweet) ? (tweet.retweeted_status || tweet.in_reply_to_status_id) : false
 );
 
 /**
@@ -212,7 +223,7 @@ export const store = (tweet: any): Promise<Message> => (
         tweet_id: id_str,
         text: $tweetText,
         source,
-        is_retweet: false, // for now
+        is_retweet: isRetweet(tweet),
         in_reply_to_status_id,
         in_reply_to_user_id,
         user_id: user.id_str,
@@ -264,7 +275,7 @@ export const hasFiveHashtagsOrMore = (tweet: any): boolean => (
  * @param {*} tweet - The tweet object
  * @return {boolean}
  */
-export const isRetweeted = (tweet: any): boolean => tweet.retweeted;
+export const isRetweetedByMyself = (tweet: any): boolean => tweet.retweeted;
 
 /**
  * Validate the tweet properties for further process:
