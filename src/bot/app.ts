@@ -24,7 +24,7 @@ import {
   removeURLs,
   getIntersectionCount,
   hasURLs,
-  isRetweeted,
+  isRetweetedByMyself,
   validateInitialTweet,
   removeRetweetNotation,
 } from './utils';
@@ -129,7 +129,7 @@ const onTweet = (tweet: any): void => {
     id = hasInterestingWords
     && !hasUninterestingWords
     && !hasURLs(tweet)
-    && !isRetweeted(tweet)
+    && !isRetweetedByMyself(tweet)
       ? tweet.id_str
       : 0;
   }

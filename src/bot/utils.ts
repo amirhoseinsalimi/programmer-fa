@@ -95,6 +95,15 @@ export const isTweetExtended = (tweet: any): boolean => (
 export const isTweetFarsi = (tweet: any): boolean => tweet.lang === 'fa';
 
 /**
+ * Whether a tweet is a retweet or not.
+ * @param tweet
+ * @return {boolean}
+ */
+export const isRetweet = (tweet: any): boolean => (
+  Object.prototype.hasOwnProperty.call(tweet, 'retweeted_status')
+);
+
+/**
  * Whether a tweet is a reply or not.
  * @param {*} tweet - The tweet object
  * @return {boolean}
@@ -264,7 +273,7 @@ export const hasFiveHashtagsOrMore = (tweet: any): boolean => (
  * @param {*} tweet - The tweet object
  * @return {boolean}
  */
-export const isRetweeted = (tweet: any): boolean => tweet.retweeted;
+export const isRetweetedByMyself = (tweet: any): boolean => tweet.retweeted;
 
 /**
  * Validate the tweet properties for further process:
