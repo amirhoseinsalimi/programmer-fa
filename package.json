@@ -32,7 +32,6 @@
   },
   "devDependencies": {
     "@types/dotenv": "^8.2.0",
-    "@types/lodash": "^4.14.152",
     "@types/mysql": "^2.15.12",
     "@types/node": "^13.13.9",
     "@types/twit": "^2.2.24",
