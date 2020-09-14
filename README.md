@@ -1,9 +1,6 @@
 # Programmer Farsi Twitter Bot 
 
-<a href="https://twitter.com/intent/follow?screen_name=programmer_fa">
-  <img src="https://img.shields.io/twitter/follow/programmer_fa?style=social&logo=twitter"
-    alt="follow on Twitter">
-</a>
+[![Follow on Twitter](http://img.shields.io/twitter/follow/programmer_fa.svg?label=follow+@programmer_fa)](https://twitter.com/programmer_fa)
 
 <p></p>
 
