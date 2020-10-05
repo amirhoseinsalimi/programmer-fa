@@ -17,7 +17,7 @@ interface Message {
 }
 
 /**
- * Get an array of all occurrences of a substring in a string
+ * Get the number of hashtags of a tweet
  * @param {string} str - The full string to search in
  * @return {string[]}
  */
