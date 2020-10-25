@@ -9,6 +9,7 @@
     "stop": "pm2 stop programmer-fa-bot",
     "dev": "tsc --watch",
     "build": "tsc",
+    "sort": "npm run build && node dist/cli/sort-words.js && git add --all ./src/data/ && git commit -m \"Update words!\"",
     "bot:dev": "npm run bot:build && NODE_ENV=development nodemon --watch 'src/bot/**/*.ts' --exec 'ts-node' src/bot/app.ts",
     "bot:build": "tsc -p src/bot/tsconfig.json",
     "test": "echo \"Error: no test specified\" && exit 1",
