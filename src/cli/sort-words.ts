@@ -26,11 +26,13 @@ const writeFilePromisified = promisify(writeFile);
 
       const data = await readFilePromisified(currentFile);
 
-      const dataObj = JSON.parse(data.toString());
+      const dataArray = JSON.parse(data.toString());
 
-      dataObj.sort();
+      const dataArrayUnique = [...new Set(dataArray)];
 
-      await writeFilePromisified(currentFile, JSON.stringify(dataObj, null, 2));
+      dataArrayUnique.sort();
+
+      await writeFilePromisified(currentFile, JSON.stringify(dataArrayUnique, null, 2));
     });
   } catch (e) {
     console.log(e);
