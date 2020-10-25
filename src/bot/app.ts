@@ -69,11 +69,11 @@ wordsToFollow.forEach((word: string) => {
   let w: string;
 
   // Replace space and half-space w/ an underscore
-  w = word.replace(/[ ‌]/g, '_');
+  w = word.replace(/[ ‌]/gi, '_');
   // Add a number sign at the beginning of the word
   w = `#${w}`;
 
-  interests.push(w);
+  interests.push(w.toLowerCase());
 });
 
 const params: Twit.Params = {
