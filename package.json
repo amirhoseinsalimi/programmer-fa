@@ -4,9 +4,11 @@
   "description": "‏‏‏‏‏‏‏‏‏‏‏ریتوئیت های #برنامه_نویسی و پروژه؛ موضوعات برنامه نویسی و وب رو فالو میکنم و توی فیدت نشون میدم 😊",
   "main": "dist/app.js",
   "scripts": {
-    "start": "npm run bot:build && NODE_ENV=production pm2 start dist/bot/app.js --name programmer-fa-bot",
-    "restart": "tsc && NODE_ENV=production pm2 restart programmer-fa-bot",
+    "start": "npm run build && NODE_ENV=production pm2 start dist/bot/app.js --name programmer-fa-bot",
+    "restart": "npm run build && NODE_ENV=production pm2 restart programmer-fa-bot",
     "stop": "pm2 stop programmer-fa-bot",
+    "dev": "tsc --watch",
+    "build": "tsc",
     "bot:dev": "npm run bot:build && NODE_ENV=development nodemon --watch 'src/bot/**/*.ts' --exec 'ts-node' src/bot/app.ts",
     "bot:build": "tsc -p src/bot/tsconfig.json",
     "test": "echo \"Error: no test specified\" && exit 1",
