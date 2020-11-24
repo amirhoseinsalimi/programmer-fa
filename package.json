@@ -4,9 +4,9 @@
   "description": "‏‏‏‏‏‏‏‏‏‏‏ریتوئیت های #برنامه_نویسی و پروژه؛ موضوعات برنامه نویسی و وب رو فالو میکنم و توی فیدت نشون میدم 😊",
   "main": "dist/app.js",
   "scripts": {
-    "start": "npm run build && NODE_ENV=production pm2 start dist/bot/app.js --name programmer-fa-bot",
-    "restart": "npm run build && NODE_ENV=production pm2 restart programmer-fa-bot",
-    "stop": "pm2 stop programmer-fa-bot",
+    "start": "npm run build && NODE_ENV=production pm2 start dist/bot/app.js --name programmer-fa",
+    "restart": "npm run build && NODE_ENV=production pm2 restart programmer-fa",
+    "stop": "pm2 stop programmer-fa",
     "dev": "tsc --watch",
     "build": "tsc",
     "sort": "npm run build && node dist/cli/sort-words.js && git add --all ./src/data/ && git commit -m \"Update words!\"",
