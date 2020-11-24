@@ -37,6 +37,7 @@ For Run `npm start`
 * [x] Don't store or log `RT @username`
 * [ ] Log the details of retweets in dev. env. (Name, date, text, matched words, link, etc.)
 * [ ] Full implementation of the database
+* [ ] Migrate to Twitter API v2
 
 
 <br />
