@@ -1,0 +1,8 @@
+TODO: Make it English (And introduce it in Discord, chats,...)
+TODO: Let "log verbosity level" and "file storing" to be set
+TODO: Enhance code modularity
+TODO: Separate Development & Debug env. variables
+TODO: Don't store or log RT @username
+TODO: Log the details of retweets in dev. env. (Name, date, text, matched words, link, etc.)
+TODO: Full implementation of the database
+TODO: Migrate to Twitter API v2
