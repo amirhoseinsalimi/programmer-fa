@@ -12,6 +12,7 @@ import {
   logSuccess,
   writeToFile,
   printWelcomeBanner,
+  prettyPrintInTable,
 } from './logger';
 
 import {
@@ -155,6 +156,7 @@ const onTweet = (tweet: any): void => {
   if (id) {
     if (isDebugModeEnabled()) {
       writeToFile(tweet.$tweetText);
+      prettyPrintInTable(tweet);
     } else {
       retweet(id)
         .then(({ message }) => {

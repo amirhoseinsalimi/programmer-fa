@@ -1,4 +1,5 @@
 import * as fs from 'fs';
+import { printTable } from 'console-table-printer';
 import { isDebugModeEnabled } from './utils';
 
 const colorIt = require('color-it');
@@ -74,6 +75,18 @@ export const writeToFile = (text: string | Buffer): void => {
       }
     });
   }
+};
+
+export const prettyPrintInTable = (tweet: any) => {
+  const t = [
+    {
+      id: tweet.id,
+      user_id: tweet.user.id,
+      text: tweet.$tweetText,
+    },
+  ];
+
+  printTable(t);
 };
 
 export const printWelcomeBanner = (): void => {

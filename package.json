@@ -19,6 +19,7 @@
   "license": "MIT",
   "dependencies": {
     "color-it": "^1.2.12",
+    "console-table-printer": "^2.7.5",
     "dotenv": "^8.2.0",
     "knex": "^0.20.15",
     "mssql": "^6.2.3",
