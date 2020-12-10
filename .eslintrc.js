@@ -1,7 +1,16 @@
 module.exports = {
-  extends: ['airbnb', 'plugin:@typescript-eslint/recommended'],
+  extends: [
+    'airbnb',
+    'plugin:@typescript-eslint/recommended',
+    'plugin:mocha/recommended',
+  ],
   parser: '@typescript-eslint/parser',
-  plugins: ['@typescript-eslint', 'prettier'],
+  plugins: [
+    '@typescript-eslint',
+    'prettier',
+    'mocha',
+    'chai-friendly'
+  ],
   settings: {
     'import/parsers': {
       '@typescript-eslint/parser': ['.ts'],
@@ -11,7 +20,7 @@ module.exports = {
     },
   },
   rules: {
-    'import/no-extraneous-dependencies': [2, { devDependencies: ['**/test.ts'] }],
+    'import/no-extraneous-dependencies': [2, { devDependencies: ['test/**/*.spec.js'] }],
     '@typescript-eslint/indent': [2, 2],
     '@typescript-eslint/camelcase': [0, 0],
     '@typescript-eslint/no-var-requires': [0, 0],
@@ -25,5 +34,7 @@ module.exports = {
       }
     ],
     'no-cond-assign': 0,
+    'no-unused-expressions': 0,
+    'chai-friendly/no-unused-expressions': 2
   },
 };
