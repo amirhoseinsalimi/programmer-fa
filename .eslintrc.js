@@ -20,7 +20,7 @@ module.exports = {
     },
   },
   rules: {
-    'import/no-extraneous-dependencies': [2, { devDependencies: ['test/**/*.spec.js'] }],
+    'import/no-extraneous-dependencies': [2, { devDependencies: ['test/**/*.spec.ts'] }],
     '@typescript-eslint/indent': [2, 2],
     '@typescript-eslint/camelcase': [0, 0],
     '@typescript-eslint/no-var-requires': [0, 0],
