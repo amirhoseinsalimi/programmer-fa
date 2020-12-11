@@ -7,3 +7,4 @@ TODO: Log the details of retweets in dev. env. (Name, date, text, matched words,
 TODO: Full implementation of the database
 TODO: Migrate to Twitter API v2
 TODO: Change all test cases to English values
+TODO: Full TypeScript
