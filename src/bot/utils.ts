@@ -22,7 +22,7 @@ interface Message {
  * @param {string} str - The full string to search in
  * @return {string[]}
  */
-export const getCountOfHashtags = (str: string): number => {
+export const getNumberOfHashtags = (str: string): number => {
   if (str.length === 0) {
     return 0;
   }
@@ -267,7 +267,7 @@ export const getIntersectionCount = (arr1: string[], arr2: string[]): number => 
  * @return {boolean}
  */
 export const hasFiveHashtagsOrMore = (tweet: any): boolean => (
-  getCountOfHashtags(getTweetFullText(tweet)) >= 5
+  getNumberOfHashtags(getTweetFullText(tweet)) >= 5
   || tweet.entities.hashtags.length >= 5
 );
 
