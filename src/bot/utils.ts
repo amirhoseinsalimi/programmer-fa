@@ -306,6 +306,11 @@ export const validateInitialTweet = (tweet: any): boolean => {
   return true;
 };
 
+/**
+ * Remove the `@username` from the tweet body
+ * @param {string} tweetText - The text of a tweet
+ * @return {string} - The text of the tweet w/ `@username` removed
+ */
 export const removeRetweetNotation = (tweetText: string): string => (
   tweetText.replace(/(RT @.*?:)/m, '').trim()
 );
