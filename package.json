@@ -36,7 +36,9 @@
     "twit": "^2.2.11"
   },
   "devDependencies": {
+    "@types/chai": "^4.2.14",
     "@types/dotenv": "^8.2.0",
+    "@types/mocha": "^8.2.0",
     "@types/mysql": "^2.15.16",
     "@types/node": "^13.13.34",
     "@types/twit": "^2.2.28",
