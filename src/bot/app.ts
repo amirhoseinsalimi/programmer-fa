@@ -71,7 +71,7 @@ if (wordsToFollowDB instanceof Error || wordsNotToFollowDB instanceof Error) {
 const interestingWords: string[] = [];
 
 // Include hashtags in a single array
-wordsToFollowDB.forEach((val: string) => interestingWords.push(val.toLowerCase()));
+wordsToFollowDB.forEach((word: string) => interestingWords.push(word));
 wordsToFollowDB.forEach((word: string) => {
   let w: string;
 
@@ -80,7 +80,7 @@ wordsToFollowDB.forEach((word: string) => {
   // Add a number sign at the beginning of the word
   w = `#${w}`;
 
-  interestingWords.push(w.toLowerCase());
+  interestingWords.push(w);
 });
 
 const params: Twit.Params = {
