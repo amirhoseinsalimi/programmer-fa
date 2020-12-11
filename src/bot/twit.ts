@@ -14,7 +14,7 @@ const T: Twit = new Twit({
   access_token,
   access_token_secret,
   timeout_ms: 60 * 1000,
-  strictSSL: !!strictSSL,
+  strictSSL: strictSSL !== 'false',
 });
 
 export { T, Twit };
