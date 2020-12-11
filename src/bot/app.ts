@@ -30,6 +30,7 @@ import {
   removeRetweetNotation,
   isRetweet,
   loadJSONFileContent,
+  fillArrayWithWords,
 } from './utils';
 
 /* =======================================
@@ -68,20 +69,9 @@ if (wordsToFollowDB instanceof Error || wordsNotToFollowDB instanceof Error) {
   process.exit(1);
 }
 
-const interestingWords: string[] = [];
+let interestingWords: string[] = [];
 
-// Include hashtags in a single array
-wordsToFollowDB.forEach((word: string) => interestingWords.push(word));
-wordsToFollowDB.forEach((word: string) => {
-  let w: string;
-
-  // Replace space and half-space w/ an underscore
-  w = word.replace(/[ ‌]/gi, '_');
-  // Add a number sign at the beginning of the word
-  w = `#${w}`;
-
-  interestingWords.push(w);
-});
+interestingWords = fillArrayWithWords(interestingWords, wordsToFollowDB);
 
 const params: Twit.Params = {
   // track these words

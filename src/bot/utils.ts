@@ -345,3 +345,44 @@ export const loadJSONFileContent = (filePath: string): string[] | Error => {
 
   return Array.isArray(fileContent) ? fileContent : new Error('File doesn\'t include an array');
 };
+
+/**
+ * Convert a string to hashtag
+ * @param {string} string - The word to be hashtagged
+ * @return {string} - The hashtagged form of the given string
+ */
+export const makeHashtag = (string: string): string => {
+  let s: string;
+
+  // Replace space, half-space, dash, dot w/ an underscore
+  s = string.replace(/[ ‌\-.]/gmi, '_');
+
+  // Replace subsequent underscores with one underscore
+  s = s.replace(/_{2,}/, '_');
+
+  // Add a number sign at the beginning of the word
+  s = `#${s}`;
+
+  return s;
+};
+
+/**
+ * Fill a given array with an array of strings
+ * @param {string[]} arrayToFill
+ * @param {string[]} arrayOfWords
+ * @return {string[]}
+ */
+export const fillArrayWithWords = (
+  arrayToFill: string[],
+  arrayOfWords: string[],
+): string[] => {
+  arrayOfWords.forEach((word: string) => arrayToFill.push(word));
+
+  arrayOfWords.forEach((word: string) => {
+    const w = makeHashtag(word);
+
+    arrayToFill.push(w);
+  });
+
+  return arrayToFill;
+};
