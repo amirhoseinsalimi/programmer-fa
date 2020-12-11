@@ -40,7 +40,7 @@ class Emitter extends EventEmitter {}
 const emitter: Emitter = new Emitter();
 
 emitter.on('bot-error', (err: any) => {
-  logError('An error has been thrown', err.message);
+  logError('An error has been thrown', err.message || err);
 });
 
 /* Deal w/ uncaught errors and unhandled promises */
@@ -60,8 +60,8 @@ process
  * ==================================== */
 printWelcomeBanner();
 
-const wordsToFollowDB: string[] | Error = loadJSONFileContent('../data/words-to-follow.json');
-const wordsNotToFollowDB: string[] | Error = loadJSONFileContent('../data/words-not-to-follow.json');
+const wordsToFollowDB: string[] | Error = loadJSONFileContent(`${__dirname}/../data/words-to-follow.json`);
+const wordsNotToFollowDB: string[] | Error = loadJSONFileContent(`${__dirname}/../data/words-not-to-follow.json`);
 
 if (wordsToFollowDB instanceof Error || wordsNotToFollowDB instanceof Error) {
   emitter.emit('bot-error', "Files couldn't be loaded");
@@ -88,7 +88,8 @@ const params: Twit.Params = {
   track: interestingWords,
 };
 
-const stream: Twit.Stream = T.stream('statuses/filter', params);
+// eslint-disable-next-line import/prefer-default-export
+export const stream: Twit.Stream = T.stream('statuses/filter', params);
 
 /**
  * onTweet handler - Runs for each tweet that comes from the stream
