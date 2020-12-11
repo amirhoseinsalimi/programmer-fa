@@ -63,7 +63,12 @@ printWelcomeBanner();
 const wordsToFollowDB: string[] | Error = loadJSONFileContent('../data/words-to-follow.json');
 const wordsNotToFollowDB: string[] | Error = loadJSONFileContent('../data/words-not-to-follow.json');
 
-const interests: string[] = [];
+if (wordsToFollowDB instanceof Error || wordsNotToFollowDB instanceof Error) {
+  emitter.emit('bot-error', "Files couldn't be loaded");
+  process.exit(1);
+}
+
+const wordsToFollow: string[] = [];
 
 // Include hashtags in a single array
 wordsToFollow.forEach((val: string) => interests.push(val.toLowerCase()));
