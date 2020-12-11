@@ -3,6 +3,9 @@
   "version": "0.5.0",
   "description": "‏‏‏‏‏‏‏‏‏‏‏ریتوئیت های #برنامه_نویسی و پروژه؛ موضوعات برنامه نویسی و وب رو فالو میکنم و توی فیدت نشون میدم 😊",
   "main": "dist/app.js",
+  "engines": {
+    "node": ">=14.0.0"
+  },
   "scripts": {
     "start": "npm run build && NODE_ENV=production pm2 start dist/bot/app.js --name programmer-fa-bot",
     "restart": "npm run build && NODE_ENV=production pm2 restart programmer-fa-bot",
