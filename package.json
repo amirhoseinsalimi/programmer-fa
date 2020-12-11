@@ -7,14 +7,12 @@
     "node": ">=14.0.0"
   },
   "scripts": {
-    "start": "npm run build && NODE_ENV=production pm2 start dist/bot/app.js --name programmer-fa-bot",
-    "restart": "npm run build && NODE_ENV=production pm2 restart programmer-fa-bot",
-    "stop": "pm2 stop programmer-fa-bot",
-    "dev": "tsc --watch",
+    "start": "npm run build && NODE_ENV=production pm2 start dist/bot/app.js --name programmer-fa",
+    "restart": "npm run build && NODE_ENV=production pm2 restart programmer-fa",
+    "stop": "pm2 stop programmer-fa",
     "build": "tsc",
+    "dev": "tsc && NODE_ENV=development nodemon --watch 'src/bot/**/*.ts' --exec 'ts-node' src/bot/app.ts",
     "sort": "npm run build && node dist/cli/sort-words.js && git add --all ./src/data/ && git commit -m \"Update words!\"",
-    "bot:dev": "npm run bot:build && NODE_ENV=development nodemon --watch 'src/bot/**/*.ts' --exec 'ts-node' src/bot/app.ts",
-    "bot:build": "tsc -p src/bot/tsconfig.json",
     "test": "env TS_NODE_COMPILER_OPTIONS='{\"module\": \"commonjs\" }' mocha -r ts-node/register 'test/**/*.ts'",
     "lint": "eslint . --ext .js,.ts"
   },
