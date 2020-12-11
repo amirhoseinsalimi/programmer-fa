@@ -29,6 +29,7 @@ import {
   validateInitialTweet,
   removeRetweetNotation,
   isRetweet,
+  loadJSONFileContent,
 } from './utils';
 
 /* =======================================
@@ -59,8 +60,8 @@ process
  * ==================================== */
 printWelcomeBanner();
 
-const wordsToFollow: string[] = require('../data/words.json');
-const blackListedWords: string[] = require('../data/black-listed-words.json');
+const wordsToFollowDB: string[] | Error = loadJSONFileContent('../data/words-to-follow.json');
+const wordsNotToFollowDB: string[] | Error = loadJSONFileContent('../data/words-not-to-follow.json');
 
 const interests: string[] = [];
 
