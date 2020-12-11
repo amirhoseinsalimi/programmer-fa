@@ -6,7 +6,7 @@ const chai = require('chai');
 const { expect } = chai;
 
 describe('Load files', () => {
-  const BASE_DATA_DIR = `${__dirname}/../src/data`;
+  const BASE_DATA_DIR = `${__dirname}/../../src/data`;
   const WORDS_TO_FOLLOW_FILE_PATH = 'words-to-follow.json';
   const WORDS_NOT_TO_FOLLOW_FILE_PATH = 'words-not-to-follow.json';
   const WORDS_WITH_SUSPICION_FILE_PATH = 'words-with-suspicion.json';
@@ -26,7 +26,7 @@ describe('Load files', () => {
     }
   });
 
-  it(`should load ${WORDS_NOT_TO_FOLLOW_FILE_PATH} content and it should contain array of strings`, (done) => {
+  it(`should load ${WORDS_NOT_TO_FOLLOW_FILE_PATH} content and it should contain an array of strings`, (done) => {
     const wordsNotToFollow: string[] | Error = loadJSONFileContent(`${BASE_DATA_DIR}/${WORDS_NOT_TO_FOLLOW_FILE_PATH}`);
 
     if (wordsNotToFollow instanceof Error) {
@@ -40,7 +40,7 @@ describe('Load files', () => {
     }
   });
 
-  it(`should load ${WORDS_WITH_SUSPICION_FILE_PATH} content and it should contain array of strings`, (done) => {
+  it(`should load ${WORDS_WITH_SUSPICION_FILE_PATH} content and it should contain an array of strings`, (done) => {
     const suspiciousWords: string[] | Error = loadJSONFileContent(`${BASE_DATA_DIR}/${WORDS_WITH_SUSPICION_FILE_PATH}`);
 
     if (suspiciousWords instanceof Error) {
@@ -54,7 +54,7 @@ describe('Load files', () => {
     }
   });
 
-  it(`should load ${ACCOUNTS_NOT_TO_FOLLOW_FILE_PATH} content and it should contain array of numbers`, (done) => {
+  it(`should load ${ACCOUNTS_NOT_TO_FOLLOW_FILE_PATH} content and it should contain an array of numbers`, (done) => {
     const blackListedAccountIDs: string[] | Error = loadJSONFileContent(`${BASE_DATA_DIR}/${ACCOUNTS_NOT_TO_FOLLOW_FILE_PATH}`);
 
     if (blackListedAccountIDs instanceof Error) {
