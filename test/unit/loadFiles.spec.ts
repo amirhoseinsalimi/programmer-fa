@@ -1,5 +1,5 @@
 import { describe, it } from 'mocha';
-import { loadJSONFileContent } from '../src/bot/utils';
+import { loadJSONFileContent } from '../../src/bot/utils';
 
 const chai = require('chai');
 
