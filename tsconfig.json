@@ -2,9 +2,14 @@
   "include": ["./src/**/*.ts"],
   "compilerOptions": {
     "noImplicitAny": true,
-    "target": "es5",
+    "target": "es2017",
     "outDir": "dist",
     "downlevelIteration": true,
     "resolveJsonModule": true
-  }
+  },
+  "exclude": [
+    "./test/",
+    "./node_modules/",
+    "./dist/"
+  ]
 }
