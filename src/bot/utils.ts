@@ -1,3 +1,4 @@
+import { readFileSync } from 'fs';
 import { T } from './twit';
 
 const {
@@ -314,3 +315,33 @@ export const validateInitialTweet = (tweet: any): boolean => {
 export const removeRetweetNotation = (tweetText: string): string => (
   tweetText.replace(/(RT @.*?:)/m, '').trim()
 );
+
+/**
+ * Checks whether a file is JSON or not, using file extension for this purpose
+ * @param {string} fileName - The name of the file
+ * @return {boolean} - File is JSON or not
+ */
+export const isFileJSON = (fileName: string): boolean => (/\.(json)$/i.test(fileName));
+
+/**
+ * Load the content of a given file, JSON only
+ * @param {string} filePath - The full path of the JSON file
+ * @return {string[]} - The text of the tweet w/ `@username` removed
+ */
+export const loadJSONFileContent = (filePath: string): string[] | Error => {
+  let fileContent: string;
+
+  if (!isFileJSON(filePath)) {
+    return new Error('File is not JSON');
+  }
+
+  try {
+    fileContent = readFileSync(filePath, 'utf8');
+  } catch (e) {
+    return new Error(e);
+  }
+
+  fileContent = JSON.parse(fileContent);
+
+  return Array.isArray(fileContent) ? fileContent : new Error('File doesn\'t include an array');
+};
