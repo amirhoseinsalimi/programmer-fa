@@ -313,7 +313,7 @@ export const validateInitialTweet = (tweet: any): boolean => {
  * @return {string} - The text of the tweet w/ `@username` removed
  */
 export const removeRetweetNotation = (tweetText: string): string => (
-  tweetText.replace(/(RT @.*?:)/m, '').trim()
+  tweetText.replace(/(RT @.*?:)/gim, '').trim()
 );
 
 /**
