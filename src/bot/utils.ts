@@ -384,5 +384,5 @@ export const fillArrayWithWords = (
     arrayToFill.push(w);
   });
 
-  return arrayToFill;
+  return [...new Set(arrayToFill)];
 };
