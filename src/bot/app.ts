@@ -107,7 +107,7 @@ const onTweet = (tweet: any): void => {
   let tweetId = 0;
 
   if (getIntersectionCount(interestingWords, hashtagsOfCurrentTweet)) {
-    tweetId = tweet.id_str;
+    tweetId = tweet.id;
   } else {
     const tweetTextWithoutURLs: string = removeURLs(tweet.$tweetText);
     const reTweetTextWithoutURLs: string = removeURLs(tweet.$retweetText);
@@ -147,7 +147,7 @@ const onTweet = (tweet: any): void => {
       && !tweetIncludesBlackListedWords
       && !retweetIncludesBlackListedWords
       && !hasURLs(tweet)
-      && !isRetweetedByMyself(tweet) ? tweet.id_str : 0;
+      && !isRetweetedByMyself(tweet) ? tweet.id : 0;
   }
 
   if (tweetId) {
