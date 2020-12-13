@@ -1,10 +1,20 @@
 {
-  "include": ["./src/**/*.ts"],
+  "include": [
+    "./**/*.ts",
+    "./**/*.json"
+  ],
   "compilerOptions": {
     "noImplicitAny": true,
-    "target": "es5",
+    "target": "es2017",
     "outDir": "dist",
     "downlevelIteration": true,
-    "resolveJsonModule": true
-  }
+    "resolveJsonModule": true,
+    "allowSyntheticDefaultImports": true,
+    "moduleResolution": "Node"
+  },
+  "exclude": [
+    "./test/",
+    "./node_modules/",
+    "./dist/"
+  ]
 }

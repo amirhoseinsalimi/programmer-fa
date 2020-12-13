@@ -1,3 +1,4 @@
+import { readFileSync } from 'fs';
 import { T } from './twit';
 
 const {
@@ -6,8 +7,8 @@ const {
   DB_ENABLE: enableDB,
 } = require('../../env.js');
 
-const suspiciousWords: string[] = require('../data/suspicious-words.json');
-const blackListedAccounts: string[] = require('../data/black-listed-accounts.json');
+const suspiciousWords: string[] = require('../data/words-with-suspicion.json');
+const blackListedAccounts: string[] = require('../data/accounts-not-to-follow.json');
 
 const knex = require('../../knex-export.js');
 
@@ -21,7 +22,7 @@ interface Message {
  * @param {string} str - The full string to search in
  * @return {string[]}
  */
-export const getCountOfHashtags = (str: string): number => {
+export const getNumberOfHashtags = (str: string): number => {
   if (str.length === 0) {
     return 0;
   }
@@ -251,22 +252,12 @@ export const isBlackListed = (tweet: any): boolean => {
 };
 
 /**
- * Returns the number of intersections b/w two arrays
- * @param {string[]} arr1
- * @param {string[]} arr2
- * @return {number}
- */
-export const getIntersectionCount = (arr1: string[], arr2: string[]): number => (
-  [...new Set(arr1)].filter((v) => arr2.includes(v)).length
-);
-
-/**
  * Check if a tweet has 5 hashtags or more. See it as an ad-blocker.
  * @param {*} tweet - The tweet object
  * @return {boolean}
  */
 export const hasFiveHashtagsOrMore = (tweet: any): boolean => (
-  getCountOfHashtags(getTweetFullText(tweet)) >= 5
+  getNumberOfHashtags(getTweetFullText(tweet)) >= 5
   || tweet.entities.hashtags.length >= 5
 );
 
@@ -306,6 +297,82 @@ export const validateInitialTweet = (tweet: any): boolean => {
   return true;
 };
 
+/**
+ * Remove the `@username` from the tweet body
+ * @param {string} tweetText - The text of a tweet
+ * @return {string} - The text of the tweet w/ `@username` removed
+ */
 export const removeRetweetNotation = (tweetText: string): string => (
-  tweetText.replace(/(RT @.*?:)/m, '').trim()
+  tweetText.replace(/(RT @.*?:)/gim, '').trim()
 );
+
+/**
+ * Checks whether a file is JSON or not, using file extension for this purpose
+ * @param {string} fileName - The name of the file
+ * @return {boolean} - File is JSON or not
+ */
+export const isFileJSON = (fileName: string): boolean => (/\.(json)$/i.test(fileName));
+
+/**
+ * Load the content of a given file, JSON only
+ * @param {string} filePath - The full path of the JSON file
+ * @return {string[]} - The text of the tweet w/ `@username` removed
+ */
+export const loadJSONFileContent = (filePath: string): string[] | Error => {
+  let fileContent: string;
+
+  if (!isFileJSON(filePath)) {
+    return new Error('File is not JSON');
+  }
+
+  try {
+    fileContent = readFileSync(filePath, 'utf8');
+  } catch (e) {
+    return new Error(e);
+  }
+
+  fileContent = JSON.parse(fileContent);
+
+  return Array.isArray(fileContent) ? fileContent : new Error('File doesn\'t include an array');
+};
+
+/**
+ * Convert a string to hashtag
+ * @param {string} string - The word to be hashtagged
+ * @return {string} - The hashtagged form of the given string
+ */
+export const makeHashtag = (string: string): string => {
+  let s: string;
+
+  // Replace space, half-space, dash, dot w/ an underscore
+  s = string.replace(/[ ‌\-.]/gmi, '_');
+
+  // Replace subsequent underscores with one underscore
+  s = s.replace(/_{2,}/, '_');
+
+  // Add a number sign at the beginning of the word
+  s = `#${s}`;
+
+  return s;
+};
+
+/**
+ * Fill a given array with an array of strings
+ * @param {string[]} arrayToFill
+ * @param {string[]} arrayOfWords
+ * @return {string[]}
+ */
+export const fillArrayWithWords = (
+  arrayToFill: string[],
+  arrayOfWords: string[],
+): string[] => {
+  arrayOfWords.forEach((word: string) => arrayToFill.push(word));
+
+  arrayOfWords.forEach((word: string) => {
+    const w = makeHashtag(word);
+
+    arrayToFill.push(w);
+  });
+
+  return [...new Set(arrayToFill)];
+};

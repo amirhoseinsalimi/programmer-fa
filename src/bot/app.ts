@@ -23,12 +23,13 @@ import {
   store,
   removeSuspiciousWords,
   removeURLs,
-  getIntersectionCount,
   hasURLs,
   isRetweetedByMyself,
   validateInitialTweet,
   removeRetweetNotation,
   isRetweet,
+  loadJSONFileContent,
+  fillArrayWithWords,
 } from './utils';
 
 /* =======================================
@@ -39,7 +40,7 @@ class Emitter extends EventEmitter {}
 const emitter: Emitter = new Emitter();
 
 emitter.on('bot-error', (err: any) => {
-  logError('An error has been thrown', err.message);
+  logError('An error has been thrown', err.message || err);
 });
 
 /* Deal w/ uncaught errors and unhandled promises */
@@ -59,30 +60,25 @@ process
  * ==================================== */
 printWelcomeBanner();
 
-const wordsToFollow: string[] = require('../data/words.json');
-const blackListedWords: string[] = require('../data/black-listed-words.json');
+const wordsToFollowDB: string[] | Error = loadJSONFileContent(`${__dirname}/../data/words-to-follow.json`);
+const wordsNotToFollowDB: string[] | Error = loadJSONFileContent(`${__dirname}/../data/words-not-to-follow.json`);
 
-const interests: string[] = [];
+if (wordsToFollowDB instanceof Error || wordsNotToFollowDB instanceof Error) {
+  emitter.emit('bot-error', "Files couldn't be loaded");
+  process.exit(1);
+}
 
-// Include hashtags in a single array
-wordsToFollow.forEach((val: string) => interests.push(val.toLowerCase()));
-wordsToFollow.forEach((word: string) => {
-  let w: string;
+let interestingWords: string[] = [];
 
-  // Replace space and half-space w/ an underscore
-  w = word.replace(/[ ‌]/gi, '_');
-  // Add a number sign at the beginning of the word
-  w = `#${w}`;
-
-  interests.push(w.toLowerCase());
-});
+interestingWords = fillArrayWithWords(interestingWords, wordsToFollowDB);
 
 const params: Twit.Params = {
   // track these words
-  track: interests,
+  track: interestingWords,
 };
 
-const stream: Twit.Stream = T.stream('statuses/filter', params);
+// eslint-disable-next-line import/prefer-default-export
+export const stream: Twit.Stream = T.stream('statuses/filter', params);
 
 /**
  * onTweet handler - Runs for each tweet that comes from the stream
@@ -107,62 +103,58 @@ const onTweet = (tweet: any): void => {
     hashtagsOfCurrentTweet.push(`#${val.text}`)
   ));
 
-  let id = 0;
+  let tweetId = 0;
 
-  if (getIntersectionCount(interests, hashtagsOfCurrentTweet)) {
-    id = tweet.id_str;
-  } else {
-    const tweetTextWithoutURLs: string = removeURLs(tweet.$tweetText);
-    const reTweetTextWithoutURLs: string = removeURLs(tweet.$retweetText);
+  const tweetTextWithoutURLs: string = removeURLs(tweet.$tweetText);
+  const reTweetTextWithoutURLs: string = removeURLs(tweet.$retweetText);
 
-    const tweetTextWithoutSuspiciousWords: string = removeSuspiciousWords(
-      tweetTextWithoutURLs,
-    );
-    const reTweetTextWithoutSuspiciousWords: string = removeSuspiciousWords(
-      reTweetTextWithoutURLs,
-    );
+  const tweetTextWithoutSuspiciousWords: string = removeSuspiciousWords(
+    tweetTextWithoutURLs,
+  );
+  const retweetTextWithoutSuspiciousWords: string = removeSuspiciousWords(
+    reTweetTextWithoutURLs,
+  );
 
-    const hasInterestingWords: boolean = interests.some(
-      (interest: string) => (
-        tweetTextWithoutSuspiciousWords.search(
-          new RegExp(interest.toLowerCase()),
-        ) > -1
-      ),
-    );
+  const tweetIncludesInterestingWords: boolean = interestingWords.some(
+    (word: string) => (
+      tweetTextWithoutSuspiciousWords.search(
+        new RegExp(word.toLowerCase()),
+      ) > -1
+    ),
+  );
 
-    const hasUninterestingWordsInTweetText: boolean = blackListedWords.some(
-      (blackListedWord: string) => (
-        tweetTextWithoutSuspiciousWords.search(
-          new RegExp(blackListedWord.toLowerCase()),
-        ) > -1
-      ),
-    );
+  const tweetIncludesBlackListedWords: boolean = wordsNotToFollowDB.some(
+    (word: string) => (
+      tweetTextWithoutSuspiciousWords.search(
+        new RegExp(word.toLowerCase()),
+      ) > -1
+    ),
+  );
 
-    const hasUninterestingWordsInRetweetText: boolean = blackListedWords.some(
-      (blackListedWord: string) => (
-        reTweetTextWithoutSuspiciousWords.search(
-          new RegExp(blackListedWord.toLowerCase()),
-        ) > -1
-      ),
-    );
+  const retweetIncludesBlackListedWords: boolean = wordsNotToFollowDB.some(
+    (blackListedWord: string) => (
+      retweetTextWithoutSuspiciousWords.search(
+        new RegExp(blackListedWord.toLowerCase()),
+      ) > -1
+    ),
+  );
 
-    id = hasInterestingWords
-      && !hasUninterestingWordsInTweetText
-      && !hasUninterestingWordsInRetweetText
-      && !hasURLs(tweet)
-      && !isRetweetedByMyself(tweet) ? tweet.id_str : 0;
-  }
+  tweetId = tweetIncludesInterestingWords
+  && !tweetIncludesBlackListedWords
+  && !retweetIncludesBlackListedWords
+  && !hasURLs(tweet)
+  && !isRetweetedByMyself(tweet) ? tweet.id : 0;
 
-  if (id) {
+  if (tweetId) {
     if (isDebugModeEnabled()) {
       writeToFile(tweet.$tweetText);
       prettyPrintInTable(tweet);
     } else {
-      retweet(id)
+      retweet(tweetId)
         .then(({ message }) => {
           logSuccess(message);
 
-          favourite(id)
+          favourite(tweetId)
             .then(({ message: m }) => {
               logSuccess(m);
             })

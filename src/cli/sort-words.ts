@@ -24,15 +24,19 @@ const writeFilePromisified = promisify(writeFile);
     await asyncForEach(files, async (file: string) => {
       const currentFile = `${WORDS_PATH}/${file}`;
 
-      const data = await readFilePromisified(currentFile);
+      const currentFileContent = await readFilePromisified(currentFile);
 
-      const dataArray = JSON.parse(data.toString());
+      const currentFileContentArray: string[] = JSON.parse(currentFileContent.toString());
 
-      const dataArrayUnique = [...new Set(dataArray)];
+      const currentFileContentUnique = [...new Set(currentFileContentArray)];
 
-      dataArrayUnique.sort();
+      const currentFileContentLowerCase = currentFileContentUnique.map(
+        (v: string) => v.toLowerCase(),
+      );
 
-      await writeFilePromisified(currentFile, JSON.stringify(dataArrayUnique, null, 2));
+      currentFileContentLowerCase.sort();
+
+      await writeFilePromisified(currentFile, JSON.stringify(currentFileContentLowerCase, null, 2));
     });
   } catch (e) {
     console.log(e);
