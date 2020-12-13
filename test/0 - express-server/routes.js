@@ -1,12 +1,16 @@
-module.exports = () => ({
+const express = require('express');
+
+const router = express.Router();
+
+const tweets = {
   tweets: [
     {
       text:
         `
-      دوستم این ترم برنامه نویسی داره بعد میگه خیلی سخته و این داستانا
-      بش میگم چه زبونی تدریس میکنن؟
-      میگه انگلیسی :)
-      `,
+        دوستم این ترم برنامه نویسی داره بعد میگه خیلی سخته و این داستانا
+        بش میگم چه زبونی تدریس میکنن؟
+        میگه انگلیسی :)
+        `,
       numberOfHashtags: 0,
     },
     {
@@ -148,4 +152,10 @@ module.exports = () => ({
       numberOfHashtags: 6,
     },
   ],
+};
+
+router.get('/tweets', async (req, res) => {
+  res.json(tweets);
 });
+
+module.exports = router;
