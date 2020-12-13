@@ -252,16 +252,6 @@ export const isBlackListed = (tweet: any): boolean => {
 };
 
 /**
- * Returns the number of intersections b/w two arrays
- * @param {string[]} arr1
- * @param {string[]} arr2
- * @return {number}
- */
-export const getNumberOfIntersections = (arr1: string[], arr2: string[]): number => (
-  [...new Set(arr1)].filter((v) => arr2.includes(v)).length
-);
-
-/**
  * Check if a tweet has 5 hashtags or more. See it as an ad-blocker.
  * @param {*} tweet - The tweet object
  * @return {boolean}

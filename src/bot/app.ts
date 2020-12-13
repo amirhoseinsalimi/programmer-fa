@@ -23,7 +23,6 @@ import {
   store,
   removeSuspiciousWords,
   removeURLs,
-  getNumberOfIntersections,
   hasURLs,
   isRetweetedByMyself,
   validateInitialTweet,
@@ -106,49 +105,45 @@ const onTweet = (tweet: any): void => {
 
   let tweetId = 0;
 
-  if (getNumberOfIntersections(interestingWords, hashtagsOfCurrentTweet)) {
-    tweetId = tweet.id;
-  } else {
-    const tweetTextWithoutURLs: string = removeURLs(tweet.$tweetText);
-    const reTweetTextWithoutURLs: string = removeURLs(tweet.$retweetText);
+  const tweetTextWithoutURLs: string = removeURLs(tweet.$tweetText);
+  const reTweetTextWithoutURLs: string = removeURLs(tweet.$retweetText);
 
-    const tweetTextWithoutSuspiciousWords: string = removeSuspiciousWords(
-      tweetTextWithoutURLs,
-    );
-    const retweetTextWithoutSuspiciousWords: string = removeSuspiciousWords(
-      reTweetTextWithoutURLs,
-    );
+  const tweetTextWithoutSuspiciousWords: string = removeSuspiciousWords(
+    tweetTextWithoutURLs,
+  );
+  const retweetTextWithoutSuspiciousWords: string = removeSuspiciousWords(
+    reTweetTextWithoutURLs,
+  );
 
-    const tweetIncludesInterestingWords: boolean = interestingWords.some(
-      (word: string) => (
-        tweetTextWithoutSuspiciousWords.search(
-          new RegExp(word.toLowerCase()),
-        ) > -1
-      ),
-    );
+  const tweetIncludesInterestingWords: boolean = interestingWords.some(
+    (word: string) => (
+      tweetTextWithoutSuspiciousWords.search(
+        new RegExp(word.toLowerCase()),
+      ) > -1
+    ),
+  );
 
-    const tweetIncludesBlackListedWords: boolean = wordsNotToFollowDB.some(
-      (word: string) => (
-        tweetTextWithoutSuspiciousWords.search(
-          new RegExp(word.toLowerCase()),
-        ) > -1
-      ),
-    );
+  const tweetIncludesBlackListedWords: boolean = wordsNotToFollowDB.some(
+    (word: string) => (
+      tweetTextWithoutSuspiciousWords.search(
+        new RegExp(word.toLowerCase()),
+      ) > -1
+    ),
+  );
 
-    const retweetIncludesBlackListedWords: boolean = wordsNotToFollowDB.some(
-      (blackListedWord: string) => (
-        retweetTextWithoutSuspiciousWords.search(
-          new RegExp(blackListedWord.toLowerCase()),
-        ) > -1
-      ),
-    );
+  const retweetIncludesBlackListedWords: boolean = wordsNotToFollowDB.some(
+    (blackListedWord: string) => (
+      retweetTextWithoutSuspiciousWords.search(
+        new RegExp(blackListedWord.toLowerCase()),
+      ) > -1
+    ),
+  );
 
-    tweetId = tweetIncludesInterestingWords
-      && !tweetIncludesBlackListedWords
-      && !retweetIncludesBlackListedWords
-      && !hasURLs(tweet)
-      && !isRetweetedByMyself(tweet) ? tweet.id : 0;
-  }
+  tweetId = tweetIncludesInterestingWords
+  && !tweetIncludesBlackListedWords
+  && !retweetIncludesBlackListedWords
+  && !hasURLs(tweet)
+  && !isRetweetedByMyself(tweet) ? tweet.id : 0;
 
   if (tweetId) {
     if (isDebugModeEnabled()) {
