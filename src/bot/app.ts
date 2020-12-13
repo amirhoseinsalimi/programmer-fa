@@ -23,7 +23,7 @@ import {
   store,
   removeSuspiciousWords,
   removeURLs,
-  getIntersectionCount,
+  getNumberOfIntersections,
   hasURLs,
   isRetweetedByMyself,
   validateInitialTweet,
@@ -106,7 +106,7 @@ const onTweet = (tweet: any): void => {
 
   let tweetId = 0;
 
-  if (getIntersectionCount(interestingWords, hashtagsOfCurrentTweet)) {
+  if (getNumberOfIntersections(interestingWords, hashtagsOfCurrentTweet)) {
     tweetId = tweet.id;
   } else {
     const tweetTextWithoutURLs: string = removeURLs(tweet.$tweetText);

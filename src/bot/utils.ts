@@ -257,7 +257,7 @@ export const isBlackListed = (tweet: any): boolean => {
  * @param {string[]} arr2
  * @return {number}
  */
-export const getIntersectionCount = (arr1: string[], arr2: string[]): number => (
+export const getNumberOfIntersections = (arr1: string[], arr2: string[]): number => (
   [...new Set(arr1)].filter((v) => arr2.includes(v)).length
 );
 
