@@ -148,14 +148,14 @@ const onTweet = (tweet: any): void => {
       retweet(tweetId)
         .then(({ message }) => {
           logSuccess(message);
+        })
+        .catch((err) => {
+          emitter.emit('bot-error', err);
+        });
 
-          favourite(tweetId)
-            .then(({ message: m }) => {
-              logSuccess(m);
-            })
-            .catch((err) => {
-              emitter.emit('bot-error', err);
-            });
+      favourite(tweetId)
+        .then(({ message: m }) => {
+          logSuccess(m);
         })
         .catch((err) => {
           emitter.emit('bot-error', err);
