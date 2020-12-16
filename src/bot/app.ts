@@ -90,7 +90,6 @@ const onTweet = (tweet: any): void => {
     return;
   }
 
-  const hashtagsOfCurrentTweet: string[] = [];
   tweet.$tweetText = removeRetweetNotation(getTweetFullText(tweet));
 
   tweet.$retweetText = '';
@@ -98,10 +97,6 @@ const onTweet = (tweet: any): void => {
   if (isRetweet(tweet)) {
     tweet.$retweetText = removeRetweetNotation(getTweetFullText(tweet.retweeted_status));
   }
-
-  tweet.entities.hashtags.map((val: { text: string }) => (
-    hashtagsOfCurrentTweet.push(`#${val.text}`)
-  ));
 
   let tweetId = 0;
 
