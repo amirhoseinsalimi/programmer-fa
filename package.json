@@ -34,6 +34,7 @@
     "twit": "^2.2.11"
   },
   "devDependencies": {
+    "@istanbuljs/nyc-config-typescript": "^1.0.1",
     "@types/chai": "^4.2.14",
     "@types/chai-http": "^4.2.0",
     "@types/dotenv": "^8.2.0",
@@ -63,7 +64,9 @@
     "faker": "^5.1.0",
     "mocha": "^8.2.1",
     "nodemon": "^2.0.6",
+    "nyc": "^15.1.0",
     "prettier": "^1.19.1",
+    "source-map-support": "^0.5.19",
     "supertest": "^6.0.1",
     "ts-node": "^8.10.2",
     "typescript": "^3.9.7"
