@@ -4,7 +4,7 @@ import {
   getNumberOfHashtags,
   fillArrayWithWords,
   loadJSONFileContent,
-  makeHashtag,
+  makeHashtag, removeRetweetNotation, getTweetFullText,
 } from '../../src/bot/utils';
 
 const chai = require('chai');
@@ -36,7 +36,10 @@ describe('Integration Tests', () => {
   it('should properly count number of hashtags', (done) => {
     const hashtagsGetsCountedProperly = tweets.every(
       (tweet: { text: string; numberOfHashtags: number }) => (
-        tweet.numberOfHashtags === getNumberOfHashtags(tweet.text)
+        tweet.numberOfHashtags
+        === getNumberOfHashtags(
+          removeRetweetNotation(getTweetFullText(tweet)),
+        )
       ),
     );
 
