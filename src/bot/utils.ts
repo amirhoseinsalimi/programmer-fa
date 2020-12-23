@@ -27,7 +27,7 @@ export const getNumberOfHashtags = (str: string): number => {
     return 0;
   }
 
-  const matches: RegExpMatchArray = str.match(/#.*?/mgi);
+  const matches: RegExpMatchArray = str.match(/#\S/mgi);
 
   return (matches && matches.length) ? matches.length : 0;
 };
