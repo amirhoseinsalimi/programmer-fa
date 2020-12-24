@@ -284,7 +284,7 @@ const tweets = {
       lang: 'fa',
       timestamp_ms: '1608730085445',
       numberOfHashtags: 0,
-      shouldBeRetweeted: true,
+      tweetIsValid: true,
     },
     {
       created_at: 'Wed Dec 23 13:28:54 +0000 2020',
@@ -382,7 +382,7 @@ const tweets = {
       lang: 'fa',
       timestamp_ms: '1608730134726',
       numberOfHashtags: 0,
-      shouldBeRetweeted: false,
+      tweetIsValid: false,
     },
     {
       created_at: 'Wed Dec 23 13:30:04 +0000 2020',
@@ -687,7 +687,7 @@ const tweets = {
       lang: 'fa',
       timestamp_ms: '1608730204095',
       numberOfHashtags: 0,
-      shouldBeRetweeted: true,
+      tweetIsValid: true,
     },
     {
       created_at: 'Wed Dec 23 13:30:51 +0000 2020',
@@ -777,7 +777,7 @@ const tweets = {
       lang: 'fa',
       timestamp_ms: '1608730251130',
       numberOfHashtags: 0,
-      shouldBeRetweeted: true,
+      tweetIsValid: true,
     },
     {
       created_at: 'Wed Dec 23 13:36:57 +0000 2020',
@@ -877,7 +877,7 @@ const tweets = {
       lang: 'fa',
       timestamp_ms: '1608730617876',
       numberOfHashtags: 0,
-      shouldBeRetweeted: false,
+      tweetIsValid: false,
     },
     {
       created_at: 'Wed Dec 23 13:38:25 +0000 2020',
@@ -974,7 +974,7 @@ const tweets = {
       lang: 'fa',
       timestamp_ms: '1608730705833',
       numberOfHashtags: 0,
-      shouldBeRetweeted: false,
+      tweetIsValid: false,
     },
     {
       created_at: 'Wed Dec 23 13:45:45 +0000 2020',
@@ -1066,7 +1066,7 @@ const tweets = {
       lang: 'fa',
       timestamp_ms: '1608731145454',
       numberOfHashtags: 0,
-      shouldBeRetweeted: false,
+      tweetIsValid: false,
     },
     {
       created_at: 'Wed Dec 23 13:47:30 +0000 2020',
@@ -1158,7 +1158,7 @@ const tweets = {
       lang: 'fa',
       timestamp_ms: '1608731250228',
       numberOfHashtags: 0,
-      shouldBeRetweeted: true, // *
+      tweetIsValid: false,
     },
     {
       created_at: 'Wed Dec 23 13:48:48 +0000 2020',
@@ -1244,7 +1244,7 @@ const tweets = {
       lang: 'fa',
       timestamp_ms: '1608731328100',
       numberOfHashtags: 1,
-      shouldBeRetweeted: true,
+      tweetIsValid: true,
     },
     {
       created_at: 'Wed Dec 23 13:50:51 +0000 2020',
@@ -1521,7 +1521,7 @@ const tweets = {
       lang: 'fa',
       timestamp_ms: '1608731451329',
       numberOfHashtags: 0,
-      shouldBeRetweeted: true,
+      tweetIsValid: false, // * true
     },
     {
       created_at: 'Wed Dec 23 13:56:47 +0000 2020',
@@ -1612,7 +1612,7 @@ const tweets = {
       lang: 'fa',
       timestamp_ms: '1608731807565',
       numberOfHashtags: 0,
-      shouldBeRetweeted: false,
+      tweetIsValid: false,
     },
     {
       created_at: 'Wed Dec 23 14:00:04 +0000 2020',
@@ -1704,7 +1704,7 @@ const tweets = {
       lang: 'fa',
       timestamp_ms: '1608732004045',
       numberOfHashtags: 0,
-      shouldBeRetweeted: false,
+      tweetIsValid: false,
     },
     {
       created_at: 'Wed Dec 23 14:00:04 +0000 2020',
@@ -1791,7 +1791,7 @@ const tweets = {
       lang: 'fa',
       timestamp_ms: '1608732004153',
       numberOfHashtags: 0,
-      shouldBeRetweeted: false,
+      tweetIsValid: false,
     },
     {
       created_at: 'Wed Dec 23 14:04:03 +0000 2020',
@@ -2005,7 +2005,7 @@ const tweets = {
       lang: 'fa',
       timestamp_ms: '1608732243303',
       numberOfHashtags: 0,
-      shouldBeRetweeted: false,
+      tweetIsValid: false,
     },
     {
       created_at: 'Wed Dec 23 10:51:34 +0000 2020',
@@ -2190,7 +2190,7 @@ const tweets = {
       lang: 'fa',
       timestamp_ms: '1608720694677',
       numberOfHashtags: 0,
-      shouldBeRetweeted: false,
+      tweetIsValid: false,
     },
     {
       created_at: 'Wed Dec 23 10:53:17 +0000 2020',
@@ -2476,7 +2476,7 @@ const tweets = {
       lang: 'fa',
       timestamp_ms: '1608720797769',
       numberOfHashtags: 0,
-      shouldBeRetweeted: false,
+      tweetIsValid: false,
     },
     {
       created_at: 'Wed Dec 23 10:56:05 +0000 2020',
@@ -2740,7 +2740,7 @@ const tweets = {
       lang: 'fa',
       timestamp_ms: '1608720965672',
       numberOfHashtags: 0,
-      shouldBeRetweeted: false,
+      tweetIsValid: false,
     },
     {
       created_at: 'Wed Dec 23 10:56:15 +0000 2020',
@@ -3041,7 +3041,7 @@ const tweets = {
       lang: 'fa',
       timestamp_ms: '1608720975430',
       numberOfHashtags: 1,
-      shouldBeRetweeted: true,
+      tweetIsValid: true,
     },
     {
       created_at: 'Wed Dec 23 10:58:30 +0000 2020',
@@ -3246,7 +3246,7 @@ const tweets = {
       lang: 'fa',
       timestamp_ms: '1608721110327',
       numberOfHashtags: 0,
-      shouldBeRetweeted: false,
+      tweetIsValid: false,
     },
     {
       created_at: 'Wed Dec 23 11:00:04 +0000 2020',
@@ -3338,7 +3338,7 @@ const tweets = {
       lang: 'fa',
       timestamp_ms: '1608721204612',
       numberOfHashtags: 0,
-      shouldBeRetweeted: false,
+      tweetIsValid: false,
     },
     {
       created_at: 'Wed Dec 23 11:05:53 +0000 2020',
@@ -3647,7 +3647,7 @@ const tweets = {
       lang: 'fa',
       timestamp_ms: '1608721553919',
       numberOfHashtags: 0,
-      shouldBeRetweeted: false,
+      tweetIsValid: false,
     },
     {
       created_at: 'Wed Dec 23 11:06:35 +0000 2020',
@@ -3833,7 +3833,7 @@ const tweets = {
       lang: 'fa',
       timestamp_ms: '1608721595616',
       numberOfHashtags: 1,
-      shouldBeRetweeted: true,
+      tweetIsValid: true,
     },
     {
       created_at: 'Wed Dec 23 11:07:46 +0000 2020',
@@ -3934,7 +3934,7 @@ const tweets = {
       lang: 'fa',
       timestamp_ms: '1608721666713',
       numberOfHashtags: 0,
-      shouldBeRetweeted: true,
+      tweetIsValid: true,
     },
     {
       created_at: 'Wed Dec 23 11:10:37 +0000 2020',
@@ -4020,7 +4020,7 @@ const tweets = {
       lang: 'fa',
       timestamp_ms: '1608721837836',
       numberOfHashtags: 1,
-      shouldBeRetweeted: true,
+      tweetIsValid: true,
     },
     {
       created_at: 'Wed Dec 23 11:11:30 +0000 2020',
@@ -4102,7 +4102,7 @@ const tweets = {
       lang: 'fa',
       timestamp_ms: '1608721890915',
       numberOfHashtags: 0,
-      shouldBeRetweeted: true,
+      tweetIsValid: true,
     },
     {
       created_at: 'Wed Dec 23 11:12:14 +0000 2020',
@@ -4188,7 +4188,7 @@ const tweets = {
       lang: 'fa',
       timestamp_ms: '1608721934564',
       numberOfHashtags: 1,
-      shouldBeRetweeted: true,
+      tweetIsValid: true,
     },
     {
       created_at: 'Wed Dec 23 11:17:06 +0000 2020',
@@ -4269,7 +4269,7 @@ const tweets = {
       lang: 'fa',
       timestamp_ms: '1608722226604',
       numberOfHashtags: 0,
-      shouldBeRetweeted: true,
+      tweetIsValid: true,
     },
     {
       created_at: 'Wed Dec 23 11:19:54 +0000 2020',
@@ -4512,7 +4512,7 @@ const tweets = {
       lang: 'fa',
       timestamp_ms: '1608722394586',
       numberOfHashtags: 0,
-      shouldBeRetweeted: true,
+      tweetIsValid: true,
     },
     {
       created_at: 'Wed Dec 23 11:20:33 +0000 2020',
@@ -4842,7 +4842,7 @@ const tweets = {
       lang: 'fa',
       timestamp_ms: '1608722433750',
       numberOfHashtags: 0,
-      shouldBeRetweeted: false,
+      tweetIsValid: false,
     },
     {
       created_at: 'Wed Dec 23 11:21:42 +0000 2020',
@@ -5121,7 +5121,7 @@ const tweets = {
       lang: 'fa',
       timestamp_ms: '1608722502596',
       numberOfHashtags: 0,
-      shouldBeRetweeted: false,
+      tweetIsValid: false,
     },
     {
       created_at: 'Wed Dec 23 11:23:30 +0000 2020',
@@ -5400,7 +5400,7 @@ const tweets = {
       lang: 'fa',
       timestamp_ms: '1608722610409',
       numberOfHashtags: 0,
-      shouldBeRetweeted: false,
+      tweetIsValid: false,
     },
     {
       created_at: 'Wed Dec 23 11:11:30 +0000 2020',
@@ -5482,7 +5482,7 @@ const tweets = {
       lang: 'fa',
       timestamp_ms: '1608721890915',
       numberOfHashtags: 0,
-      shouldBeRetweeted: true,
+      tweetIsValid: true,
     },
     {
       created_at: 'Wed Dec 23 11:12:14 +0000 2020',
@@ -5568,7 +5568,7 @@ const tweets = {
       lang: 'fa',
       timestamp_ms: '1608721934564',
       numberOfHashtags: 1,
-      shouldBeRetweeted: true,
+      tweetIsValid: true,
     },
     {
       created_at: 'Wed Dec 23 11:26:43 +0000 2020',
@@ -5782,7 +5782,7 @@ const tweets = {
       lang: 'fa',
       timestamp_ms: '1608722803004',
       numberOfHashtags: 0,
-      shouldBeRetweeted: false,
+      tweetIsValid: false,
     },
     {
       created_at: 'Wed Dec 23 11:28:42 +0000 2020',
@@ -5883,7 +5883,7 @@ const tweets = {
       lang: 'fa',
       timestamp_ms: '1608722922816',
       numberOfHashtags: 2,
-      shouldBeRetweeted: true,
+      tweetIsValid: true,
     },
     {
       created_at: 'Wed Dec 23 11:35:59 +0000 2020',
@@ -6006,7 +6006,7 @@ const tweets = {
       lang: 'fa',
       timestamp_ms: '1608723359059',
       numberOfHashtags: 4,
-      shouldBeRetweeted: true,
+      tweetIsValid: false, // * true
     },
     {
       created_at: 'Wed Dec 23 11:39:06 +0000 2020',
@@ -6193,7 +6193,7 @@ const tweets = {
       lang: 'fa',
       timestamp_ms: '1608723546326',
       numberOfHashtags: 0,
-      shouldBeRetweeted: false,
+      tweetIsValid: false,
     },
     {
       created_at: 'Wed Dec 23 11:43:24 +0000 2020',
@@ -6275,7 +6275,7 @@ const tweets = {
       lang: 'fa',
       timestamp_ms: '1608723804953',
       numberOfHashtags: 0,
-      shouldBeRetweeted: true,
+      tweetIsValid: true,
     },
     {
       created_at: 'Wed Dec 23 11:48:15 +0000 2020',
@@ -6438,7 +6438,7 @@ const tweets = {
       lang: 'fa',
       timestamp_ms: '1608724095698',
       numberOfHashtags: 1,
-      shouldBeRetweeted: true,
+      tweetIsValid: true,
     },
     {
       created_at: 'Wed Dec 23 11:49:06 +0000 2020',
@@ -6615,7 +6615,7 @@ const tweets = {
       lang: 'fa',
       timestamp_ms: '1608724146934',
       numberOfHashtags: 0,
-      shouldBeRetweeted: true,
+      tweetIsValid: true,
     },
     {
       created_at: 'Wed Dec 23 12:01:18 +0000 2020',
@@ -6901,7 +6901,7 @@ const tweets = {
       lang: 'fa',
       timestamp_ms: '1608724878135',
       numberOfHashtags: 0,
-      shouldBeRetweeted: true,
+      tweetIsValid: false, // * true
     },
     {
       created_at: 'Wed Dec 23 12:02:16 +0000 2020',
@@ -7187,7 +7187,7 @@ const tweets = {
       lang: 'fa',
       timestamp_ms: '1608724936043',
       numberOfHashtags: 0,
-      shouldBeRetweeted: false,
+      tweetIsValid: false,
     },
     {
       created_at: 'Wed Dec 23 12:02:17 +0000 2020',
@@ -7277,7 +7277,7 @@ const tweets = {
       lang: 'fa',
       timestamp_ms: '1608724937897',
       numberOfHashtags: 2,
-      shouldBeRetweeted: true,
+      tweetIsValid: true,
     },
     {
       created_at: 'Wed Dec 23 12:03:40 +0000 2020',
@@ -7637,7 +7637,7 @@ const tweets = {
       lang: 'fa',
       timestamp_ms: '1608725020938',
       numberOfHashtags: 0,
-      shouldBeRetweeted: false,
+      tweetIsValid: false,
     },
     {
       created_at: 'Wed Dec 23 12:04:57 +0000 2020',
@@ -7923,7 +7923,7 @@ const tweets = {
       lang: 'fa',
       timestamp_ms: '1608725097761',
       numberOfHashtags: 0,
-      shouldBeRetweeted: false,
+      tweetIsValid: false,
     },
     {
       created_at: 'Wed Dec 23 12:07:38 +0000 2020',
@@ -8013,7 +8013,7 @@ const tweets = {
       lang: 'fa',
       timestamp_ms: '1608725258730',
       numberOfHashtags: 0,
-      shouldBeRetweeted: true,
+      tweetIsValid: true,
     },
     {
       created_at: 'Wed Dec 23 12:09:05 +0000 2020',
@@ -8113,7 +8113,7 @@ const tweets = {
       lang: 'fa',
       timestamp_ms: '1608725345027',
       numberOfHashtags: 0,
-      shouldBeRetweeted: true,
+      tweetIsValid: true,
     },
     {
       created_at: 'Wed Dec 23 12:13:07 +0000 2020',
@@ -8205,7 +8205,7 @@ const tweets = {
       lang: 'fa',
       timestamp_ms: '1608725587141',
       numberOfHashtags: 0,
-      shouldBeRetweeted: false,
+      tweetIsValid: false,
     },
     {
       created_at: 'Wed Dec 23 12:15:27 +0000 2020',
@@ -8286,7 +8286,7 @@ const tweets = {
       lang: 'fa',
       timestamp_ms: '1608725727529',
       numberOfHashtags: 0,
-      shouldBeRetweeted: false,
+      tweetIsValid: true,
     },
     {
       created_at: 'Wed Dec 23 12:27:24 +0000 2020',
@@ -8650,7 +8650,7 @@ const tweets = {
       lang: 'fa',
       timestamp_ms: '1608726444002',
       numberOfHashtags: 0,
-      shouldBeRetweeted: false,
+      tweetIsValid: false,
     },
     {
       created_at: 'Wed Dec 23 12:29:43 +0000 2020',
@@ -8750,7 +8750,7 @@ const tweets = {
       lang: 'fa',
       timestamp_ms: '1608726583410',
       numberOfHashtags: 0,
-      shouldBeRetweeted: true,
+      tweetIsValid: true,
     },
     {
       created_at: 'Wed Dec 23 12:30:14 +0000 2020',
@@ -8832,7 +8832,7 @@ const tweets = {
       lang: 'fa',
       timestamp_ms: '1608726614875',
       numberOfHashtags: 0,
-      shouldBeRetweeted: true,
+      tweetIsValid: true,
     },
   ],
 };
