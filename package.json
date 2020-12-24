@@ -7,13 +7,13 @@
     "node": ">=14.0.0"
   },
   "scripts": {
-    "start": "npm run build && NODE_ENV=production pm2 start dist/bot/app.js --name programmer-fa",
+    "start": "npm run build && NODE_ENV=production pm2 start dist/src/bot/app.js --name programmer-fa",
     "restart": "npm run build && NODE_ENV=production pm2 restart programmer-fa",
     "stop": "pm2 stop programmer-fa",
     "build": "tsc",
     "dev": "tsc && NODE_ENV=development nodemon --watch 'src/bot/**/*.ts' --exec 'ts-node' src/bot/app.ts",
-    "sort": "npm run build && node dist/cli/sort-words.js && git add --all ./src/data/ && git commit -m \"Update words!\"",
-    "test": "env TS_NODE_COMPILER_OPTIONS='{\"module\": \"commonjs\" }' mocha -r ts-node/register 'test/**/*.ts'",
+    "sort": "npm run build && node dist/src/cli/sort-words.js && git add --all ./src/data/ && git commit -m \"Update words!\"",
+    "test": "env TS_NODE_COMPILER_OPTIONS='{\"module\": \"commonjs\" }' mocha -b -r ts-node/register 'test/**/*.ts'",
     "lint": "eslint . --ext .js,.ts"
   },
   "author": "Amir Hosein Salimi",
@@ -34,6 +34,7 @@
     "twit": "^2.2.11"
   },
   "devDependencies": {
+    "@istanbuljs/nyc-config-typescript": "^1.0.1",
     "@types/chai": "^4.2.14",
     "@types/chai-http": "^4.2.0",
     "@types/dotenv": "^8.2.0",
@@ -63,7 +64,9 @@
     "faker": "^5.1.0",
     "mocha": "^8.2.1",
     "nodemon": "^2.0.6",
+    "nyc": "^15.1.0",
     "prettier": "^1.19.1",
+    "source-map-support": "^0.5.19",
     "supertest": "^6.0.1",
     "ts-node": "^8.10.2",
     "typescript": "^3.9.7"

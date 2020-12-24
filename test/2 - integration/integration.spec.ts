@@ -4,8 +4,9 @@ import {
   getNumberOfHashtags,
   fillArrayWithWords,
   loadJSONFileContent,
-  makeHashtag,
+  makeHashtag, removeRetweetNotation, getTweetFullText,
 } from '../../src/bot/utils';
+import { onTweet } from '../../src/bot/app';
 
 const chai = require('chai');
 const chaiHttp = require('chai-http');
@@ -31,18 +32,6 @@ describe('Integration Tests', () => {
       .then(async (response) => {
         tweets = JSON.parse(response.text).tweets;
       });
-  });
-
-  it('should properly count number of hashtags', (done) => {
-    const hashtagsGetsCountedProperly = tweets.every(
-      (tweet: { text: string; numberOfHashtags: number }) => (
-        tweet.numberOfHashtags === getNumberOfHashtags(tweet.text)
-      ),
-    );
-
-    expect(hashtagsGetsCountedProperly).to.be.true;
-
-    done();
   });
 
   it('should return an array including "words to follow", both in plain form and in hashtag form', (done) => {
@@ -78,6 +67,37 @@ describe('Integration Tests', () => {
 
     expect(allExpectedValuesAreInBlackListedWordsArray).to.be.true;
 
+    done();
+  });
+
+  it('should properly count number of hashtags', (done) => {
+    const hashtagsGetsCountedProperly = tweets.every(
+      // TODO: Make a type for this
+      (tweet: { text: string; numberOfHashtags: number }) => (
+        tweet.numberOfHashtags
+        === getNumberOfHashtags(
+          removeRetweetNotation(getTweetFullText(tweet)),
+        )
+      ),
+    );
+
+    expect(hashtagsGetsCountedProperly).to.be.true;
+
+    done();
+  });
+
+  it('should return the `id` of valid tweets or `0` for invalid tweets', (done) => {
+    tweets.forEach(
+      (tweet: any) => {
+        if (tweet.tweetIsValid) {
+          expect(onTweet(tweet))
+            .to.be.not.equal(0);
+        } else {
+          expect(onTweet(tweet))
+            .to.be.equal(0);
+        }
+      },
+    );
     done();
   });
 });

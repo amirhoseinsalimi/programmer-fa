@@ -5,12 +5,13 @@
   ],
   "compilerOptions": {
     "noImplicitAny": true,
-    "target": "es2017",
+    "target": "ES5",
     "outDir": "dist",
     "downlevelIteration": true,
     "resolveJsonModule": true,
     "allowSyntheticDefaultImports": true,
-    "moduleResolution": "Node"
+    "moduleResolution": "Node",
+    "sourceMap": true
   },
   "exclude": [
     "./test/",
