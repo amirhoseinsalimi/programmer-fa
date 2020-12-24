@@ -10,26 +10,25 @@ import { T, Twit } from './twit';
 import {
   logError,
   logSuccess,
-  writeToFile,
-  printWelcomeBanner,
   prettyPrintInTable,
+  printWelcomeBanner,
+  writeToFile,
 } from './logger';
 
 import {
+  favourite,
+  fillArrayWithWords,
   getTweetFullText,
   isDebugModeEnabled,
-  retweet,
-  favourite,
-  store,
+  isRetweet,
+  isRetweetedByMyself,
+  loadJSONFileContent,
+  removeRetweetNotation,
   removeSuspiciousWords,
   removeURLs,
-  hasURLs,
-  isRetweetedByMyself,
+  retweet,
+  store,
   validateInitialTweet,
-  removeRetweetNotation,
-  isRetweet,
-  loadJSONFileContent,
-  fillArrayWithWords,
 } from './utils';
 
 /* =======================================
@@ -60,8 +59,12 @@ process
  * ==================================== */
 printWelcomeBanner();
 
-const wordsToFollowDB: string[] | Error = loadJSONFileContent(`${__dirname}/../data/words-to-follow.json`);
-const wordsNotToFollowDB: string[] | Error = loadJSONFileContent(`${__dirname}/../data/words-not-to-follow.json`);
+const wordsToFollowDB: string[] | Error = loadJSONFileContent(
+  `${__dirname}/../data/words-to-follow.json`,
+);
+const wordsNotToFollowDB: string[] | Error = loadJSONFileContent(
+  `${__dirname}/../data/words-not-to-follow.json`,
+);
 
 if (wordsToFollowDB instanceof Error || wordsNotToFollowDB instanceof Error) {
   emitter.emit('bot-error', "Files couldn't be loaded");
@@ -95,7 +98,9 @@ const onTweet = (tweet: any): void => {
   tweet.$retweetText = '';
 
   if (isRetweet(tweet)) {
-    tweet.$retweetText = removeRetweetNotation(getTweetFullText(tweet.retweeted_status));
+    tweet.$retweetText = removeRetweetNotation(
+      getTweetFullText(tweet.retweeted_status),
+    );
   }
 
   let tweetId = 0;
@@ -135,10 +140,9 @@ const onTweet = (tweet: any): void => {
   );
 
   tweetId = tweetIncludesInterestingWords
-  && !tweetIncludesBlackListedWords
-  && !retweetIncludesBlackListedWords
-  && !hasURLs(tweet)
-  && !isRetweetedByMyself(tweet) ? tweet.id : 0;
+    && !tweetIncludesBlackListedWords
+    && !retweetIncludesBlackListedWords
+    && !isRetweetedByMyself(tweet) ? tweet.id : 0;
 
   if (tweetId) {
     if (isDebugModeEnabled()) {
