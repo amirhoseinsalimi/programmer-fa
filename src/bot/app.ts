@@ -88,9 +88,9 @@ export const stream: Twit.Stream = T.stream('statuses/filter', params);
  * @param tweet - The tweet object
  * @return void
  */
-const onTweet = (tweet: any): void => {
+export const onTweet = (tweet: any): number => {
   if (!validateInitialTweet(tweet)) {
-    return;
+    return 0;
   }
 
   tweet.$tweetText = removeRetweetNotation(getTweetFullText(tweet));
@@ -174,6 +174,8 @@ const onTweet = (tweet: any): void => {
         emitter.emit('bot-error', err);
       });
   }
+
+  return tweetId;
 };
 
 stream.on('tweet', onTweet);
