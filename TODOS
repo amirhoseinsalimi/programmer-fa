@@ -11,3 +11,4 @@ TODO: Full TypeScript
 TODO: Support for quoted tweet
 TODO: Read the entities of extended tweets too
 TODO: Suspicious words should be included in words-to-follow
+TODO: Write async functions for tasks that takes time
