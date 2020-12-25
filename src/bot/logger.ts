@@ -44,7 +44,7 @@ export const logSuccess = (...args: any): void => {
   }
 };
 
-export const writeToFile = (text: string | Buffer): void => {
+export const writeToFile = async (text: string | Buffer): Promise<void> => {
   if (isDebugModeEnabled()) {
     fs.access(`${process.cwd()}/logs`, (err) => {
       if (err && err.code === 'ENOENT') {

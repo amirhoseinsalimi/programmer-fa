@@ -146,33 +146,31 @@ export const onTweet = (tweet: any): number => {
 
   if (tweetId) {
     if (isDebugModeEnabled()) {
-      writeToFile(tweet.$tweetText);
-      prettyPrintInTable(tweet);
+      try {
+        await writeToFile(tweet.$tweetText);
+        prettyPrintInTable(tweet);
+      } catch (e) {
+        emitter.emit('bot-error', e);
+      }
     } else {
-      retweet(tweetId)
-        .then(({ message }) => {
-          logSuccess(message);
-        })
-        .catch((err) => {
-          emitter.emit('bot-error', err);
-        });
+      try {
+        logSuccess(await retweet(tweetId));
+      } catch (e) {
+        emitter.emit('bot-error', e);
+      }
 
-      favourite(tweetId)
-        .then(({ message: m }) => {
-          logSuccess(m);
-        })
-        .catch((err) => {
-          emitter.emit('bot-error', err);
-        });
+      try {
+        logSuccess(await favourite(tweetId));
+      } catch (e) {
+        emitter.emit('bot-error', e);
+      }
     }
 
-    store(tweet)
-      .then(({ message }) => {
-        logSuccess(message);
-      })
-      .catch((err) => {
-        emitter.emit('bot-error', err);
-      });
+    try {
+      logSuccess(await store(tweet));
+    } catch (e) {
+      emitter.emit('bot-error', e);
+    }
   }
 
   return tweetId;

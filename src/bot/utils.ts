@@ -14,7 +14,6 @@ const knex = require('../../knex-export.js');
 
 interface Message {
   message: string;
-  err?: any;
 }
 
 /**
@@ -155,71 +154,85 @@ export const isDebugModeEnabled = (): boolean => {
 /**
  * Retweet the passed tweet by the given `id`
  * @param {number} id - Tweet ID
- * @return {Promise}
+ * @return {Promise<Message | Error>}
  */
-export const retweet = (id: number): Promise<Message> => (
-  new Promise((resolve, reject) => {
-    T.post('statuses/retweet/:id', { id: id.toString() }, (err: any) => {
+export const retweet = async (id: number): Promise<Message | Error> => {
+  let response: Message | Error;
+
+  try {
+    T.post('statuses/retweet/:id', { id: id.toString() }, (err: Error) => {
       if (err) {
-        reject(new Error(`Failed to retweet the tweet ${id}`));
+        throw err;
       }
 
-      resolve({ message: 'Tweet retweeted successfully' });
+      response = { message: 'Tweet retweeted successfully' };
     });
-  })
-);
+  } catch (e) {
+    response = e;
+  }
+
+  return response;
+};
 
 /**
  * Favourite/Like the passed tweet by the given `id`
  * @param {number} id - Tweet ID
- * @return {Promise}
+ * @return {Promise<Message | Error>}
  */
-export const favourite = (id: number): Promise<Message> => (
-  new Promise((resolve, reject) => {
-    T.post('/favorites/create', { id: id.toString() }, (err: any) => {
+export const favourite = async (id: number): Promise<Message | Error> => {
+  let response: Message | Error;
+
+  try {
+    T.post('/favorites/create', { id: id.toString() }, (err: Error) => {
       if (err) {
-        reject(new Error(`Failed to favorite the tweet ${id}`));
+        throw err;
       }
 
-      resolve({ message: 'Tweet favourited successfully' });
+      response = { message: 'Tweet favourited successfully' };
     });
-  })
-);
+  } catch (e) {
+    response = e;
+  }
+
+  return response;
+};
 
 /**
  * Store the given tweet in the database
  * @param {*} tweet - The tweet object
- * @return {Promise}
+ * @return {Promise<Message | Error>}
  */
-export const store = (tweet: any): Promise<Message> => (
-  new Promise((resolve, reject) => {
-    if (enableDB === 'false') {
-      resolve({ message: 'Database storage is disabled' });
-    }
+export const store = async (tweet: any): Promise<Message | Error> => {
+  if (enableDB === 'false') {
+    return {
+      message: 'Database storage is disabled',
+    };
+  }
 
-    const {
-      in_reply_to_status_id,
-      in_reply_to_user_id,
-      source,
-      user,
-      id_str,
-      $tweetText,
-    } = tweet;
+  const {
+    in_reply_to_status_id,
+    in_reply_to_user_id,
+    source,
+    user,
+    id_str,
+    $tweetText,
+  } = tweet;
 
-    const {
-      id_str: userIdStr,
-      screen_name,
-      name,
-    } = user;
+  const {
+    id_str: userIdStr,
+    screen_name,
+    name,
+  } = user;
 
-    knex('users')
+  try {
+    await knex('users')
       .insert({
         id_str: userIdStr,
         screen_name,
         name,
       });
 
-    knex('tweets')
+    await knex('tweets')
       .insert({
         tweet_id: id_str,
         text: $tweetText,
@@ -228,15 +241,13 @@ export const store = (tweet: any): Promise<Message> => (
         in_reply_to_status_id,
         in_reply_to_user_id,
         user_id: user.id_str,
-      })
-      .then(() => {
-        resolve({ message: 'Tweet stored in the database' });
-      })
-      .catch(() => {
-        reject(new Error('Failed to store the tweet in the database'));
       });
-  })
-);
+
+    return { message: 'Tweet stored in the database' };
+  } catch (e) {
+    return new Error('Failed to store the tweet in the database');
+  }
+};
 
 /**
  * Check if the user is in the blacklist
