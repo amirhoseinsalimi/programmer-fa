@@ -88,12 +88,12 @@ describe('Integration Tests', () => {
 
   it('should return the `id` of valid tweets or `0` for invalid tweets', (done) => {
     tweets.forEach(
-      (tweet: any) => {
+      async (tweet: any, i) => {
         if (tweet.tweetIsValid) {
-          expect(onTweet(tweet))
+          expect(await onTweet(tweet))
             .to.be.not.equal(0);
         } else {
-          expect(onTweet(tweet))
+          expect(await onTweet(tweet))
             .to.be.equal(0);
         }
       },

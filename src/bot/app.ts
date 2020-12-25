@@ -88,7 +88,7 @@ export const stream: Twit.Stream = T.stream('statuses/filter', params);
  * @param tweet - The tweet object
  * @return void
  */
-export const onTweet = (tweet: any): number => {
+export const onTweet = async (tweet: any): Promise<number> => {
   if (!validateInitialTweet(tweet)) {
     return 0;
   }
