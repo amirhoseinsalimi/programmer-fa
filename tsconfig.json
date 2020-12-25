@@ -1,17 +1,16 @@
 {
   "include": [
-    "./**/*.ts",
-    "./**/*.json"
+    "./**/*.ts"
   ],
   "compilerOptions": {
     "noImplicitAny": true,
     "target": "ES5",
     "outDir": "dist",
     "downlevelIteration": true,
-    "resolveJsonModule": true,
+    "resolveJsonModule": false,
     "allowSyntheticDefaultImports": true,
     "moduleResolution": "Node",
-    "sourceMap": true
+    "sourceMap": false
   },
   "exclude": [
     "./test/",
