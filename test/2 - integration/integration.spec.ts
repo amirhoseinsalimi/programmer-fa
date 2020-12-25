@@ -30,7 +30,7 @@ describe('Integration Tests', () => {
       .get('/tweets')
       .expect(200)
       .then(async (response) => {
-        tweets = JSON.parse(response.text).tweets;
+        tweets = JSON.parse(JSON.parse(response.text).tweets);
       });
   });
 
@@ -98,6 +98,7 @@ describe('Integration Tests', () => {
         }
       },
     );
+
     done();
   });
 });
