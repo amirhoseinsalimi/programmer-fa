@@ -20,6 +20,7 @@
   "author": "Amir Hosein Salimi",
   "license": "MIT",
   "dependencies": {
+    "@appsignal/nodejs": "^1.1.0",
     "color-it": "^1.2.12",
     "console-table-printer": "^2.7.5",
     "dotenv": "^8.2.0",

@@ -1,6 +1,17 @@
 /* =======================================
  *           Node.js Modules
  * ===================================== */
+import { Appsignal } from '@appsignal/nodejs';
+
+const appsignal = new Appsignal({
+  active: process.env.NODE_ENV === 'production',
+  name: 'Programmer Farsi',
+  apiKey: 'ce15887b-9f5f-4110-b7aa-6d065cc9096e',
+});
+
+/* =======================================
+ *           Node.js Modules
+ * ===================================== */
 import { EventEmitter } from 'events';
 import { T, Twit } from './twit';
 
