@@ -1,7 +1,7 @@
 /* =======================================
  *           Node.js Modules
  * ===================================== */
-import { Appsignal } from '@appsignal/nodejs';
+const { Appsignal } = require('@appsignal/nodejs')
 
 const {
   APPSIGNAL_PUSH_API_KEY: appSignalApiKey,
