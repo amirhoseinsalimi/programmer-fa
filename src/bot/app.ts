@@ -1,6 +1,22 @@
 /* =======================================
  *           Node.js Modules
  * ===================================== */
+import { Appsignal } from '@appsignal/nodejs';
+
+const {
+  APPSIGNAL_PUSH_API_KEY: appSignalApiKey,
+  APPSIGNAL_APP_NAME: appSignalAppName,
+} = require('../../env');
+
+const appsignal = new Appsignal({
+  active: process.env.NODE_ENV === 'production',
+  name: appSignalAppName,
+  apiKey: appSignalApiKey,
+});
+
+/* =======================================
+ *           Node.js Modules
+ * ===================================== */
 import { EventEmitter } from 'events';
 import { T, Twit } from './twit';
 

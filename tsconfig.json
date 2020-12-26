@@ -4,7 +4,7 @@
   ],
   "compilerOptions": {
     "noImplicitAny": true,
-    "target": "ES5",
+    "target": "ES2015",
     "outDir": "dist",
     "downlevelIteration": true,
     "resolveJsonModule": false,

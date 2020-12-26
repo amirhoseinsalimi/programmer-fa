@@ -41,6 +41,8 @@ module.exports = {
     ],
     'no-cond-assign': 0,
     'no-unused-expressions': 0,
-    'chai-friendly/no-unused-expressions': 2
+    'chai-friendly/no-unused-expressions': 2,
+    'import/first': 0,
+    'import/order': 0,
   },
 };
