@@ -75,7 +75,11 @@ export const removeURLs = (text: string): string => {
  * @param tweet
  * @return boolean
  */
-export const hasURLs = (tweet: any): boolean => tweet.entities.urls.length > 0;
+export const hasSuspiciousWordsURLs = (tweet: any): boolean => (
+  tweet.entities.urls.length > 0 && tweet.entities.urls.has((urlEntity: string) => (
+    /(\.apsx|\.php|\.html)/.test(urlEntity)
+  ))
+);
 
 /**
  * Whether a tweet is under 140 characters long or not
