@@ -160,11 +160,11 @@ export const isDebugModeEnabled = (): boolean => {
  * @param {number} id - Tweet ID
  * @return {Promise<Message | Error>}
  */
-export const retweet = async (id: number): Promise<Message | Error> => {
+export const retweet = async (id: string): Promise<Message | Error> => {
   let response: Message | Error;
 
   try {
-    T.post('statuses/retweet/:id', { id: id.toString() }, (err: Error) => {
+    T.post('statuses/retweet/:id', { id }, (err: Error) => {
       if (err) {
         throw err;
       }
@@ -183,11 +183,11 @@ export const retweet = async (id: number): Promise<Message | Error> => {
  * @param {number} id - Tweet ID
  * @return {Promise<Message | Error>}
  */
-export const favourite = async (id: number): Promise<Message | Error> => {
+export const favourite = async (id: string): Promise<Message | Error> => {
   let response: Message | Error;
 
   try {
-    T.post('/favorites/create', { id: id.toString() }, (err: Error) => {
+    T.post('/favorites/create', { id }, (err: Error) => {
       if (err) {
         throw err;
       }

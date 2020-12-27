@@ -90,9 +90,9 @@ export const stream: Twit.Stream = T.stream('statuses/filter', params);
  * @param tweet - The tweet object
  * @return void
  */
-export const onTweet = async (tweet: any): Promise<number> => {
+export const onTweet = async (tweet: any): Promise<string> => {
   if (!validateInitialTweet(tweet)) {
-    return 0;
+    return '0';
   }
 
   tweet.$tweetText = removeRetweetNotation(getTweetFullText(tweet));
@@ -139,13 +139,13 @@ export const onTweet = async (tweet: any): Promise<number> => {
     ),
   );
 
-  const tweetId: number = tweetIncludesInterestingWords
+  const tweetId: string = tweetIncludesInterestingWords
     && !tweetIncludesBlackListedWords
     && !retweetIncludesBlackListedWords
     && !hasSuspiciousURLs(tweet)
-    && !isRetweetedByMyself(tweet) ? tweet.id : 0;
+    && !isRetweetedByMyself(tweet) ? tweet.id_str : '0';
 
-  if (tweetId) {
+  if (tweetId !== '0') {
     if (isDebugModeEnabled()) {
       try {
         await writeToFile(tweet.$tweetText);
