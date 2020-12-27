@@ -13,7 +13,7 @@
     "build": "tsc && npm run copy-json-files",
     "dev": "tsc && NODE_ENV=development nodemon --watch 'src/bot/**/*.ts' --exec 'ts-node' src/bot/app.ts",
     "sort": "npm run build && node dist/cli/sort-words.js && git add --all ./src/data/ && git commit -m \"Update words!\"",
-    "test": "env TS_NODE_COMPILER_OPTIONS='{\"module\": \"commonjs\" }' mocha -b -r ts-node/register 'test/**/*.ts'",
+    "test": "env TS_NODE_COMPILER_OPTIONS='{\"module\": \"commonjs\" }' NODE_ENV=testing DEBUG_MODE=true DB_ENABLE=false mocha -b -r ts-node/register 'test/**/*.ts'",
     "copy-json-files": "mkdir -p dist/data && cp src/data/* dist/data/",
     "lint": "eslint . --ext .js,.ts"
   },
