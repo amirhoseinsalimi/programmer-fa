@@ -1,8 +1,13 @@
-exports.up = (knex) => knex.schema
-  .hasTable('tweets')
-  .then((exists) => {
-    if (!exists) {
-      knex.schema.createTable('tweets', (table) => {
+const TABLE_NAME = 'tweets';
+
+exports.up = async ({ schema }) => {
+  try {
+    const tableExists = await schema.hasTable(TABLE_NAME);
+
+    if (!tableExists) {
+      return await schema.createTable(TABLE_NAME, (table) => {
+        table.collate('utf8mb4_unicode_ci');
+
         table.increments().primary();
         table.string('tweet_id', 50).notNullable().unique();
         table.text('text').notNullable();
@@ -15,20 +20,21 @@ exports.up = (knex) => knex.schema
         table.timestamps(true, true);
       });
     }
-  })
-  .catch((err) => {
-    console.error(err);
-  });
+  } catch (e) {
+    throw e;
+  }
+}
 
-exports.down = (knex) => knex.schema
-  .hasTable('tweets')
-  .then((exists) => {
-    if (exists) {
-      knex.schema.dropTableIfExists('tweets');
+exports.down = async ({ schema }) => {
+  try {
+    const tableExists = await schema.hasTable(TABLE_NAME);
+
+    if (tableExists) {
+      return await schema.dropTableIfExists(TABLE_NAME);
     }
-  })
-  .catch((err) => {
-    console.error(err);
-  });
+  } catch (e) {
+    throw e;
+  }
+}
 
 exports.config = { transaction: false };

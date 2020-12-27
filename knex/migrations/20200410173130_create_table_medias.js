@@ -1,8 +1,11 @@
-exports.up = (knex) => knex.schema
-  .hasTable('medias')
-  .then((exists) => {
-    if (!exists) {
-      knex.schema.createTable('medias', (table) => {
+const TABLE_NAME = 'medias';
+
+exports.up = async ({ schema }) => {
+  try {
+    const tableExists = await schema.hasTable(TABLE_NAME);
+
+    if (!tableExists) {
+      return await schema.createTable(TABLE_NAME, (table) => {
         table.increments().primary();
         table.string('media_url').notNullable();
 
@@ -10,20 +13,21 @@ exports.up = (knex) => knex.schema
         table.timestamps(true, true);
       });
     }
-  })
-  .catch((err) => {
-    console.error(err);
-  });
+  } catch (e) {
+    throw e;
+  }
+}
 
-exports.down = (knex) => knex.schema
-  .hasTable('medias')
-  .then((exists) => {
-    if (exists) {
-      knex.schema.dropTableIfExists('medias');
+exports.down = async ({ schema }) => {
+  try {
+    const tableExists = await schema.hasTable(TABLE_NAME);
+
+    if (tableExists) {
+      return await schema.dropTableIfExists(TABLE_NAME);
     }
-  })
-  .catch((err) => {
-    console.error(err);
-  });
+  } catch (e) {
+    throw e;
+  }
+}
 
 exports.config = { transaction: false };

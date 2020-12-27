@@ -1,8 +1,13 @@
-exports.up = (knex) => knex.schema
-  .hasTable('users')
-  .then((exists) => {
-    if (!exists) {
-      knex.schema.createTable('users', (table) => {
+const TABLE_NAME = 'users';
+
+exports.up = async ({ schema }) => {
+  try {
+    const tableExists = await schema.hasTable(TABLE_NAME);
+
+    if (!tableExists) {
+      return schema.createTable(TABLE_NAME, (table) => {
+        table.collate('utf8mb4_unicode_ci');
+
         table.increments().primary();
         table.string('user_id').notNullable();
         table.string('name').notNullable();
@@ -10,20 +15,21 @@ exports.up = (knex) => knex.schema
         table.timestamps(true, true);
       });
     }
-  })
-  .catch((err) => {
-    console.error(err);
-  });
+  } catch (e) {
+    throw e;
+  }
+}
 
-exports.down = (knex) => knex.schema
-  .hasTable('users')
-  .then((exists) => {
-    if (exists) {
-      knex.schema.dropTableIfExists('users');
+exports.down = async ({ schema }) => {
+  try {
+    const tableExists = await schema.hasTable(TABLE_NAME);
+
+    if (tableExists) {
+      return await schema.dropTableIfExists(TABLE_NAME);
     }
-  })
-  .catch((err) => {
-    console.error(err);
-  });
+  } catch (e) {
+    throw e;
+  }
+}
 
 exports.config = { transaction: false };
