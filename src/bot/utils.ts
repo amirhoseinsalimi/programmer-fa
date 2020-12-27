@@ -2,7 +2,6 @@ import { readFileSync } from 'fs';
 import { T } from './twit';
 
 const {
-  NODE_ENV: env,
   DEBUG_MODE: debugMode,
   DB_ENABLE: enableDB,
 } = require('../../env.js');
@@ -146,14 +145,7 @@ export const getTweetHashtags = (tweet: any): string[] => (
  * Whether the environment is in debug mode or not
  * @return {boolean}
  */
-export const isDebugModeEnabled = (): boolean => {
-  const environment = env || 'development';
-
-  if (environment === 'production') {
-    return false;
-  }
-  return debugMode !== 'false';
-};
+export const isDebugModeEnabled = (): boolean => debugMode === 'true';
 
 /**
  * Retweet the passed tweet by the given `id`
