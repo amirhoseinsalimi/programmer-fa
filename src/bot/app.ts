@@ -39,7 +39,7 @@ class Emitter extends EventEmitter {}
 
 const emitter: Emitter = new Emitter();
 
-emitter.on('bot-error', (err: any) => {
+emitter.on('bot-error', (err: Error) => {
   logError('An error has been thrown', err.message || err);
 });
 
@@ -50,7 +50,7 @@ process
     logError(err.stack);
     process.exit(1);
   })
-  .on('unhandledRejection', (reason, p: Promise<any>) => {
+  .on('unhandledRejection', (reason, p: Promise<unknown>) => {
     logError('Unhandled Rejection at Promise', p);
     logError(reason);
   });
@@ -180,6 +180,6 @@ export const onTweet = async (tweet: any): Promise<number> => {
 
 stream.on('tweet', onTweet);
 
-stream.on('error', (err: any) => {
+stream.on('error', (err: Error) => {
   emitter.emit('bot-error', err);
 });
