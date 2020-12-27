@@ -46,6 +46,7 @@ emitter.on('bot-error', (err: Error) => {
 /* Deal w/ uncaught errors and unhandled promises */
 process
   .on('uncaughtException', (err: Error) => {
+    logError(JSON.stringify(err, null, 2));
     logError(`${new Date().toUTCString()} "uncaughtException": ${err.message}`);
     logError(err.stack);
     process.exit(1);
