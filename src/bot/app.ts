@@ -19,7 +19,7 @@ import {
   favourite,
   fillArrayWithWords,
   getTweetFullText,
-  hasSuspiciousWordsURLs,
+  hasSuspiciousURLs,
   isDebugModeEnabled,
   isRetweet,
   isRetweetedByMyself,
@@ -142,7 +142,7 @@ export const onTweet = async (tweet: any): Promise<number> => {
   const tweetId: number = tweetIncludesInterestingWords
     && !tweetIncludesBlackListedWords
     && !retweetIncludesBlackListedWords
-    && !hasSuspiciousWordsURLs(tweet)
+    && !hasSuspiciousURLs(tweet)
     && !isRetweetedByMyself(tweet) ? tweet.id : 0;
 
   if (tweetId) {

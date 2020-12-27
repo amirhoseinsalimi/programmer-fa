@@ -75,8 +75,8 @@ export const removeURLs = (text: string): string => {
  * @param tweet
  * @return boolean
  */
-export const hasSuspiciousWordsURLs = (tweet: any): boolean => (
-  tweet.entities.urls.length > 0 && tweet.entities.urls.has((urlEntity: string) => (
+export const hasSuspiciousURLs = (tweet: any): boolean => (
+  tweet.entities.urls.length > 0 && tweet.entities.urls.some((urlEntity: string) => (
     /(\.apsx|\.php|\.html)/.test(urlEntity)
   ))
 );
