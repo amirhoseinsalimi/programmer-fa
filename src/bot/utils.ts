@@ -249,7 +249,7 @@ export const store = async (tweet: any): Promise<Message | Error> => {
 
     return { message: 'Tweet stored in the database' };
   } catch (e) {
-    return new Error('Failed to store the tweet in the database');
+    return new Error(e);
   }
 };
 
