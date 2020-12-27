@@ -104,8 +104,6 @@ export const onTweet = async (tweet: any): Promise<number> => {
     );
   }
 
-  let tweetId = 0;
-
   const tweetTextWithoutURLs: string = removeURLs(tweet.$tweetText);
   const reTweetTextWithoutURLs: string = removeURLs(tweet.$retweetText);
 
@@ -140,7 +138,7 @@ export const onTweet = async (tweet: any): Promise<number> => {
     ),
   );
 
-  tweetId = tweetIncludesInterestingWords
+  const tweetId: number = tweetIncludesInterestingWords
     && !tweetIncludesBlackListedWords
     && !retweetIncludesBlackListedWords
     && !hasURLs(tweet)
