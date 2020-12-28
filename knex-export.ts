@@ -1,10 +1,8 @@
 import * as Knex from 'knex';
 
-const {
-  NODE_ENV: env,
-} = require('./env');
+import envs from './env';
 
-const environment = env || 'development';
+const environment = envs.NODE_ENV || 'development';
 const config = require('./knexfile')[environment];
 
 export default Knex(config);
