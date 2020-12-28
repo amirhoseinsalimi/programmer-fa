@@ -1,15 +1,12 @@
 import { readFileSync } from 'fs';
 import { T } from './twit';
 
-const {
-  DEBUG_MODE: debugMode,
-  DB_ENABLE: enableDB,
-} = require('../../env.js');
+import envs from '../../env';
 
 const suspiciousWords: string[] = require('../data/words-with-suspicion.json');
 const blackListedAccounts: string[] = require('../data/accounts-not-to-follow.json');
 
-const knex = require('../../knex-export.js');
+const knex = require('../../knex-export');
 
 interface Message {
   message: string;
@@ -145,7 +142,7 @@ export const getTweetHashtags = (tweet: any): string[] => (
  * Whether the environment is in debug mode or not
  * @return {boolean}
  */
-export const isDebugModeEnabled = (): boolean => debugMode === 'true';
+export const isDebugModeEnabled = (): boolean => envs.DEBUG_MODE === 'true';
 
 /**
  * Retweet the passed tweet by the given `id`
@@ -199,7 +196,7 @@ export const favourite = async (id: string): Promise<Message | Error> => {
  * @return {Promise<Message | Error>}
  */
 export const store = async (tweet: any): Promise<Message | Error> => {
-  if (enableDB === 'false') {
+  if (envs.DB_ENABLE === 'false') {
     return {
       message: 'Database storage is disabled',
     };
