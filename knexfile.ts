@@ -1,20 +1,15 @@
 /* Knex.js configuration
    See http://knexjs.org/ for documents
 * */
-const {
-  DB_NAME: database,
-  DB_USERNAME: user,
-  DB_PASSWORD: password,
-  DB_CLIENT: client,
-} = require('./env');
+import envs from './env';
 
 module.exports = {
   development: {
-    client: client || 'mysql',
+    client: envs.DB_DRIVER || 'mysql',
     connection: {
-      database,
-      user,
-      password,
+      database: envs.DB_NAME,
+      user: envs.DB_USERNAME,
+      password: envs.DB_PASSWORD,
     },
     pool: {
       min: 2,
@@ -29,28 +24,12 @@ module.exports = {
     },
   },
 
-  // staging: {
-  //   client: client || 'mysql',
-  //   connection: {
-  //     database: 'my_db',
-  //     user:     'username',
-  //     password: 'password'
-  //   },
-  //   pool: {
-  //     min: 2,
-  //     max: 10
-  //   },
-  //   migrations: {
-  //     tableName: 'knex_migrations'
-  //   }
-  // },
-
   production: {
-    client: client || 'mysql',
+    client: 'client' || 'mysql',
     connection: {
-      database,
-      user,
-      password,
+      database: envs.DB_NAME,
+      user: envs.DB_USERNAME,
+      password: envs.DB_PASSWORD,
     },
     pool: {
       min: 2,

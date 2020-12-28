@@ -1,11 +1,14 @@
+import * as Knex from 'knex';
+import { CreateTableBuilder } from 'knex';
+
 const TABLE_NAME = 'tweets';
 
-exports.up = async ({ schema }) => {
+export async function up({ schema }: Knex): Promise<any> {
   try {
     const tableExists = await schema.hasTable(TABLE_NAME);
 
     if (!tableExists) {
-      return await schema.createTable(TABLE_NAME, (table) => {
+      return await schema.createTable(TABLE_NAME, (table: CreateTableBuilder) => {
         table.collate('utf8mb4_unicode_ci');
 
         table.increments().primary();
@@ -25,7 +28,7 @@ exports.up = async ({ schema }) => {
   }
 }
 
-exports.down = async ({ schema }) => {
+export async function down({ schema }: Knex): Promise<any> {
   try {
     const tableExists = await schema.hasTable(TABLE_NAME);
 

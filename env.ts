@@ -1,4 +1,4 @@
-const dotenv = require('dotenv');
+import * as dotenv from 'dotenv';
 
 const result = dotenv.config();
 
@@ -8,4 +8,4 @@ if (result.error) {
 
 const { parsed: envs } = result;
 
-module.exports = envs;
+export default envs;
