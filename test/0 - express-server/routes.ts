@@ -1,5 +1,5 @@
-const express = require('express');
-const fs = require('fs');
+import * as express from 'express';
+import * as fs from 'fs';
 
 const router = express.Router();
 
@@ -11,4 +11,4 @@ router.get('/tweets', async (req, res) => {
   res.json(tweets);
 });
 
-module.exports = router;
+export default router;
