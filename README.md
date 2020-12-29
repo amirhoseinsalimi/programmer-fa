@@ -29,20 +29,11 @@ Run `npm i`
 Copy the content of `.env.example` into `.env` and fill it with your credentials
 
 3. **Run migrations**\
-Run the command `knex migrate:latest` to create the tables
+Run the command `npm run migrate:latest` to create the tables
 
 4. **Run the bot**\
 For development with hot reload: `npm run bot:dev`\
 For Run `npm start`
- ---
-### To-do list before we hit version 1.0.0
-* [ ] Enhance code modularity
-* [ ] Separate Development & Debug env. variables
-* [ ] Let "log verbosity level" and "file storing" to be set
-* [x] Don't store or log `RT @username`
-* [ ] Log the details of retweets in dev. env. (Name, date, text, matched words, link, etc.)
-* [ ] Full implementation of the database
-* [ ] Migrate to Twitter API v2
 
 
 <br />
