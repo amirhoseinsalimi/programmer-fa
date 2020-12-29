@@ -13,7 +13,7 @@
     "build": "tsc && npm run copy-files",
     "dev": "tsc && NODE_ENV=development nodemon --watch 'src/bot/**/*.ts' --exec 'ts-node' src/bot/app.ts",
     "sort": "npm run build && node dist/cli/sort-words.js && git add --all ./src/data/ && git commit -m \"Update words!\"",
-    "test": "env NODE_ENV=testing DEBUG_MODE=true DB_ENABLE=false mocha -b -r ts-node/register 'test/**/*.ts'",
+    "test": "tsc --outDir dist .mocharc.ts && env NODE_ENV=testing DEBUG_MODE=true DB_ENABLE=false mocha --config dist/.mocharc.js -b -r ts-node/register 'test/**/*.ts'",
     "copy-files": "mkdir -p dist/data && cp src/data/* dist/data/ && cp .env dist",
     "migrate:latest": "npm run build && knex migrate:latest --knexfile dist/knexfile.js --migrations-directory dist/database/migrations",
     "migrate:rollback": "npm run build && knex migrate:rollback --knexfile dist/knexfile.js --migrations-directory dist/database/migrations",
