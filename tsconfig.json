@@ -10,7 +10,7 @@
     "resolveJsonModule": false,
     "allowSyntheticDefaultImports": true,
     "moduleResolution": "Node",
-    "sourceMap": true
+    "sourceMap": false
   },
   "exclude": [
     "./test/",
