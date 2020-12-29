@@ -1,12 +1,11 @@
 import { readFileSync } from 'fs';
 import { T } from './twit';
 
-import envs from '../../env';
+import envs from '../env';
+import knex from '../knex-export';
 
 const suspiciousWords: string[] = require('../data/words-with-suspicion.json');
 const blackListedAccounts: string[] = require('../data/accounts-not-to-follow.json');
-
-const knex = require('../../knex-export');
 
 interface Message {
   message: string;
@@ -218,25 +217,53 @@ export const store = async (tweet: any): Promise<Message | Error> => {
   } = user;
 
   try {
-    await knex('users')
-      .insert({
-        id_str: userIdStr,
-        screen_name,
-        name,
-      });
+    const userId = await knex
+      .select('user_id')
+      .from('users')
+      .where('user_id', userIdStr);
 
-    await knex('tweets')
-      .insert({
-        tweet_id: id_str,
-        text: $tweetText,
-        source,
-        is_retweet: isRetweet(tweet),
-        in_reply_to_status_id,
-        in_reply_to_user_id,
-        user_id: user.id_str,
-      });
+    if (userId.length) {
+      await knex('users')
+        .where('user_id', userIdStr)
+        .update({
+          user_id: userIdStr,
+          screen_name,
+          name,
+        });
+    } else {
+      await knex('users')
+        .insert({
+          user_id: userIdStr,
+          screen_name,
+          name,
+        });
+    }
+  } catch (e) {
+    return new Error(e);
+  }
 
-    return { message: 'Tweet stored in the database' };
+  try {
+    const tweetId = await knex
+      .select('tweet_id')
+      .from('tweets')
+      .where('tweet_id', id_str);
+
+    if (!tweetId.length) {
+      await knex('tweets')
+        .insert({
+          tweet_id: id_str,
+          text: $tweetText,
+          source,
+          is_retweet: isRetweet(tweet),
+          in_reply_to_status_id,
+          in_reply_to_user_id,
+          user_id: user.id_str,
+        });
+
+      return { message: 'Tweet stored in the database' };
+    }
+
+    return { message: 'Tweet is already in the database' };
   } catch (e) {
     return new Error(e);
   }
