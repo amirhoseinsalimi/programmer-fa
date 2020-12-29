@@ -7,10 +7,12 @@ import {
   makeHashtag, removeRetweetNotation, getTweetFullText,
 } from '../../src/bot/utils';
 import { onTweet } from '../../src/bot/app';
+import { createServer } from '../0 - express-server/server';
+
+console.log(createServer());
 
 const chai = require('chai');
 const chaiHttp = require('chai-http');
-const createServer = require('../0 - express-server/server');
 
 chai.use(chaiHttp);
 
