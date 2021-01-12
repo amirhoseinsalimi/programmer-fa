@@ -70,11 +70,17 @@ export const removeURLs = (text: string): string => {
  * @param tweet
  * @return boolean
  */
-export const hasSuspiciousURLs = (tweet: any): boolean => (
-  tweet.entities.urls.length > 0 && tweet.entities.urls.some((urlEntity: string) => (
-    /(\.apsx|\.php|\.html)/.test(urlEntity)
-  ))
-);
+export const hasSuspiciousURLs = (tweet: any): boolean => {
+  const fileExtensionRegExp = /(\.apsx|\.php|\.html)/;
+
+  return (
+    fileExtensionRegExp.test(tweet.$tweetText)
+    || fileExtensionRegExp.test(tweet.$retweetText)
+    || tweet.entities?.urls?.some((urlEntity: string) => (
+      fileExtensionRegExp.test(urlEntity)
+    ))
+  );
+};
 
 /**
  * Whether a tweet is under 140 characters long or not
