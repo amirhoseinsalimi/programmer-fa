@@ -1,8 +1,5 @@
 TODO: Make it English (And introduce it in Discord, chats,...)
 TODO: Log the details of retweets in dev. env. (Name, date, text, matched word, link, etc.)
 TODO: Migrate to Twitter API v2
-TODO: Change all test cases to English values
 TODO: Support for quoted tweet
 TODO: Read the entities of extended tweets too
-TODO: Suspicious words should be included in words-to-follow
-TODO: Write async functions for tasks that takes time
