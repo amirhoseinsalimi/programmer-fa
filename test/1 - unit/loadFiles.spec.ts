@@ -12,8 +12,13 @@ describe('Load files', () => {
   const WORDS_WITH_SUSPICION_FILE_PATH = 'words-with-suspicion.json';
   const ACCOUNTS_NOT_TO_FOLLOW_FILE_PATH = 'accounts-not-to-follow.json';
 
+  let wordsToFollow: string[] | Error;
+  let wordsNotToFollow: string[] | Error;
+  let suspiciousWords: string[] | Error;
+  let blackListedAccountIDs: string[] | Error;
+
   it(`should load ${WORDS_TO_FOLLOW_FILE_PATH} content and it should contain array of strings`, (done) => {
-    const wordsToFollow: string[] | Error = loadJSONFileContent(`${BASE_DATA_DIR}/${WORDS_TO_FOLLOW_FILE_PATH}`);
+    wordsToFollow = loadJSONFileContent(`${BASE_DATA_DIR}/${WORDS_TO_FOLLOW_FILE_PATH}`);
 
     if (wordsToFollow instanceof Error) {
       done(wordsToFollow);
@@ -27,7 +32,7 @@ describe('Load files', () => {
   });
 
   it(`should load ${WORDS_NOT_TO_FOLLOW_FILE_PATH} content and it should contain an array of strings`, (done) => {
-    const wordsNotToFollow: string[] | Error = loadJSONFileContent(`${BASE_DATA_DIR}/${WORDS_NOT_TO_FOLLOW_FILE_PATH}`);
+    wordsNotToFollow = loadJSONFileContent(`${BASE_DATA_DIR}/${WORDS_NOT_TO_FOLLOW_FILE_PATH}`);
 
     if (wordsNotToFollow instanceof Error) {
       done(wordsNotToFollow);
@@ -41,7 +46,7 @@ describe('Load files', () => {
   });
 
   it(`should load ${WORDS_WITH_SUSPICION_FILE_PATH} content and it should contain an array of strings`, (done) => {
-    const suspiciousWords: string[] | Error = loadJSONFileContent(`${BASE_DATA_DIR}/${WORDS_WITH_SUSPICION_FILE_PATH}`);
+    suspiciousWords = loadJSONFileContent(`${BASE_DATA_DIR}/${WORDS_WITH_SUSPICION_FILE_PATH}`);
 
     if (suspiciousWords instanceof Error) {
       done(suspiciousWords);
@@ -55,7 +60,7 @@ describe('Load files', () => {
   });
 
   it(`should load ${ACCOUNTS_NOT_TO_FOLLOW_FILE_PATH} content and it should contain an array of numbers`, (done) => {
-    const blackListedAccountIDs: string[] | Error = loadJSONFileContent(`${BASE_DATA_DIR}/${ACCOUNTS_NOT_TO_FOLLOW_FILE_PATH}`);
+    blackListedAccountIDs = loadJSONFileContent(`${BASE_DATA_DIR}/${ACCOUNTS_NOT_TO_FOLLOW_FILE_PATH}`);
 
     if (blackListedAccountIDs instanceof Error) {
       done(blackListedAccountIDs);
