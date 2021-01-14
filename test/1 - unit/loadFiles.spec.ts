@@ -75,4 +75,16 @@ describe('Load files', () => {
       done();
     }
   });
+
+  it('should verify that suspicious words are included in words to follow', (done) => {
+    expect(wordsToFollow).to.include.members(suspiciousWords);
+
+    done();
+  });
+
+  it('should verify that suspicious words are not included in words not to follow', (done) => {
+    expect(wordsNotToFollow).to.not.include.members(suspiciousWords);
+
+    done();
+  });
 });
