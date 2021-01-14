@@ -9,8 +9,6 @@ import {
 import { onTweet } from '../../src/bot/app';
 import { createServer } from '../0 - express-server/server';
 
-console.log(createServer());
-
 const chai = require('chai');
 const chaiHttp = require('chai-http');
 
