@@ -8,6 +8,9 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [ 14.x ]
     steps:
       - uses: actions/checkout@v2
       - name: Node.js
@@ -17,6 +20,3 @@ jobs:
       - name: yarn install, build and test
         run: |
           npm t
-strategy:
-  matrix:
-    node-version: [14.x]
