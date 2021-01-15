@@ -34,11 +34,3 @@ jobs:
         run: |
           npm i
           npm t
-        NODE_ENV: staging
-        DEBUG_MODE: true
-        CONSUMER_KEY: ${{ secrets.CONSUMER_KEY }}
-        CONSUMER_SECRET: ${{ secrets.CONSUMER_SECRET }}
-        ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
-        ACCESS_TOKEN_SECRET: ${{ secrets.ACCESS_TOKEN_SECRET }}
-        STRICT_SSL: true
-        DB_ENABLE: false
