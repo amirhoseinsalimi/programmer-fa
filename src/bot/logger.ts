@@ -1,7 +1,6 @@
 import * as fs from 'fs';
 import { printTable } from 'console-table-printer';
 import { isDebugModeEnabled } from './utils';
-import envs from '../env';
 
 const colorIt = require('color-it');
 
@@ -79,7 +78,7 @@ export const writeToFile = async (text: string | Buffer): Promise<void> => {
 };
 
 export const prettyPrintInTable = (tweet: any): void => {
-  if (envs.NODE_ENV !== 'testing') {
+  if (process.env.NODE_ENV !== 'testing') {
     const t = [
       {
         id: tweet.id,
