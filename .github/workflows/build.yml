@@ -17,7 +17,16 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node-version }}
-      - name: npm install, build and test
+          envkey_NODE_ENV: staging
+          envkey_DEBUG_MODE: true
+          envkey_CONSUMER_KEY: ${{ secrets.CONSUMER_KEY }}
+          envkey_CONSUMER_SECRET: ${{ secrets.CONSUMER_SECRET }}
+          envkey_ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+          envkey_ACCESS_TOKEN_SECRET: ${{ secrets.ACCESS_TOKEN_SECRET }}
+          envkey_STRICT_SSL: true
+          envkey_DB_ENABLE: false
+          file_name: .env
+      - name: npm install, and test
         run: |
           npm i
           npm t
