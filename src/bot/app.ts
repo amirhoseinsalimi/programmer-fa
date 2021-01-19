@@ -155,20 +155,20 @@ export const onTweet = async (tweet: any): Promise<string> => {
       }
     } else {
       try {
-        logSuccess(await retweet(tweetId));
+        logSuccess((await retweet(tweetId)).message);
       } catch (e) {
         emitter.emit('bot-error', e);
       }
 
       try {
-        logSuccess(await favourite(tweetId));
+        logSuccess((await favourite(tweetId)).message);
       } catch (e) {
         emitter.emit('bot-error', e);
       }
     }
 
     try {
-      logSuccess(await store(tweet));
+      logSuccess((await store(tweet)).message);
     } catch (e) {
       emitter.emit('bot-error', e);
     }

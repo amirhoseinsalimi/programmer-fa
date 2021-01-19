@@ -1,20 +1,14 @@
 import * as Twit from 'twit';
 
-const {
-  CONSUMER_KEY: consumer_key,
-  CONSUMER_SECRET: consumer_secret,
-  ACCESS_TOKEN: access_token,
-  ACCESS_TOKEN_SECRET: access_token_secret,
-  STRICT_SSL: strictSSL,
-} = require('../../env');
+import envs from '../env';
 
 const T: Twit = new Twit({
-  consumer_key,
-  consumer_secret,
-  access_token,
-  access_token_secret,
+  consumer_key: envs.CONSUMER_KEY,
+  consumer_secret: envs.CONSUMER_SECRET,
+  access_token: envs.ACCESS_TOKEN,
+  access_token_secret: envs.ACCESS_TOKEN_SECRET,
   timeout_ms: 60 * 1000,
-  strictSSL: strictSSL !== 'false',
+  strictSSL: envs.STRICT_SSL !== 'false',
 });
 
 export { T, Twit };

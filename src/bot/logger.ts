@@ -77,16 +77,18 @@ export const writeToFile = async (text: string | Buffer): Promise<void> => {
   }
 };
 
-export const prettyPrintInTable = (tweet: any) => {
-  const t = [
-    {
-      id: tweet.id,
-      user_id: tweet.user.id,
-      text: tweet.$tweetText,
-    },
-  ];
+export const prettyPrintInTable = (tweet: any): void => {
+  if (process.env.NODE_ENV !== 'testing' && process.env.NODE_ENV !== 'staging') {
+    const t = [
+      {
+        id: tweet.id,
+        user_id: tweet.user.id,
+        text: tweet.$tweetText,
+      },
+    ];
 
-  printTable(t);
+    printTable(t);
+  }
 };
 
 export const printWelcomeBanner = (): void => {

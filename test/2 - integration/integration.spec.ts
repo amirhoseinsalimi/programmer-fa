@@ -7,10 +7,10 @@ import {
   makeHashtag, removeRetweetNotation, getTweetFullText,
 } from '../../src/bot/utils';
 import { onTweet } from '../../src/bot/app';
+import { createServer } from '../0 - express-server/server';
 
 const chai = require('chai');
 const chaiHttp = require('chai-http');
-const createServer = require('../0 - express-server/server');
 
 chai.use(chaiHttp);
 
@@ -86,15 +86,15 @@ describe('Integration Tests', () => {
     done();
   });
 
-  it('should return the `id` of valid tweets or `0` for invalid tweets', (done) => {
+  it('should return the `id` of valid tweets or "0" for invalid tweets', (done) => {
     tweets.forEach(
       async (tweet: any) => {
         if (tweet.tweetIsValid) {
           expect(await onTweet(tweet))
-            .to.be.not.equal(0);
+            .to.be.not.equal('0');
         } else {
           expect(await onTweet(tweet))
-            .to.be.equal(0);
+            .to.be.equal('0');
         }
       },
     );

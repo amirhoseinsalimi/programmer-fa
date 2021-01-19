@@ -1,15 +1,11 @@
 import { readFileSync } from 'fs';
 import { T } from './twit';
 
-const {
-  DEBUG_MODE: debugMode,
-  DB_ENABLE: enableDB,
-} = require('../../env.js');
+import envs from '../env';
+import knex from '../knex-export';
 
 const suspiciousWords: string[] = require('../data/words-with-suspicion.json');
 const blackListedAccounts: string[] = require('../data/accounts-not-to-follow.json');
-
-const knex = require('../../knex-export.js');
 
 interface Message {
   message: string;
@@ -74,11 +70,17 @@ export const removeURLs = (text: string): string => {
  * @param tweet
  * @return boolean
  */
-export const hasSuspiciousURLs = (tweet: any): boolean => (
-  tweet.entities.urls.length > 0 && tweet.entities.urls.some((urlEntity: string) => (
-    /(\.apsx|\.php|\.html)/.test(urlEntity)
-  ))
-);
+export const hasSuspiciousURLs = (tweet: any): boolean => {
+  const fileExtensionRegExp = /(\.apsx|\.php|\.html)/;
+
+  return (
+    fileExtensionRegExp.test(tweet.$tweetText)
+    || fileExtensionRegExp.test(tweet.$retweetText)
+    || tweet.entities?.urls?.some((urlEntity: string) => (
+      fileExtensionRegExp.test(urlEntity)
+    ))
+  );
+};
 
 /**
  * Whether a tweet is under 140 characters long or not
@@ -145,7 +147,7 @@ export const getTweetHashtags = (tweet: any): string[] => (
  * Whether the environment is in debug mode or not
  * @return {boolean}
  */
-export const isDebugModeEnabled = (): boolean => debugMode === 'true';
+export const isDebugModeEnabled = (): boolean => envs.DEBUG_MODE === 'true';
 
 /**
  * Retweet the passed tweet by the given `id`
@@ -199,7 +201,7 @@ export const favourite = async (id: string): Promise<Message | Error> => {
  * @return {Promise<Message | Error>}
  */
 export const store = async (tweet: any): Promise<Message | Error> => {
-  if (enableDB === 'false') {
+  if (envs.DB_ENABLE === 'false') {
     return {
       message: 'Database storage is disabled',
     };
@@ -221,25 +223,53 @@ export const store = async (tweet: any): Promise<Message | Error> => {
   } = user;
 
   try {
-    await knex('users')
-      .insert({
-        id_str: userIdStr,
-        screen_name,
-        name,
-      });
+    const userId = await knex
+      .select('user_id')
+      .from('users')
+      .where('user_id', userIdStr);
 
-    await knex('tweets')
-      .insert({
-        tweet_id: id_str,
-        text: $tweetText,
-        source,
-        is_retweet: isRetweet(tweet),
-        in_reply_to_status_id,
-        in_reply_to_user_id,
-        user_id: user.id_str,
-      });
+    if (userId.length) {
+      await knex('users')
+        .where('user_id', userIdStr)
+        .update({
+          user_id: userIdStr,
+          screen_name,
+          name,
+        });
+    } else {
+      await knex('users')
+        .insert({
+          user_id: userIdStr,
+          screen_name,
+          name,
+        });
+    }
+  } catch (e) {
+    return new Error(e);
+  }
 
-    return { message: 'Tweet stored in the database' };
+  try {
+    const tweetId = await knex
+      .select('tweet_id')
+      .from('tweets')
+      .where('tweet_id', id_str);
+
+    if (!tweetId.length) {
+      await knex('tweets')
+        .insert({
+          tweet_id: id_str,
+          text: $tweetText,
+          source,
+          is_retweet: isRetweet(tweet),
+          in_reply_to_status_id,
+          in_reply_to_user_id,
+          user_id: user.id_str,
+        });
+
+      return { message: 'Tweet stored in the database' };
+    }
+
+    return { message: 'Tweet is already in the database' };
   } catch (e) {
     return new Error(e);
   }
