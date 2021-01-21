@@ -3,3 +3,4 @@ TODO: Log the details of retweets in dev. env. (Name, date, text, matched word, 
 TODO: Migrate to Twitter API v2
 TODO: Support for quoted tweet
 TODO: Read the entities of extended tweets too
+TODO: Write more tests
