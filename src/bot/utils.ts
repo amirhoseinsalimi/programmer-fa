@@ -57,10 +57,15 @@ export const removeSuspiciousWords = (text: string): string => {
  * @return {string}
  */
 export const removeURLs = (text: string): string => {
-  const urlRegex = /^((http(s?)?):\/\/)?([wW]{3}\.)?[a-zA-Z0-9\-.]+\.[a-zA-Z]{2,}(\.[a-zA-Z]{2,})?$/gmi;
+  const urlRegex = /((http(s?)?):\/\/)?([wW]{3}\.)?[a-zA-Z0-9\-.]+\.[a-zA-Z]{2,}(\.[a-zA-Z]{2,})?/img;
+  let numberOfURLs = (text.match(urlRegex) || []).length;
 
-  const lText: string = text.toLowerCase();
-  lText.replace(urlRegex, '');
+  let lText: string = text.toLowerCase();
+
+  while (numberOfURLs) {
+    lText = lText.replace(urlRegex, '');
+    numberOfURLs -= 1;
+  }
 
   // remove multiple contiguous spaces and return the string
   return lText.replace(/ +/g, ' ');
