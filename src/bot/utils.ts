@@ -68,7 +68,7 @@ export const removeURLs = (text: string): string => {
   }
 
   // remove multiple contiguous spaces and return the string
-  return lText.replace(/ +/g, ' ');
+  return lText.replace(/ +/g, ' ').trim();
 };
 
 /**
