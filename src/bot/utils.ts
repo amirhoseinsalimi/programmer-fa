@@ -62,7 +62,8 @@ export const removeURLs = (text: string): string => {
   const lText: string = text.toLowerCase();
   lText.replace(urlRegex, '');
 
-  return lText;
+  // remove multiple contiguous spaces and return the string
+  return lText.replace(/ +/g, ' ');
 };
 
 /**
