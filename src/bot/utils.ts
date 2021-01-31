@@ -57,7 +57,7 @@ export const removeSuspiciousWords = (text: string): string => {
  * @return {string}
  */
 export const removeURLs = (text: string): string => {
-  const urlRegex = /(https?:\/\/[^\s]+)/g;
+  const urlRegex = /^((http(s?)?):\/\/)?([wW]{3}\.)?[a-zA-Z0-9\-.]+\.[a-zA-Z]{2,}(\.[a-zA-Z]{2,})?$/gmi;
 
   const lText: string = text.toLowerCase();
   lText.replace(urlRegex, '');
