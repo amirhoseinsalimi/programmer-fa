@@ -1,6 +1,7 @@
 import { describe, it } from 'mocha';
 import {
-  makeHashtag,
+  getNumberOfHashtags,
+  makeHashtag, removeSuspiciousWords, removeURLs,
 } from '../../src/bot/utils';
 
 const chai = require('chai');
@@ -8,6 +9,31 @@ const chai = require('chai');
 const { expect } = chai;
 
 describe('Unit tests', () => {
+  it('should properly count the number of hashtags', ((done) => {
+    const testCase = 'سلام این یک متن جاوا #اسکریپتی می‌باشد. و این #جمله هم دارای تعدادی، #هشتگ است';
+
+    expect(getNumberOfHashtags(testCase)).to.equal(3);
+
+    done();
+  }));
+
+  it('should remove suspicious words from a string', ((done) => {
+    const testCase = 'سلام این یک متن است که دارای کلمات جنگو و روبی و پایتون و چند تای دیگر است که این اسامی باید حذف شوند.';
+
+    expect(removeSuspiciousWords(testCase)).to.equal('سلام این یک متن است که دارای کلمات جنگو و و و چند تای دیگر است که این اسامی باید حذف شوند.');
+
+    done();
+  }));
+
+  it('should remove all URLs from a string', ((done) => {
+    const testCase = 'سلام این یک متن است که شامل چندین URL هست که باید حذف شوند: https://google.com http://www.google.com یکی دیگه: http://google.com/ اینم آخری: google.com';
+
+    expect(removeURLs(testCase))
+      .to.equal('سلام این یک متن است که شامل چندین url هست که باید حذف شوند: یکی دیگه: / اینم آخری:');
+
+    done();
+  }));
+
   it('should convert a string to hashtag', (done) => {
     const testCase = 'سلام این یک متن جاوا اسکریپتی می‌باشد. و این کلمه هم دارای خط-تیره است';
 
