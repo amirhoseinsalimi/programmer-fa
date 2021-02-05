@@ -48,6 +48,15 @@ export const removeSuspiciousWords = (text: string): string => {
   return lText.replace(/ +/g, ' ');
 };
 
+export const hasURL = (tweet: any): boolean => {
+  const urlRegex = /((http(s?)?):\/\/)?([wW]{3}\.)?[a-zA-Z0-9\-.]+\.[a-zA-Z]{2,}(\.[a-zA-Z]{2,})?/img;
+
+  return (
+    urlRegex.test(tweet.$tweetText)
+    || tweet.entities?.urls?.length > 0
+  );
+};
+
 /**
  * Remove URLs from the tweet.
  * This function finds and removes URLs from the text of the tweet
