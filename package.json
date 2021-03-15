@@ -7,13 +7,13 @@
     "node": ">=14.0.0"
   },
   "scripts": {
-    "start": "npm run build && NODE_ENV=production pm2 start dist/bot/app.js --name programmer-fa",
-    "restart": "npm run build && NODE_ENV=production pm2 restart programmer-fa",
+    "start": "npm run build && cross-env NODE_ENV=production pm2 start dist/bot/app.js --name programmer-fa",
+    "restart": "npm run build && cross-env NODE_ENV=production pm2 restart programmer-fa",
     "stop": "pm2 stop programmer-fa",
     "build": "tsc && npm run copy-files",
-    "dev": "tsc && NODE_ENV=development nodemon --watch 'src/bot/**/*.ts' --exec 'ts-node' src/bot/app.ts",
+    "dev": "tsc && cross-env NODE_ENV=development nodemon --watch 'src/bot/**/*.ts' --exec 'ts-node' src/bot/app.ts",
     "sort": "npm run build && node dist/cli/sort-words.js && git add --all ./src/data/ && git commit -m \"Update words!\"",
-    "test": "tsc --outDir dist .mocharc.ts && env NODE_ENV=testing DEBUG_MODE=true DB_ENABLE=false mocha --config dist/.mocharc.js --exit -b -r ts-node/register 'test/**/*.ts'",
+    "test": "tsc --outDir dist .mocharc.ts && cross-env NODE_ENV=testing DEBUG_MODE=true DB_ENABLE=false mocha --config dist/.mocharc.js --exit -b -r ts-node/register 'test/**/*.ts'",
     "copy-files": "mkdir -p dist/data && cp src/data/* dist/data/ && cp .env dist",
     "migrate:latest": "npm run build && knex migrate:latest --knexfile dist/knexfile.js --migrations-directory dist/database/migrations",
     "migrate:rollback": "npm run build && knex migrate:rollback --knexfile dist/knexfile.js --migrations-directory dist/database/migrations",
