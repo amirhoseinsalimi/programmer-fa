@@ -1,7 +1,7 @@
 import { describe, it } from 'mocha';
 import {
   getNumberOfHashtags,
-  makeHashtag, removeSuspiciousWords, removeURLs,
+  makeHashtag, removeSuspiciousWords, removeURLs, getTweetLength,
 } from '../../src/bot/utils';
 
 const chai = require('chai');
@@ -38,6 +38,14 @@ describe('Unit tests', () => {
     const testCase = 'سلام این یک متن جاوا اسکریپتی می‌باشد. و این کلمه هم دارای خط-تیره است';
 
     expect(makeHashtag(testCase)).to.equal('#سلام_این_یک_متن_جاوا_اسکریپتی_می_باشد_و_این_کلمه_هم_دارای_خط_تیره_است');
+
+    done();
+  });
+
+  it('should properly count the characters of a tweet', (done) => {
+    const testCase = 'سلام این یک متن جاوا اسکریپتی می‌باشد. و این کلمه هم دارای خط-تیره است';
+
+    expect(getTweetLength(testCase)).to.equal(70);
 
     done();
   });

@@ -159,6 +159,13 @@ export const getTweetHashtags = (tweet: any): string[] => (
 );
 
 /**
+ * Returns the length of a given tweet text
+ * @param {string} tweetText - The text of the tweet
+ * @return {number}
+ */
+export const getTweetLength = (tweetText: string): number => tweetText.length;
+
+/**
  * Whether the environment is in debug mode or not
  * @return {boolean}
  */
@@ -326,6 +333,7 @@ export const isRetweetedByMyself = (tweet: any): boolean => tweet.retweeted;
  *   2. Checks whether the tweet is a reply or not
  *   3. Checks whether the tweet has for or less hashtags "#"
  *   4. See if the user is blocked or not
+ *   5. Checks whether the text of the tweet is longer than 10 characters
  * @param {*} tweet - The tweet object
  * @return {boolean} - Whether the tweet is validated or not
  */
@@ -343,6 +351,10 @@ export const validateInitialTweet = (tweet: any): boolean => {
   }
 
   if (isBlackListed(tweet)) {
+    return false;
+  }
+
+  if (getTweetLength(tweet.text) <= 10) {
     return false;
   }
 
