@@ -159,6 +159,13 @@ export const getTweetHashtags = (tweet: any): string[] => (
 );
 
 /**
+ * Returns the length of a given tweet text
+ * @param {string} tweetText - The text of the tweet
+ * @return {number}
+ */
+export const getTweetLength = (tweetText: string): number => tweetText.length;
+
+/**
  * Whether the environment is in debug mode or not
  * @return {boolean}
  */
