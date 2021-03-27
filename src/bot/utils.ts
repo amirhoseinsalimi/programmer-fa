@@ -333,6 +333,7 @@ export const isRetweetedByMyself = (tweet: any): boolean => tweet.retweeted;
  *   2. Checks whether the tweet is a reply or not
  *   3. Checks whether the tweet has for or less hashtags "#"
  *   4. See if the user is blocked or not
+ *   5. Check whether the text of the tweet is longer than 10 characters
  * @param {*} tweet - The tweet object
  * @return {boolean} - Whether the tweet is validated or not
  */
@@ -350,6 +351,10 @@ export const validateInitialTweet = (tweet: any): boolean => {
   }
 
   if (isBlackListed(tweet)) {
+    return false;
+  }
+
+  if (getTweetLength(tweet.text) <= 10) {
     return false;
   }
 
