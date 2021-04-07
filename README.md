@@ -16,7 +16,7 @@ Feel free to add your desired words.
 ### Project setup
 
 0. **Clone this repo:**\
-Run `https://github.com/amirhoseinsalimi/programmer-fa`
+Run `git clone https://github.com/amirhoseinsalimi/programmer-fa`
 
 1. **Install dependencies:**\
 Run `npm i`
