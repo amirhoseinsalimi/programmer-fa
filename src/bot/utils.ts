@@ -66,7 +66,7 @@ export const hasURL = (tweet: any): boolean => {
  * @return {string}
  */
 export const removeURLs = (text: string): string => {
-  const urlRegex = /((http(s?)?):\/\/)?([wW]{3}\.)?[a-zA-Z0-9\-.]+\.[a-zA-Z]{2,}(\.[a-zA-Z]{2,})?/img;
+  const urlRegex = /((([A-Za-z]{3,9}:(?:\/\/)?)(?:[-;:&=+$,\w]+@)?[A-Za-z0-9.-]+|(?:www.|[-;:&=+$,\w]+@)[A-Za-z0-9.-]+)((?:\/[+~%/.\w-_]*)?\??(?:[-+=&;%@.\w_]*)#?(?:[.!/\\w]*))?)/ig;
   let numberOfURLs = (text.match(urlRegex) || []).length;
 
   let lText: string = text.toLowerCase();
