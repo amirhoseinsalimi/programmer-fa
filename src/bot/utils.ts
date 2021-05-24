@@ -1,5 +1,6 @@
 import { readFileSync } from 'fs';
 import { T } from './twit';
+import { DateTime, Duration } from 'luxon';
 
 import envs from '../env';
 import knex from '../knex-export';
@@ -218,6 +219,24 @@ export const favourite = async (id: string): Promise<Message | Error> => {
 };
 
 /**
+ * Pars the date format returned from Twitter API to Luxon DateTime
+ * @param {string} date - The date
+ * @return {DateTime}
+ */
+export const parseTwitterDateToLuxon = (date: string): DateTime => (
+  DateTime.fromFormat(date, 'ccc LLL dd HH:mm:ss ZZZ yyyy')
+);
+
+/**
+ * Return the difference between the given {DateTime}
+ * @param {DateTime} date - The date
+ * @return {Duration}
+ */
+export const getDiffBetweenDateTimeAndNowInDays = (date: DateTime): Duration => (
+  DateTime.now().diff(date, 'days')
+);
+
+/**
  * Store the given tweet in the database
  * @param {*} tweet - The tweet object
  * @return {Promise<Message | Error>}
@@ -303,12 +322,45 @@ export const store = async (tweet: any): Promise<Message | Error> => {
  * @return {boolean}
  */
 export const isBlackListed = (tweet: any): boolean => {
-  const originalUserId: string = tweet.retweet_status?.user?.id_str;
-  const retweetedUserId: string = tweet.user.id_str;
+  const originalUserId: string = tweet.user.id_str;
+  const retweeterUserId: string = tweet.retweet_status?.user?.id_str;
 
   return (
-    blackListedAccounts.includes(retweetedUserId)
+    blackListedAccounts.includes(retweeterUserId)
     || blackListedAccounts.includes(originalUserId)
+  );
+};
+
+/**
+ * Check if the user has registered recently or not
+ * @param {*} tweet
+ * @return {boolean}
+ */
+export const hasUserRegisteredRecently = (tweet: any): boolean => {
+  const originalUser: any = tweet.user;
+  const retweeterUser: any = tweet.retweeted_status;
+
+  const originalUserRegisterDate: DateTime = parseTwitterDateToLuxon(originalUser.created_at);
+
+  let retweeterUserRegisterDateDiff: number;
+
+  const ignoreUsersNewerThan: number = +envs.IGNORE_USERS_NEWER_THAN;
+
+  if (retweeterUser) {
+    const retweeterUserRegisterDate: DateTime = parseTwitterDateToLuxon(originalUser.created_at);
+
+    retweeterUserRegisterDateDiff = getDiffBetweenDateTimeAndNowInDays(
+      retweeterUserRegisterDate,
+    ).days;
+  }
+
+  const originalUserRegisterDateDiff = getDiffBetweenDateTimeAndNowInDays(
+    originalUserRegisterDate,
+  ).days;
+
+  return (
+    ignoreUsersNewerThan > +originalUserRegisterDateDiff
+    || ignoreUsersNewerThan > retweeterUserRegisterDateDiff
   );
 };
 
@@ -331,15 +383,16 @@ export const isRetweetedByMyself = (tweet: any): boolean => tweet.retweeted;
 
 /**
  * Validate the tweet properties for further process:
- *   1. Checks the language of the tweet
- *   2. Checks whether the tweet is a reply or not
- *   3. Checks whether the tweet has for or less hashtags "#"
- *   4. See if the user is blocked or not
+ *   1. Checks whether the language of the tweet is Farsi
+ *   2. Checks whether the tweet is a reply
+ *   3. Checks whether the tweet has five or more hashtags "#"
+ *   4. Checks whether the user is blocked
  *   5. Checks whether the text of the tweet is longer than 10 characters
+ *   6. Checks whether the user has registered recently
  * @param {*} tweet - The tweet object
- * @return {boolean} - Whether the tweet is validated or not
+ * @return {boolean} - Whether the tweet is acceptable
  */
-export const validateInitialTweet = (tweet: any): boolean => {
+export const isTweetAcceptable = (tweet: any): boolean => {
   if (!isTweetFarsi(tweet)) {
     return false;
   }
@@ -357,6 +410,10 @@ export const validateInitialTweet = (tweet: any): boolean => {
   }
 
   if (getTweetLength(tweet.text) <= 10) {
+    return false;
+  }
+
+  if (hasUserRegisteredRecently(tweet)) {
     return false;
   }
 
