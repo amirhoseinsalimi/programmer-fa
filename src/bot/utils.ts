@@ -383,13 +383,14 @@ export const isRetweetedByMyself = (tweet: any): boolean => tweet.retweeted;
 
 /**
  * Validate the tweet properties for further process:
- *   1. Checks the language of the tweet
- *   2. Checks whether the tweet is a reply or not
- *   3. Checks whether the tweet has for or less hashtags "#"
- *   4. See if the user is blocked or not
+ *   1. Checks whether the language of the tweet is Farsi
+ *   2. Checks whether the tweet is a reply
+ *   3. Checks whether the tweet has five or more hashtags "#"
+ *   4. Checks whether the user is blocked
  *   5. Checks whether the text of the tweet is longer than 10 characters
+ *   6. Checks whether the user has registered recently
  * @param {*} tweet - The tweet object
- * @return {boolean} - Whether the tweet is validated or not
+ * @return {boolean} - Whether the tweet is acceptable
  */
 export const isTweetAcceptable = (tweet: any): boolean => {
   if (!isTweetFarsi(tweet)) {
