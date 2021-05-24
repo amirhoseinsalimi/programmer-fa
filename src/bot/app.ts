@@ -23,13 +23,13 @@ import {
   isDebugModeEnabled,
   isRetweet,
   isRetweetedByMyself,
+  isTweetAcceptable,
   loadJSONFileContent,
   removeRetweetNotation,
   removeSuspiciousWords,
   removeURLs,
   retweet,
   store,
-  validateInitialTweet,
 } from './utils';
 
 /* =======================================
@@ -91,7 +91,7 @@ export const stream: Twit.Stream = T.stream('statuses/filter', params);
  * @return void
  */
 export const onTweet = async (tweet: any): Promise<string> => {
-  if (!validateInitialTweet(tweet)) {
+  if (!isTweetAcceptable(tweet)) {
     return '0';
   }
 

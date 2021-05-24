@@ -339,7 +339,7 @@ export const isRetweetedByMyself = (tweet: any): boolean => tweet.retweeted;
  * @param {*} tweet - The tweet object
  * @return {boolean} - Whether the tweet is validated or not
  */
-export const validateInitialTweet = (tweet: any): boolean => {
+export const isTweetAcceptable = (tweet: any): boolean => {
   if (!isTweetFarsi(tweet)) {
     return false;
   }
