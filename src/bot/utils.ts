@@ -1,5 +1,6 @@
 import { readFileSync } from 'fs';
 import { T } from './twit';
+import { DateTime, Duration } from 'luxon';
 
 import envs from '../env';
 import knex from '../knex-export';
@@ -218,6 +219,24 @@ export const favourite = async (id: string): Promise<Message | Error> => {
 };
 
 /**
+ * Pars the date format returned from Twitter API to Luxon DateTime
+ * @param {string} date - The date
+ * @return {DateTime}
+ */
+export const parseTwitterDateToLuxon = (date: string): DateTime => (
+  DateTime.fromFormat(date, 'ccc LLL dd HH:mm:ss ZZZ yyyy')
+);
+
+/**
+ * Return the difference between the given {DateTime}
+ * @param {DateTime} date - The date
+ * @return {Duration}
+ */
+export const getDiffBetweenDateTimeAndNowInDays = (date: DateTime): Duration => (
+  DateTime.now().diff(date, 'days')
+);
+
+/**
  * Store the given tweet in the database
  * @param {*} tweet - The tweet object
  * @return {Promise<Message | Error>}
@@ -313,6 +332,39 @@ export const isBlackListed = (tweet: any): boolean => {
 };
 
 /**
+ * Check if the user has registered recently or not
+ * @param {*} tweet
+ * @return {boolean}
+ */
+export const hasUserRegisteredRecently = (tweet: any): boolean => {
+  const originalUser: any = tweet.user;
+  const retweeterUser: any = tweet.retweeted_status;
+
+  const originalUserRegisterDate: DateTime = parseTwitterDateToLuxon(originalUser.created_at);
+
+  let retweeterUserRegisterDateDiff: number;
+
+  const ignoreUsersNewerThan: number = +envs.IGNORE_USERS_NEWER_THAN;
+
+  if (retweeterUser) {
+    const retweeterUserRegisterDate: DateTime = parseTwitterDateToLuxon(originalUser.created_at);
+
+    retweeterUserRegisterDateDiff = getDiffBetweenDateTimeAndNowInDays(
+      retweeterUserRegisterDate,
+    ).days;
+  }
+
+  const originalUserRegisterDateDiff = getDiffBetweenDateTimeAndNowInDays(
+    originalUserRegisterDate,
+  ).days;
+
+  return (
+    ignoreUsersNewerThan > +originalUserRegisterDateDiff
+    || ignoreUsersNewerThan > retweeterUserRegisterDateDiff
+  );
+};
+
+/**
  * Check if a tweet has 5 hashtags or more. See it as an ad-blocker.
  * @param {*} tweet - The tweet object
  * @return {boolean}
@@ -357,6 +409,10 @@ export const isTweetAcceptable = (tweet: any): boolean => {
   }
 
   if (getTweetLength(tweet.text) <= 10) {
+    return false;
+  }
+
+  if (hasUserRegisteredRecently(tweet)) {
     return false;
   }
 
