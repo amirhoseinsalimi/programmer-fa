@@ -323,10 +323,10 @@ export const store = async (tweet: any): Promise<Message | Error> => {
  */
 export const isBlackListed = (tweet: any): boolean => {
   const originalUserId: string = tweet.user.id_str;
-  const retweetedUserId: string = tweet.retweet_status?.user?.id_str;
+  const retweeterUserId: string = tweet.retweet_status?.user?.id_str;
 
   return (
-    blackListedAccounts.includes(retweetedUserId)
+    blackListedAccounts.includes(retweeterUserId)
     || blackListedAccounts.includes(originalUserId)
   );
 };
