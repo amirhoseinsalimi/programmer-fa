@@ -26,6 +26,7 @@
     "console-table-printer": "^2.8.1",
     "dotenv": "^8.2.0",
     "knex": "^0.20.15",
+    "luxon": "^1.27.0",
     "mysql": "^2.18.1",
     "pm2": "^4.5.5",
     "twit": "^2.2.11"
@@ -37,6 +38,7 @@
     "@types/dotenv": "^8.2.0",
     "@types/express": "^4.17.11",
     "@types/faker": "^5.1.7",
+    "@types/luxon": "^1.26.5",
     "@types/mocha": "^8.2.1",
     "@types/mysql": "^2.15.18",
     "@types/node": "^13.13.46",
