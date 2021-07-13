@@ -28,6 +28,7 @@
     "knex": "^0.20.15",
     "luxon": "^1.27.0",
     "mysql": "^2.18.1",
+    "needle": "^2.4.0",
     "pm2": "^4.5.5",
     "twit": "^2.2.11"
   },
@@ -41,6 +42,7 @@
     "@types/luxon": "^1.26.5",
     "@types/mocha": "^8.2.1",
     "@types/mysql": "^2.15.18",
+    "@types/needle": "^2.5.2",
     "@types/node": "^13.13.46",
     "@types/supertest": "^2.0.10",
     "@types/twit": "^2.2.28",
