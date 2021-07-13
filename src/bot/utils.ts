@@ -224,7 +224,7 @@ export const favourite = async (id: string): Promise<Message | Error> => {
 };
 
 /**
- * Pars the date format returned from Twitter API to Luxon DateTime
+ * Parse the date format returned from Twitter API to Luxon DateTime
  * @param {string} date - The date
  * @return {DateTime}
  */
