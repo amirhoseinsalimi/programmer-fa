@@ -39,8 +39,10 @@ class Emitter extends EventEmitter {}
 
 const emitter: Emitter = new Emitter();
 
-emitter.on('bot-error', (err: Error) => {
+emitter.on('bot-error', (err: Error, tweet: any, tweetId: string) => {
   logError('An error has been thrown', err.message || err);
+  if (tweetId !== '0') logError(`Error on handling tweetId "${tweetId}".`);
+  if (tweetId !== '0' && tweet) logError(JSON.stringify(tweet));
 });
 
 /* Deal w/ uncaught errors and unhandled promises */
@@ -160,7 +162,7 @@ export const onTweet = async (tweet: any): Promise<string> => {
 
     logSuccess((await store(tweet)).message);
   } catch (e) {
-    emitter.emit('bot-error', e);
+    emitter.emit('bot-error', e, tweetId, tweet);
   }
 
   return tweetId;
