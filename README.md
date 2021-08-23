@@ -30,7 +30,3 @@ Run the command `npm run migrate:latest` to create the tables
 4. **Run the bot**\
 For development with hot reload: `npm run bot:dev`\
 For Run `npm start`
-
-
-<br />
-<small>A small side project done in https://expteam.ir</small>
