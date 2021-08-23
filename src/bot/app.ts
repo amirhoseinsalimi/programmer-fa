@@ -149,28 +149,15 @@ export const onTweet = async (tweet: any): Promise<string> => {
     return '0';
   }
 
-  if (isDebugModeEnabled()) {
-    try {
+  try {
+    if (isDebugModeEnabled()) {
       await writeToFile(tweet.$tweetText);
       prettyPrintInTable(tweet);
-    } catch (e) {
-      emitter.emit('bot-error', e);
-    }
-  } else {
-    try {
+    } else {
       logSuccess((await retweet(tweetId)).message);
-    } catch (e) {
-      emitter.emit('bot-error', e);
-    }
-
-    try {
       logSuccess((await favourite(tweetId)).message);
-    } catch (e) {
-      emitter.emit('bot-error', e);
     }
-  }
 
-  try {
     logSuccess((await store(tweet)).message);
   } catch (e) {
     emitter.emit('bot-error', e);
