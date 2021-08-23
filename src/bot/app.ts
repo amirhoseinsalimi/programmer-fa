@@ -145,33 +145,35 @@ export const onTweet = async (tweet: any): Promise<string> => {
     && !hasURL(tweet)
     && !isRetweetedByMyself(tweet) ? tweet.id_str : '0';
 
-  if (tweetId !== '0') {
-    if (isDebugModeEnabled()) {
-      try {
-        await writeToFile(tweet.$tweetText);
-        prettyPrintInTable(tweet);
-      } catch (e) {
-        emitter.emit('bot-error', e);
-      }
-    } else {
-      try {
-        logSuccess((await retweet(tweetId)).message);
-      } catch (e) {
-        emitter.emit('bot-error', e);
-      }
+  if (tweetId === '0') {
+    return '0';
+  }
 
-      try {
-        logSuccess((await favourite(tweetId)).message);
-      } catch (e) {
-        emitter.emit('bot-error', e);
-      }
-    }
-
+  if (isDebugModeEnabled()) {
     try {
-      logSuccess((await store(tweet)).message);
+      await writeToFile(tweet.$tweetText);
+      prettyPrintInTable(tweet);
     } catch (e) {
       emitter.emit('bot-error', e);
     }
+  } else {
+    try {
+      logSuccess((await retweet(tweetId)).message);
+    } catch (e) {
+      emitter.emit('bot-error', e);
+    }
+
+    try {
+      logSuccess((await favourite(tweetId)).message);
+    } catch (e) {
+      emitter.emit('bot-error', e);
+    }
+  }
+
+  try {
+    logSuccess((await store(tweet)).message);
+  } catch (e) {
+    emitter.emit('bot-error', e);
   }
 
   return tweetId;
