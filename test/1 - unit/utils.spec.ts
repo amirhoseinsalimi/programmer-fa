@@ -1,7 +1,11 @@
 import { describe, it } from 'mocha';
 import {
   getNumberOfHashtags,
-  makeHashtag, removeSuspiciousWords, removeURLs, getTweetLength,
+  makeHashtag,
+  removeSuspiciousWords,
+  removeURLs,
+  getTweetLength,
+  parseTwitterDateToLuxon,
 } from '../../src/bot/utils';
 
 const chai = require('chai');
@@ -49,4 +53,10 @@ describe('Unit tests', () => {
 
     done();
   });
+
+  it('should return a `DateTime` object from a twitter data string', () => {
+    const testCase = 'Wed Dec 23 13:28:54 +0000 2020';
+
+    expect(parseTwitterDateToLuxon(testCase).isValid).to.equal(true);
+  })
 });
