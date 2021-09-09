@@ -349,7 +349,7 @@ export const hasUserRegisteredRecently = (tweet: any): boolean => {
 
   let retweeterUserRegisterDateDiff: number;
 
-  const ignoreUsersNewerThan: number = +envs.IGNORE_USERS_NEWER_THAN;
+  const dayToBlockNewUsers: number = +envs.IGNORE_USERS_NEWER_THAN;
 
   if (retweeterUser) {
     const retweeterUserRegisterDate: DateTime = parseTwitterDateToLuxon(originalUser.created_at);
@@ -364,8 +364,8 @@ export const hasUserRegisteredRecently = (tweet: any): boolean => {
   ).days;
 
   return (
-    ignoreUsersNewerThan > +originalUserRegisterDateDiff
-    || ignoreUsersNewerThan > retweeterUserRegisterDateDiff
+    dayToBlockNewUsers > originalUserRegisterDateDiff
+    || dayToBlockNewUsers > retweeterUserRegisterDateDiff
   );
 };
 
