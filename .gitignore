@@ -10,6 +10,7 @@ act
 # Environment #
 ##############
 .env
+.env.testing
 
 
 # Logs and databases #
