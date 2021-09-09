@@ -351,6 +351,10 @@ export const hasUserRegisteredRecently = (tweet: any): boolean => {
 
   const dayToBlockNewUsers: number = +envs.IGNORE_USERS_NEWER_THAN;
 
+  const originalUserRegisterDateDiff = getDiffBetweenDateTimeAndNowInDays(
+    originalUserRegisterDate,
+  ).days;
+
   if (retweeterUser) {
     const retweeterUserRegisterDate: DateTime = parseTwitterDateToLuxon(tweet.retweeted_status.user.created_at);
 
@@ -358,10 +362,6 @@ export const hasUserRegisteredRecently = (tweet: any): boolean => {
       retweeterUserRegisterDate,
     ).days;
   }
-
-  const originalUserRegisterDateDiff = getDiffBetweenDateTimeAndNowInDays(
-    originalUserRegisterDate,
-  ).days;
 
   return (
     dayToBlockNewUsers > originalUserRegisterDateDiff
