@@ -7,8 +7,8 @@
     "node": ">=14.0.0"
   },
   "scripts": {
-    "start": "npm run build && cross-env NODE_ENV=production pm2 start dist/bot/app.js --name programmer-fa",
-    "restart": "npm run build && cross-env NODE_ENV=production pm2 restart programmer-fa",
+    "start": "npm run build && cross-env NODE_ENV=production pm2 start dist/bot/app.js --name programmer-fa --time",
+    "restart": "npm run build && cross-env NODE_ENV=production pm2 restart programmer-fa --time",
     "stop": "pm2 stop programmer-fa",
     "build": "tsc && npm run copy-files",
     "dev": "tsc && cross-env NODE_ENV=development nodemon --watch 'src/bot/**/*.ts' --exec 'ts-node' src/bot/app.ts",
