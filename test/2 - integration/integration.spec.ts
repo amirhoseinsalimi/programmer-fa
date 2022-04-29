@@ -37,7 +37,9 @@ describe('Integration Tests', () => {
   });
 
   it('should return an array including "words to follow", both in plain form and in hashtag form', (done) => {
-    const wordsToFollow = loadJSONFileContent(`${BASE_DATA_DIR}/${WORDS_TO_FOLLOW_FILE_PATH}`) as string[];
+    const wordsToFollow = loadJSONFileContent(
+      `${BASE_DATA_DIR}/${WORDS_TO_FOLLOW_FILE_PATH}`,
+    ) as string[];
     let interestingWords: string[] = [];
 
     interestingWords = fillArrayWithWords(
@@ -45,9 +47,11 @@ describe('Integration Tests', () => {
       wordsToFollow as string[],
     );
 
-    const allExpectedValuesAreInInterestedWordsArray = wordsToFollow.every((word: string) => (
-      interestingWords.includes(word) && interestingWords.includes(makeHashtag(word))
-    ));
+    const allExpectedValuesAreInInterestedWordsArray = wordsToFollow.every(
+      (word: string) =>
+        interestingWords.includes(word) &&
+        interestingWords.includes(makeHashtag(word)),
+    );
 
     expect(allExpectedValuesAreInInterestedWordsArray).to.be.true;
 
@@ -55,7 +59,9 @@ describe('Integration Tests', () => {
   });
 
   it('should return an array including "words not to follow", both in plain form and in hashtag form', (done) => {
-    const wordsNotToFollow = loadJSONFileContent(`${BASE_DATA_DIR}/${WORDS_NOT_TO_FOLLOW_FILE_PATH}`) as string[];
+    const wordsNotToFollow = loadJSONFileContent(
+      `${BASE_DATA_DIR}/${WORDS_NOT_TO_FOLLOW_FILE_PATH}`,
+    ) as string[];
     let blacklistedWords: string[] = [];
 
     blacklistedWords = fillArrayWithWords(
@@ -63,9 +69,11 @@ describe('Integration Tests', () => {
       wordsNotToFollow as string[],
     );
 
-    const allExpectedValuesAreInBlackListedWordsArray = wordsNotToFollow.every((word: string) => (
-      blacklistedWords.includes(word) && blacklistedWords.includes(makeHashtag(word))
-    ));
+    const allExpectedValuesAreInBlackListedWordsArray = wordsNotToFollow.every(
+      (word: string) =>
+        blacklistedWords.includes(word) &&
+        blacklistedWords.includes(makeHashtag(word)),
+    );
 
     expect(allExpectedValuesAreInBlackListedWordsArray).to.be.true;
 
@@ -75,12 +83,9 @@ describe('Integration Tests', () => {
   it('should properly count number of hashtags', (done) => {
     const hashtagsGetsCountedProperly = tweets.every(
       // TODO: Make a type for this
-      (tweet: { text: string; numberOfHashtags: number }) => (
-        tweet.numberOfHashtags
-        === getNumberOfHashtags(
-          removeRetweetNotation(getTweetFullText(tweet)),
-        )
-      ),
+      (tweet: { text: string; numberOfHashtags: number }) =>
+        tweet.numberOfHashtags ===
+        getNumberOfHashtags(removeRetweetNotation(getTweetFullText(tweet))),
     );
 
     expect(hashtagsGetsCountedProperly).to.be.true;
@@ -89,17 +94,13 @@ describe('Integration Tests', () => {
   });
 
   it('should return the `id` of valid tweets or "0" for invalid tweets', (done) => {
-    tweets.forEach(
-      async (tweet: any) => {
-        if (tweet.tweetIsValid) {
-          expect(await onTweet(tweet))
-            .to.be.not.equal('0');
-        } else {
-          expect(await onTweet(tweet))
-            .to.be.equal('0');
-        }
-      },
-    );
+    tweets.forEach(async (tweet: any) => {
+      if (tweet.tweetIsValid) {
+        expect(await onTweet(tweet)).to.be.not.equal('0');
+      } else {
+        expect(await onTweet(tweet)).to.be.equal('0');
+      }
+    });
 
     done();
   });
