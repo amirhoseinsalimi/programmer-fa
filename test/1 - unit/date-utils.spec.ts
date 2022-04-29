@@ -1,12 +1,5 @@
 import { describe, it } from 'mocha';
-import {
-  removeURLs,
-  makeHashtag,
-  getTweetLength,
-  getNumberOfHashtags,
-  removeSuspiciousWords,
-  parseTwitterDateToLuxon,
-} from '../../src/utils';
+import { parseTwitterDateToLuxon } from '../../src/utils';
 
 const chai = require('chai');
 
