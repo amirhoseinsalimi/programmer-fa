@@ -2,7 +2,7 @@
  *           Node.js Modules
  * ===================================== */
 import { EventEmitter } from 'events';
-import { T, Twit } from './twit';
+import { T, Twit } from '../twit';
 
 /* =======================================
  *         My Modules and Utils

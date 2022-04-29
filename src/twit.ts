@@ -1,6 +1,6 @@
 import * as Twit from 'twit';
 
-import envs from '../env';
+import envs from './env';
 
 const T: Twit = new Twit({
   consumer_key: envs.CONSUMER_KEY,

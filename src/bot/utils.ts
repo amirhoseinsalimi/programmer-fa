@@ -1,5 +1,5 @@
 import { readFileSync } from 'fs';
-import { T } from './twit';
+import { T } from '../twit';
 import { DateTime, Duration } from 'luxon';
 
 import envs from '../env';
