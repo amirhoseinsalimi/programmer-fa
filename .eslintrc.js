@@ -44,5 +44,8 @@ module.exports = {
     'chai-friendly/no-unused-expressions': 2,
     'import/first': 0,
     'import/order': 0,
+    'implicit-arrow-linebreak': 0,
+    'operator-linebreak': 0,
+    'import/no-cycle': 0,
   },
 };

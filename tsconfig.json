@@ -10,7 +10,9 @@
     "resolveJsonModule": false,
     "allowSyntheticDefaultImports": true,
     "moduleResolution": "Node",
-    "sourceMap": false
+    "sourceMap": false,
+    "typeRoots": ["./src/types/**/*.d.ts"],
+    "declaration": true
   },
   "exclude": [
     "./test/",

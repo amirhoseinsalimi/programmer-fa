@@ -1,6 +1,6 @@
 import * as fs from 'fs';
 import { printTable } from 'console-table-printer';
-import { isDebugModeEnabled } from './utils';
+import { isDebugModeEnabled } from '../utils';
 
 const colorIt = require('color-it');
 
@@ -61,8 +61,8 @@ export const writeToFile = async (text: string | Buffer): Promise<void> => {
         `;
 
         const d: Date = new Date();
-        const fileName = `${d.getFullYear()}-${d.getMonth()
-          + 1}-${d.getDate()} - H${d.getHours()}.log`;
+        const fileName = `${d.getFullYear()}-${d.getMonth() +
+          1}-${d.getDate()} - H${d.getHours()}.log`;
 
         fs.appendFile(
           `logs/${fileName}`,
@@ -78,7 +78,10 @@ export const writeToFile = async (text: string | Buffer): Promise<void> => {
 };
 
 export const prettyPrintInTable = (tweet: any): void => {
-  if (process.env.NODE_ENV !== 'testing' && process.env.NODE_ENV !== 'staging') {
+  if (
+    process.env.NODE_ENV !== 'testing' &&
+    process.env.NODE_ENV !== 'staging'
+  ) {
     const t = [
       {
         id: tweet.id,
@@ -104,10 +107,10 @@ export const printWelcomeBanner = (): void => {
 
     if (isDebugModeEnabled()) {
       logInfo(
-        'The bot has been started in development environment, so it does not'
-        + ' emit retweets, instead stores them in the database and logs the text of'
-        + ' the tweets in a file. To change this behavior set `NODE_ENV=production`'
-        + ' in the .env file',
+        'The bot has been started in development environment, so it does not' +
+          ' emit retweets, instead stores them in the database and logs the text of' +
+          ' the tweets in a file. To change this behavior set `NODE_ENV=production`' +
+          ' in the .env file',
       );
     }
   });

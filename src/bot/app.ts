@@ -30,7 +30,7 @@ import {
   removeURLs,
   retweet,
   store,
-} from './utils';
+} from '../utils';
 
 /* =======================================
  *            Error Handling
