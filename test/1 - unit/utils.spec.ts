@@ -1,12 +1,12 @@
 import { describe, it } from 'mocha';
 import {
-  getNumberOfHashtags,
-  makeHashtag,
-  removeSuspiciousWords,
   removeURLs,
+  makeHashtag,
   getTweetLength,
+  getNumberOfHashtags,
+  removeSuspiciousWords,
   parseTwitterDateToLuxon,
-} from '../../src/bot/utils';
+} from '../../src/utils';
 
 const chai = require('chai');
 

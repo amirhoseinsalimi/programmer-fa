@@ -1,11 +1,13 @@
 import { describe, it, before } from 'mocha';
 import * as supertest from 'supertest';
 import {
-  getNumberOfHashtags,
+  makeHashtag,
+  getTweetFullText,
   fillArrayWithWords,
   loadJSONFileContent,
-  makeHashtag, removeRetweetNotation, getTweetFullText,
-} from '../../src/bot/utils';
+  getNumberOfHashtags,
+  removeRetweetNotation,
+} from '../../src/utils';
 import { onTweet } from '../../src/bot/app';
 import { createServer } from '../0 - express-server/server';
 
