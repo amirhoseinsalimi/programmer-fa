@@ -16,20 +16,21 @@ import {
 } from './logger';
 
 import {
-  favourite,
-  fillArrayWithWords,
-  getTweetFullText,
-  hasURL,
-  isDebugModeEnabled,
-  isRetweet,
-  isRetweetedByMyself,
-  isTweetAcceptable,
-  loadJSONFileContent,
-  removeRetweetNotation,
-  removeSuspiciousWords,
-  removeURLs,
-  retweet,
+  t,
   store,
+  hasURL,
+  retweet,
+  isRetweet,
+  favourite,
+  removeURLs,
+  isTweetAcceptable,
+  getTweetFullText,
+  isDebugModeEnabled,
+  fillArrayWithWords,
+  loadJSONFileContent,
+  isRetweetedByMyself,
+  removeSuspiciousWords,
+  removeRetweetNotation,
 } from '../utils';
 
 /* =======================================
@@ -40,8 +41,8 @@ class Emitter extends EventEmitter {}
 const emitter: Emitter = new Emitter();
 
 emitter.on('bot-error', (err: Error, tweet: any, tweetId: string) => {
-  logError('An error has been thrown', err.message || err);
-  if (tweetId !== '0') logError(`Error on handling tweetId "${tweetId}".`);
+  logError(t('anErrorHasBeenThrown'), err.message || err);
+  if (tweetId !== '0') logError(t('errorOnHandlingTweetId', { tweetId }));
   if (tweetId !== '0' && tweet) logError(JSON.stringify(tweet));
 });
 
@@ -54,7 +55,7 @@ process
     process.exit(1);
   })
   .on('unhandledRejection', (reason, p: Promise<unknown>) => {
-    logError('Unhandled Rejection at Promise', p);
+    logError(t('unhandledRejectionAtPromise'), p);
     logError(reason);
   });
 
@@ -71,7 +72,7 @@ const wordsNotToFollowDB: string[] | Error = loadJSONFileContent(
 );
 
 if (wordsToFollowDB instanceof Error || wordsNotToFollowDB instanceof Error) {
-  emitter.emit('bot-error', "Files couldn't be loaded");
+  emitter.emit('bot-error', t('filesCouldNotLoad'));
   process.exit(1);
 }
 

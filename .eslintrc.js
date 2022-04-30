@@ -47,5 +47,6 @@ module.exports = {
     'implicit-arrow-linebreak': 0,
     'operator-linebreak': 0,
     'import/no-cycle': 0,
+    'import/prefer-default-export': 0,
   },
 };

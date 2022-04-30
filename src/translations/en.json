@@ -1,0 +1,14 @@
+{
+  "appName": "Programmer Farsi",
+  "unhandledRejectionAtPromise": "Unhandled rejection at Promise",
+  "anErrorHasBeenThrown": "An error has been thrown",
+  "errorOnHandlingTweetId": "Error on handling tweet with ID {{tweetId}}",
+  "couldNotCreateDir": "Couldn't create {{dirName}} dir. Exiting...",
+  "developmentEnvNotice": "The bot has been started in development environment, so it does retweet tweets, but instead stores them in the database and logs the text of the tweets in a file. To change this behavior set `NODE_ENV=production` in the .env file",
+  "botHasBeenStarted": "Bot has been started...",
+  "filesCouldNotLoad": "Files couldn't load",
+  "fileDoesNotIncludeAnArray": "File doesn't include an array",
+  "databaseStorageIsDisabled": "Database storage is disabled",
+  "tweetStoredInTheDatabase": "Tweet stored in the database",
+  "tweetIsAlreadyInTheDatabase": "Tweet is already in the database"
+}

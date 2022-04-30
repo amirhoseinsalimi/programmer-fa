@@ -1,6 +1,6 @@
 import * as fs from 'fs';
 import { printTable } from 'console-table-printer';
-import { isDebugModeEnabled } from '../utils';
+import { t, isDebugModeEnabled } from '../utils';
 
 const colorIt = require('color-it');
 
@@ -50,7 +50,7 @@ export const writeToFile = async (text: string | Buffer): Promise<void> => {
       if (err && err.code === 'ENOENT') {
         fs.mkdir(`${process.cwd()}/logs`, (e) => {
           if (e) {
-            logError('Couldn\'t create "logs" dir. Exiting...');
+            logError(t('couldNotCreateDir', { dirName: 'logs' }));
           }
         });
       } else {
@@ -103,15 +103,10 @@ export const printWelcomeBanner = (): void => {
 
     logInfo(banner);
 
-    logSuccess('Bot has been started...');
+    logSuccess(t('botHasBeenStarted'));
 
     if (isDebugModeEnabled()) {
-      logInfo(
-        'The bot has been started in development environment, so it does not' +
-          ' emit retweets, instead stores them in the database and logs the text of' +
-          ' the tweets in a file. To change this behavior set `NODE_ENV=production`' +
-          ' in the .env file',
-      );
+      logInfo(t('developmentEnvNotice'));
     }
   });
 };

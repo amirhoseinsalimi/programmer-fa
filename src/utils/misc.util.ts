@@ -1,9 +1,9 @@
 import { readFileSync } from 'fs';
 import envs from '../env';
 import knex from '../knex-export';
-import { T } from '../twit';
 import { makeHashtag } from './string.util';
 import { isRetweet } from './tweet.util';
+import { t } from './i18n.util';
 import { Message } from '../types/general';
 
 const blackListedAccounts: string[] = require('../data/accounts-not-to-follow.json');
@@ -58,7 +58,7 @@ export const loadJSONFileContent = (filePath: string): string[] | Error => {
 
   return Array.isArray(fileContent)
     ? fileContent
-    : new Error("File doesn't include an array");
+    : new Error(t('fileDoesNotIncludeAnArray'));
 };
 
 /**
@@ -85,7 +85,7 @@ export const isBlackListed = (tweet: any): boolean => {
 export const store = async (tweet: any): Promise<Message | Error> => {
   if (envs.DB_ENABLE === 'false') {
     return {
-      message: 'Database storage is disabled',
+      message: t('databaseStorageIsDisabled'),
     };
   }
   const {
@@ -141,10 +141,10 @@ export const store = async (tweet: any): Promise<Message | Error> => {
         user_id: user.id_str,
       });
 
-      return { message: 'Tweet stored in the database' };
+      return { message: t('tweetStoredInTheDatabase') };
     }
 
-    return { message: 'Tweet is already in the database' };
+    return { message: t('tweetIsAlreadyInTheDatabase') };
   } catch (e) {
     return new Error(e);
   }

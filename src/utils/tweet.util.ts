@@ -2,7 +2,7 @@ import { T } from '../twit';
 import { getTweetLength, hasFiveHashtagsOrMore } from './string.util';
 import { hasUserRegisteredRecently } from './date.util';
 import { isBlackListed } from './misc.util';
-import {Message} from "../types/general";
+import { Message } from '../types/general';
 
 /**
  * Whether a tweet is a retweet or not.
