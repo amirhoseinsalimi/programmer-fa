@@ -7,6 +7,8 @@ module.exports = {
   development: {
     client: envs.DB_DRIVER || 'mysql',
     connection: {
+      host: envs.DB_HOST,
+      port: envs.DB_PORT,
       database: envs.DB_NAME,
       user: envs.DB_USERNAME,
       password: envs.DB_PASSWORD,
@@ -27,6 +29,8 @@ module.exports = {
   production: {
     client: envs.DB_DRIVER || 'mysql',
     connection: {
+      host: envs.DB_HOST,
+      port: envs.DB_PORT,
       database: envs.DB_NAME,
       user: envs.DB_USERNAME,
       password: envs.DB_PASSWORD,

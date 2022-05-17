@@ -1,0 +1,55 @@
+version: '3.7'
+
+networks:
+  app-tier:
+    driver: bridge
+
+services:
+  db:
+    image: "mariadb:latest"
+    volumes:
+      - $HOME/mariadb/data:/var/lib/mysql
+      - $HOME/mariadb/conf:/etc/mysql
+    env_file:
+      - .env
+    environment:
+      - MYSQL_ROOT_PASSWORD=${DB_PASSWORD}
+      - MYSQL_DATABASE=${DB_NAME}
+      - MYSQL_USER=${DB_USERNAME}
+      - MYSQL_PASSWORD=${DB_PASSWORD}
+    restart: always
+    ports:
+      - "3306:3306"
+    networks:
+      - app-tier
+
+  app:
+    build:
+      context: .
+    links:
+      - db
+    depends_on:
+      - db
+    restart: on-failure
+    command: npm start
+    networks:
+      - app-tier
+
+  migration:
+    build:
+      context: .
+    command:
+      [
+        "./wait-for-it/wait-for-it.sh",
+        "db:3306",
+        "--",
+        "npm",
+        "run",
+        "migrate:latest"
+      ]
+    links:
+      - db
+    depends_on:
+      - db
+    networks:
+      - app-tier
