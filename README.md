@@ -30,3 +30,14 @@ Run the command `npm run migrate:latest` to create the tables
 4. **Run the bot**\
 For development with hot reload: `npm run dev`\
 For Run `npm start`
+
+### Project setup(Docker)
+
+0. **Clone this repo:**\
+   Run `git clone https://github.com/amirhoseinsalimi/programmer-fa`
+
+1. **Create an .env file**\
+   Copy the content of `.env.example` into `.env` and fill it with your credentials
+
+2. **Run the bot**\
+   `docker-compose up --build -d`
