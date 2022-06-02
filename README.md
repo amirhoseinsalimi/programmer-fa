@@ -4,8 +4,8 @@
 
 <p></p>
 
-A simple bot that brings Persian / English tweets about programming to your feed.
-Feel free to add your desired words.
+A Twitter bot that brings Persian tweets about programming to your feed.
+Feel free to add your desired words and open a PR.
 
 ### Requirements to run the bot
 
