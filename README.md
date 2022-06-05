@@ -7,6 +7,9 @@
 A simple bot that brings Persian / English tweets about programming to your feed.
 Feel free to add your desired words.
 
+> **Note**
+> This bot is being re-written. The current work is being done on `v2` branch which is going to be merged with `master` once is completed. I suggest you to send your PRs to `v2` branch for now.
+
 ### Requirements to run the bot
 
 1. A developer account (Grab one from here [Twitter](https://developer.twitter.com/)) 
