@@ -1,4 +1,4 @@
-import type {I18nKeys} from '../types/general';
+import type { I18nKeys } from '../types/general';
 import * as en from '../translations/en.json';
 
 const templateMatcher = /{{\s?([^{}\s]*)\s?}}/g;

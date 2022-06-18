@@ -1,9 +1,9 @@
 import { readFileSync } from 'fs';
 import envs from '../env';
 import knex from '../knex-export';
-import { makeHashtag } from './string.util';
-import { isRetweet } from './tweet.util';
-import { t } from './i18n.util';
+import { makeHashtag } from './string';
+import { isRetweet } from './tweet';
+import { t } from './i18n';
 import { Message } from '../types/general';
 
 const blackListedAccounts: string[] = require('../data/accounts-not-to-follow.json');

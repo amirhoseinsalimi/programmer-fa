@@ -1,4 +1,4 @@
-import { isTweetExtended } from './tweet.util';
+import { isTweetExtended } from './tweet';
 
 const suspiciousWords: string[] = require('../data/words-with-suspicion.json');
 

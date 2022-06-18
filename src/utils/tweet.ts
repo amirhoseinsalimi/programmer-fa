@@ -1,7 +1,7 @@
 import { T } from '../twit';
-import { getTweetLength, hasFiveHashtagsOrMore } from './string.util';
-import { hasUserRegisteredRecently } from './date.util';
-import { isBlackListed } from './misc.util';
+import { getTweetLength, hasFiveHashtagsOrMore } from './string';
+import { hasUserRegisteredRecently } from './date';
+import { isBlackListed } from './misc';
 import { Message } from '../types/general';
 
 /**
@@ -26,9 +26,9 @@ export const isRetweetedByMyself = (tweet: any): boolean => tweet.retweeted;
  */
 export const isTweetAReply = (tweet: any): boolean =>
   // Polyfill to check whether a tweet is a reply or not
-  (tweet.in_reply_to_status_id || tweet.in_reply_to_user_id || isRetweet(tweet)
+  tweet.in_reply_to_status_id || tweet.in_reply_to_user_id || isRetweet(tweet)
     ? tweet.retweeted_status || tweet.in_reply_to_status_id
-    : false);
+    : false;
 
 /**
  * Whether a tweet is in Farsi or not.
