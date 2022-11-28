@@ -1,7 +1,7 @@
 {
   "name": "programmer-fa",
   "version": "1.0.0-beta",
-  "description": "‏‏‏‏‏‏‏‏‏‏‏ریتوئیت های #برنامه_نویسی و پروژه؛ موضوعات برنامه نویسی و وب رو فالو میکنم و توی فیدت نشون میدم 😊",
+  "description": "A bot that brings tweets about programming to your feed",
   "main": "dist/app.js",
   "engines": {
     "node": ">=14.0.0"
