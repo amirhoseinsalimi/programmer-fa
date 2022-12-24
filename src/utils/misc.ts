@@ -7,12 +7,7 @@ import { t } from './i18n';
 import { Message } from '../types/general';
 
 const blackListedAccounts: string[] = require('../data/accounts-not-to-follow.json');
-/**
- * Fill a given array with an array of strings
- * @param {string[]} arrayToFill
- * @param {string[]} arrayOfWords
- * @return {string[]}
- */
+
 export const fillArrayWithWords = (
   arrayToFill: string[],
   arrayOfWords: string[],
@@ -28,19 +23,9 @@ export const fillArrayWithWords = (
   return [...new Set(arrayToFill)];
 };
 
-/**
- * Checks whether a file is JSON or not, using file extension for this purpose
- * @param {string} fileName - The name of the file
- * @return {boolean} - File is JSON or not
- */
 export const isFileJSON = (fileName: string): boolean =>
   /\.(json)$/i.test(fileName);
 
-/**
- * Load the content of a given file, JSON only
- * @param {string} filePath - The full path of the JSON file
- * @return {string[]} - The text of the tweet w/ `@username` removed
- */
 export const loadJSONFileContent = (filePath: string): string[] | Error => {
   let fileContent: string;
 
@@ -61,11 +46,6 @@ export const loadJSONFileContent = (filePath: string): string[] | Error => {
     : new Error(t('fileDoesNotIncludeAnArray'));
 };
 
-/**
- * Check if the user is in the blacklist
- * @param {*} tweet
- * @return {boolean}
- */
 export const isBlackListed = (tweet: any): boolean => {
   const originalUserId: string = tweet.user.id_str;
   const retweeterUserId: string = tweet.retweet_status?.user?.id_str;
@@ -77,11 +57,6 @@ export const isBlackListed = (tweet: any): boolean => {
 };
 
 // TODO: Split this into multiple functions
-/**
- * Store the given tweet in the database
- * @param {*} tweet - The tweet object
- * @return {Promise<Message | Error>}
- */
 export const store = async (tweet: any): Promise<Message | Error> => {
   if (envs.DB_ENABLE === 'false') {
     return {
@@ -150,8 +125,4 @@ export const store = async (tweet: any): Promise<Message | Error> => {
   }
 };
 
-/**
- * Whether the environment is in debug mode or not
- * @return {boolean}
- */
 export const isDebugModeEnabled = (): boolean => envs.DEBUG_MODE === 'true';

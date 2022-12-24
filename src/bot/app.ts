@@ -1,12 +1,6 @@
-/* =======================================
- *           Node.js Modules
- * ===================================== */
 import { EventEmitter } from 'events';
 import { T, Twit } from '../twit';
 
-/* =======================================
- *         My Modules and Utils
- * ===================================== */
 import {
   logError,
   logSuccess,
@@ -33,9 +27,6 @@ import {
   removeRetweetNotation,
 } from '../utils';
 
-/* =======================================
- *            Error Handling
- * ==================================== */
 class Emitter extends EventEmitter {}
 
 const emitter: Emitter = new Emitter();
@@ -59,9 +50,6 @@ process
     logError(reason);
   });
 
-/* =======================================
- *                 Bot
- * ==================================== */
 printWelcomeBanner();
 
 const wordsToFollowDB: string[] | Error = loadJSONFileContent(
@@ -88,11 +76,6 @@ const params: Twit.Params = {
 // eslint-disable-next-line import/prefer-default-export
 export const stream: Twit.Stream = T.stream('statuses/filter', params);
 
-/**
- * onTweet handler - Runs for each tweet that comes from the stream
- * @param tweet - The tweet object
- * @return void
- */
 export const onTweet = async (tweet: any): Promise<string> => {
   if (!isTweetAcceptable(tweet)) {
     return '0';
