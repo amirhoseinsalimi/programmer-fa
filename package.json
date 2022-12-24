@@ -1,6 +1,6 @@
 {
   "name": "programmer-fa",
-  "version": "1.0.0-beta",
+  "version": "2.0.0-alpha.1",
   "description": "A bot that brings tweets about programming to your feed",
   "main": "dist/app.js",
   "engines": {
