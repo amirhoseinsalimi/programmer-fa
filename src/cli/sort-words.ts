@@ -4,7 +4,10 @@ import * as path from 'path';
 
 path.resolve('./');
 
-async function asyncForEach<T>(array: T[], callback: Function): Promise<void> {
+async function asyncForEach<T>(
+  array: T[],
+  callback: (value: T, index: number, arrayItself: T[]) => void,
+): Promise<void> {
   for (let index = 0; index < array.length; index += 1) {
     // eslint-disable-next-line
     await callback(array[index], index, array);
