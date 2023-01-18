@@ -81,13 +81,11 @@ export const store = async (tweet: any): Promise<Message | Error> => {
       .where('user_id', userIdStr);
 
     if (userId.length) {
-      await knex('users')
-        .where('user_id', userIdStr)
-        .update({
-          user_id: userIdStr,
-          screen_name,
-          name,
-        });
+      await knex('users').where('user_id', userIdStr).update({
+        user_id: userIdStr,
+        screen_name,
+        name,
+      });
     } else {
       await knex('users').insert({
         user_id: userIdStr,
@@ -126,3 +124,13 @@ export const store = async (tweet: any): Promise<Message | Error> => {
 };
 
 export const isDebugModeEnabled = (): boolean => envs.DEBUG_MODE === 'true';
+
+export const asyncForEach = async <T>(
+  array: T[],
+  callback: (value: T, index: number, arrayItself: T[]) => void,
+): Promise<void> => {
+  for (let index = 0; index < array.length; index += 1) {
+    // eslint-disable-next-line
+    await callback(array[index], index, array);
+  }
+};
