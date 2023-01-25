@@ -17,7 +17,8 @@
     "copy-files": "mkdir -p dist/data && cp src/data/* dist/data/ && cp .env dist",
     "migrate:latest": "npm run build && knex migrate:latest --knexfile dist/knexfile.js --migrations-directory dist/database/migrations",
     "migrate:rollback": "npm run build && knex migrate:rollback --knexfile dist/knexfile.js --migrations-directory dist/database/migrations",
-    "lint": "eslint . --ext .js,.ts"
+    "lint": "eslint . --ext .js,.ts",
+    "prepare": "husky install"
   },
   "author": "Amir Hosein Salimi",
   "license": "MIT",
