@@ -7,6 +7,11 @@
 * move a function to "utils" directory ([693195d](https://github.com/amirhoseinsalimi/programmer-fa/commit/693195dcd28e91cf0f7f57051fe620b85bd5a39c))
 
 
+### Features
+
+* add changelogs ([e45b145](https://github.com/amirhoseinsalimi/programmer-fa/commit/e45b1456bf9d39222cda5139c80e84243ccbdbb9))
+
+
 
 # [2.0.0-alpha.1](https://github.com/amirhoseinsalimi/programmer-fa/compare/v1.0.0-beta...v2.0.0-alpha.1) (2022-12-24)
 
