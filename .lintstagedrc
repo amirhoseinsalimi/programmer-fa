@@ -1,0 +1,4 @@
+{
+  "*.{js,ts}": "eslint --cache --fix",
+  "*.{js,ts,scss,css}": "prettier --write --ignore-unknown"
+}
